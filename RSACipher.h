@@ -1,0 +1,29 @@
+#ifndef RSACIPHER_H
+#define RSACIPHER_H
+
+#include <string>
+#include <utility>
+#include <vector>
+#include "Cryptography.h"
+using namespace std;
+
+class RSA : public Cryptography {
+public:
+    RSA(long long p, long long q, long long e, const string& plaintext, const string& ciphertext);
+    pair<long long, long long> getPublicKey();
+    pair<long long, long long> getPrivateKey();
+    string encrypt();
+    string decrypt();
+private:
+    long long p, q, e, n, phi, d;
+    string plaintext;
+    string ciphertext;
+    long long generatePrime();
+    long long gcd(long long a, long long b);
+    long long modInverse(long long a, long long m);
+    long long modExp(long long base, long long exp, long long mod);
+    vector<long long> stringToInt(const string &str);
+    string intToString(const vector<long long> &nums);
+};
+
+#endif 
