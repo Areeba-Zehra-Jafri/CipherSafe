@@ -56,7 +56,7 @@ const uint8_t Rcon[11] = {
 };
 
 // Constructor implementation
-AES::AES(std::string p, std::string c, const std::vector<std::vector<int>>& k) : Cryptography(p, c), key(k)
+AES::AES(const string& p, const string& c, const vector<vector<int>>& k) : Cryptography(p, c), key(k)
 {
     padPlaintext();
 }
@@ -68,7 +68,7 @@ void AES::padPlaintext() {
 }
 
 // Substitute bytes using the S-box
-void AES::subBytes(std::vector<uint8_t>& state)
+void AES::subBytes(vector<uint8_t>& state)
 {
     for (auto& byte : state)
     {
@@ -76,7 +76,7 @@ void AES::subBytes(std::vector<uint8_t>& state)
     }
 }
 
-void AES::shiftRows(std::vector<uint8_t>& state)
+void AES::shiftRows(vector<uint8_t>& state)
 {
     uint8_t temp;
 
@@ -130,7 +130,7 @@ uint8_t AES::gmul_03(uint8_t x) {
     return gmul(x, 0x03);
 }
 
-void AES::mixColumns(std::vector<uint8_t>& state) {
+void AES::mixColumns(vector<uint8_t>& state) {
     uint8_t temp_state[16];
     for (int i = 0; i < 16; i++) {
         temp_state[i] = state[i];
@@ -146,7 +146,7 @@ void AES::mixColumns(std::vector<uint8_t>& state) {
 
 
 // Add round key
-void AES::addRoundKey(std::vector<uint8_t>& state, const std::vector<uint8_t>& roundKey)
+void AES::addRoundKey(vector<uint8_t>& state, const vector<uint8_t>& roundKey)
 {
     for (size_t i = 0; i < state.size(); ++i)
     {
@@ -155,9 +155,9 @@ void AES::addRoundKey(std::vector<uint8_t>& state, const std::vector<uint8_t>& r
 }
 
 // Key expansion
-std::vector<uint8_t> AES::keyExpansion(const std::vector<std::vector<int>>& key)
+vector<uint8_t> AES::keyExpansion(const vector<vector<int>>& key)
 {
-    std::vector<uint8_t> expandedKey(176); // AES-128 bit key expands to 176 bytes
+    vector<uint8_t> expandedKey(176); // AES-128 bit key expands to 176 bytes
     int i = 0;
 
     // The first 16 bytes of the expanded key are the original key
@@ -211,16 +211,16 @@ std::vector<uint8_t> AES::keyExpansion(const std::vector<std::vector<int>>& key)
 }
 
 // Encrypt function
-std::string AES::encrypt()
+string AES::encrypt()
 {
     // Convert plaintext to state array
-    std::vector<uint8_t> state(plaintext.begin(), plaintext.end());
+    vector<uint8_t> state(plaintext.begin(), plaintext.end());
 
     // Expand the key
-    std::vector<uint8_t> expandedKey = keyExpansion(key);
+    vector<uint8_t> expandedKey = keyExpansion(key);
 
     // Initial round key addition
-    addRoundKey(state, std::vector<uint8_t>(expandedKey.begin(), expandedKey.begin() + 16));
+    addRoundKey(state, vector<uint8_t>(expandedKey.begin(), expandedKey.begin() + 16));
 
     // Main rounds
     for (int round = 1; round < 10; ++round)
@@ -228,13 +228,13 @@ std::string AES::encrypt()
         subBytes(state);
         shiftRows(state);
         mixColumns(state);
-        addRoundKey(state, std::vector<uint8_t>(expandedKey.begin() + 16 * round, expandedKey.begin() + 16 * (round + 1)));
+        addRoundKey(state, vector<uint8_t>(expandedKey.begin() + 16 * round, expandedKey.begin() + 16 * (round + 1)));
     }
 
     // Final round
     subBytes(state);
     shiftRows(state);
-    addRoundKey(state, std::vector<uint8_t>(expandedKey.begin() + 160, expandedKey.begin() + 176));
+    addRoundKey(state, vector<uint8_t>(expandedKey.begin() + 160, expandedKey.begin() + 176));
 
     // Convert state array to ciphertext
     ciphertext.clear();
@@ -249,7 +249,7 @@ std::string AES::encrypt()
 }
 
 // Inverse substitute bytes
-void AES::invSubBytes(std::vector<uint8_t>& state)
+void AES::invSubBytes(vector<uint8_t>& state)
 {
     for (auto& byte : state)
     {
@@ -258,7 +258,7 @@ void AES::invSubBytes(std::vector<uint8_t>& state)
 }
 
 // Shift rows to the right
-void AES::invShiftRows(std::vector<uint8_t>& state)
+void AES::invShiftRows(vector<uint8_t>& state)
 {
     uint8_t temp;
 
@@ -303,7 +303,7 @@ uint8_t AES::gmul_0e(uint8_t x) {
     return gmul(x, 0x0e);
 }
 
-void AES::invMixColumns(std::vector<uint8_t>& state) {
+void AES::invMixColumns(vector<uint8_t>& state) {
     uint8_t temp_state[16];
     for (int i = 0; i < 16; i++) {
         temp_state[i] = state[i];
@@ -321,7 +321,7 @@ void AES::invMixColumns(std::vector<uint8_t>& state) {
 std::string AES::decrypt()
 {
     // Convert ciphertext to state array
-    std::vector<uint8_t> state;
+    vector<uint8_t> state;
     for (size_t i = 0; i < ciphertext.size(); i += 2)
     {
         uint8_t byte = std::stoi(ciphertext.substr(i, 2), nullptr, 16);
@@ -329,24 +329,24 @@ std::string AES::decrypt()
     }
 
     // Expand the key
-    std::vector<uint8_t> expandedKey = keyExpansion(key);
+    vector<uint8_t> expandedKey = keyExpansion(key);
 
     // Initial round key addition
-    addRoundKey(state, std::vector<uint8_t>(expandedKey.end() - 16, expandedKey.end()));
+    addRoundKey(state, vector<uint8_t>(expandedKey.end() - 16, expandedKey.end()));
 
     // Main rounds
     for (int round = 9; round > 0; --round)
     {
         invShiftRows(state);
         invSubBytes(state);
-        addRoundKey(state, std::vector<uint8_t>(expandedKey.begin() + 16 * round, expandedKey.begin() + 16 * (round + 1)));
+        addRoundKey(state, vector<uint8_t>(expandedKey.begin() + 16 * round, expandedKey.begin() + 16 * (round + 1)));
         invMixColumns(state);
     }
 
     // Final round
     invShiftRows(state);
     invSubBytes(state);
-    addRoundKey(state, std::vector<uint8_t>(expandedKey.begin(), expandedKey.begin() + 16));
+    addRoundKey(state, vector<uint8_t>(expandedKey.begin(), expandedKey.begin() + 16));
 
     // Convert state array to plaintext
     plaintext.clear();
@@ -360,4 +360,12 @@ std::string AES::decrypt()
     plaintext.erase(plaintext.end() - padding, plaintext.end());
 
     return plaintext;
+}
+void AES::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void AES::set_ciphertext(const string& c)
+{
+    ciphertext=c;
 }

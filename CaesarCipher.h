@@ -3,15 +3,17 @@
 
 #include "Cryptography.h"
 
-class CaesarCipher:protected Cryptography
+class CaesarCipher:public Cryptography
 {
 private:
     int shift;
 
 public:
-    CaesarCipher(string p,string c,int s);
-    string encrypt() override;
-    string decrypt() override;
+    CaesarCipher(const string& p,const string& c,int s);
+    string encrypt() ;
+    string decrypt() ;
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& c);
     ~CaesarCipher();
 };
 

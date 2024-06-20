@@ -14,6 +14,8 @@ public:
     pair<long long, long long> getPrivateKey();
     string encrypt();
     string decrypt();
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& c);
 private:
     long long p, q, e, n, phi, d;
     string plaintext;

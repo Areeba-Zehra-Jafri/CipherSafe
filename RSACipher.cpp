@@ -127,3 +127,11 @@ string RSA::intToString(const vector<long long> &nums) {
     }
     return result;
 }
+void RSA::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void RSA::set_ciphertext(const string& c)
+{
+    ciphertext=c;
+}

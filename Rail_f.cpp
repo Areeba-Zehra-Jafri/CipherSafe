@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-    RailFenceCipher::RailFenceCipher(const std::string& p,string& c, int railKey) : Cryptography(p,c), key(railKey) {}
+    RailFenceCipher::RailFenceCipher(const string& p,const string& c, int railKey) : Cryptography(p,c), key(railKey) {}
 
     // Function to encrypt plaintext using rail fence cipher
     string RailFenceCipher::encrypt() {
@@ -83,5 +83,11 @@ using namespace std;
         plaintext = result;
         return plaintext;
     }
-
-
+void RailFenceCipher::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void RailFenceCipher::set_ciphertext(const string& c)
+{
+    ciphertext=c;
+}

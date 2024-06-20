@@ -5,7 +5,7 @@
 
 int AffineCipher::m = 26;
 
-AffineCipher::AffineCipher(string plain_text, string cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
+AffineCipher::AffineCipher(const string& plain_text, const string& cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
 {
     if (__gcd(a, m) != 1)
     {
@@ -79,4 +79,12 @@ string AffineCipher::decrypt()
     this->plaintext = plain_text; // Update the member variable
    // return decrypt_text;
    return plain_text;
+}
+void AffineCipher::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void AffineCipher::set_ciphertext(const string& c)
+{
+    ciphertext=c;
 }
