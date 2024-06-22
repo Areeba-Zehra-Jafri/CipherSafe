@@ -9,7 +9,7 @@ using namespace std;
 
 class RSA : public Cryptography {
 public:
-    RSA(long long p, long long q, long long e, const string& plaintext, const string& ciphertext);
+    RSA(const string& plaintext, const string& ciphertext,long long p, long long q, long long e);
     pair<long long, long long> getPublicKey();
     pair<long long, long long> getPrivateKey();
     string encrypt();
