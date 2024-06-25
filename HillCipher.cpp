@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Constructor implementation
-HillCipher::HillCipher(std::string p, std::string c, const std::string& key) : Cryptography(p, c)
+HillCipher::HillCipher(const string& p, const string& c, const string& key) : Cryptography(p, c)
 {
     generateKeyMatrix(key);
     generateInverseKeyMatrix();
@@ -18,14 +18,14 @@ int HillCipher::modInverse(int a, int m)
         if ((a * x) % m == 1)
             return x;
     }
-    throw std::invalid_argument("No modular inverse found");
+    throw invalid_argument("No modular inverse found");
 }
 
-void HillCipher::generateKeyMatrix(const std::string& key)
+void HillCipher::generateKeyMatrix(const string& key)
 {
     if (key.length() != 4)
     {
-        throw std::invalid_argument("Key must be 4 characters long");
+        throw invalid_argument("Key must be 4 characters long");
     }
 
     keyMatrix = {
@@ -62,7 +62,7 @@ void HillCipher::generateInverseKeyMatrix()
     }
 }
 
-std::string HillCipher::encrypt()
+string HillCipher::encrypt()
 {
     ciphertext = "";
 
@@ -86,13 +86,13 @@ std::string HillCipher::encrypt()
     return ciphertext;
 }
 
-std::string HillCipher::decrypt()
+string HillCipher::decrypt()
 {
     plaintext = "";
 
     if (ciphertext.length() % 2 != 0)
     {
-        throw std::invalid_argument("Ciphertext length must be even");
+        throw invalid_argument("Ciphertext length must be even");
     }
 
     for (size_t i = 0; i < ciphertext.length(); i += 2)
@@ -109,5 +109,12 @@ std::string HillCipher::decrypt()
 
     return plaintext;
 }
-
+void HillCipher::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void HillCipher::set_ciphertext(const string& c)
+{
+    ciphertext=c;
+}
 HillCipher::~HillCipher() {}

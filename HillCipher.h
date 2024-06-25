@@ -13,9 +13,11 @@ private:
     void generateInverseKeyMatrix();
 
 public:
-    HillCipher(string p, string c, const string& key);
-    string encrypt() override;
-    string decrypt() override;
+    HillCipher(const string& p, const string& c, const string& key);
+    string encrypt() ;
+    string decrypt() ;
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& c);
     ~HillCipher();
 };
 

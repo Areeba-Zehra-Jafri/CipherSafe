@@ -4,7 +4,7 @@
 #include <sstream>
 using namespace std;
 
-RSA::RSA(long long p, long long q, long long e, const string& plaintext, const string& ciphertext)
+RSA::RSA(const string& plaintext, const string& ciphertext,long long p, long long q, long long e)
     : p(p), q(q), e(e), plaintext(plaintext), ciphertext(ciphertext) , Cryptography(plaintext, ciphertext) {
     n = p * q;
     phi = (p - 1) * (q - 1);
@@ -126,4 +126,12 @@ string RSA::intToString(const vector<long long> &nums) {
         result += static_cast<char>(num);
     }
     return result;
+}
+void RSA::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void RSA::set_ciphertext(const string& c)
+{
+    ciphertext=c;
 }

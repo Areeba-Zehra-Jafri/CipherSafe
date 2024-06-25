@@ -9,11 +9,13 @@ using namespace std;
 
 class RSA : public Cryptography {
 public:
-    RSA(long long p, long long q, long long e, const string& plaintext, const string& ciphertext);
+    RSA(const string& plaintext, const string& ciphertext,long long p, long long q, long long e);
     pair<long long, long long> getPublicKey();
     pair<long long, long long> getPrivateKey();
     string encrypt();
     string decrypt();
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& c);
 private:
     long long p, q, e, n, phi, d;
     string plaintext;

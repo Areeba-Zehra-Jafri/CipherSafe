@@ -13,9 +13,11 @@ protected:
     string ciphertext;
 
 public:
-    Cryptography(string p,string c);
+    Cryptography(const string& p = "", const string& c = "");
     virtual string encrypt() = 0;
     virtual string decrypt() = 0;
+    virtual void set_plaintext(const string& p);
+    virtual void set_ciphertext(const string& c);
     virtual ~Cryptography();
 };
 

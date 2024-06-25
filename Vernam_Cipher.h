@@ -8,17 +8,16 @@
 using namespace std;
 
 class VernamCipher:public Cryptography {
+private:
+    string key;
 public:
-    VernamCipher(string plain_text,string key);
+    VernamCipher(const string& p,const string& c,string key);
     string get_plain_text();
     string get_cipher();
     string encrypt();
     string decrypt();
-
-private:
-    string key;
-  
-
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& p);
 };
 
 #endif

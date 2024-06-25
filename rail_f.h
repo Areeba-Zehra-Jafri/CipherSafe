@@ -7,17 +7,16 @@
 
 class RailFenceCipher: public Cryptography {
 private:
-    // std::string plaintext;
-    // std::string ciphertext;
     int key;
 
 public:
     // Constructor
-    RailFenceCipher(const std::string& p,string& c, int railKey)  ;
+    RailFenceCipher(const string& p,const string& c, int railKey)  ;
 
-    std::string encrypt() ;
-    std::string decrypt() ;
-
+    string encrypt() ;
+    string decrypt() ;
+    void set_plaintext(const string& p);
+    void set_ciphertext(const string& c);
 };
 
 #endif

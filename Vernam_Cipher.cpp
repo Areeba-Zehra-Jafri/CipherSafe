@@ -4,7 +4,7 @@
 #include "Vernam_Cipher.h"
 using namespace std;
 
-VernamCipher::VernamCipher(const string plaintext, const string k) : Cryptography(plaintext, ""), key(k) {}
+VernamCipher::VernamCipher(const string& plaintext,const string& ciphertext, const string k) : Cryptography(plaintext, ciphertext), key(k) {}
 
 string VernamCipher::encrypt()
 {
@@ -45,4 +45,12 @@ string VernamCipher:: get_plain_text()
 string VernamCipher:: get_cipher()
 {
     return ciphertext;
+}
+void VernamCipher::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void VernamCipher::set_ciphertext(const string& c)
+{
+    ciphertext=c;
 }

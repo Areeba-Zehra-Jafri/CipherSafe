@@ -1,6 +1,6 @@
 #include "CaesarCipher.h"
 
-CaesarCipher::CaesarCipher(string p,string c,int s):Cryptography(p,c),shift(s){}
+CaesarCipher::CaesarCipher(const string& p,const string& c,int s):Cryptography(p,c),shift(s){}
 
 string CaesarCipher::encrypt()
 {
@@ -29,4 +29,14 @@ string CaesarCipher::decrypt()
     }
     return plaintext;
 }
+
+void CaesarCipher::set_plaintext(const string& p)
+{
+    plaintext=p;
+}
+void CaesarCipher::set_ciphertext(const string& c)
+{
+    ciphertext=c;
+}
+
 CaesarCipher::~CaesarCipher(){}
