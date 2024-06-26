@@ -2,13 +2,18 @@
 #include <cmath>
 #include <random>
 #include <sstream>
+#include <stdexcept>
 using namespace std;
 
-RSA::RSA(const string& plaintext, const string& ciphertext,long long p, long long q, long long e)
-    : p(p), q(q), e(e), plaintext(plaintext), ciphertext(ciphertext) , Cryptography(plaintext, ciphertext) {
+RSA::RSA(const string& plaintext, const string& ciphertext, long long p, long long q, long long e)
+    : p(p), q(q), e(e), plaintext(plaintext), ciphertext(ciphertext), Cryptography(plaintext, ciphertext) {
     n = p * q;
     phi = (p - 1) * (q - 1);
-    d = modInverse(e, phi);
+    try {
+        d = modInverse(e, phi);
+    } catch (const std::exception& e) {
+        throw std::invalid_argument("Invalid parameters for RSA encryption.");
+    }
 }
 
 long long generatePrime() {
@@ -83,33 +88,41 @@ pair<long long, long long> RSA::getPrivateKey() {
 }
 
 string RSA::encrypt() {
-    vector<long long> plainNums = stringToInt(plaintext);
-    vector<long long> cipherNums;
-    for (long long num : plainNums) {
-        cipherNums.push_back(modExp(num, e, n));
-    }
+    try {
+        vector<long long> plainNums = stringToInt(plaintext);
+        vector<long long> cipherNums;
+        for (long long num : plainNums) {
+            cipherNums.push_back(modExp(num, e, n));
+        }
 
-    ostringstream oss;
-    for (long long num : cipherNums) {
-        oss << num << " ";
+        ostringstream oss;
+        for (long long num : cipherNums) {
+            oss << num << " ";
+        }
+        return oss.str();
+    } catch (const std::exception& e) {
+        throw std::invalid_argument("Error during RSA encryption.");
     }
-    return oss.str();
 }
 
 string RSA::decrypt() {
-    istringstream iss(ciphertext);
-    vector<long long> cipherNums;
-    long long num;
-    while (iss >> num) {
-        cipherNums.push_back(num);
-    }
+    try {
+        istringstream iss(ciphertext);
+        vector<long long> cipherNums;
+        long long num;
+        while (iss >> num) {
+            cipherNums.push_back(num);
+        }
 
-    vector<long long> plainNums;
-    for (long long num : cipherNums) {
-        plainNums.push_back(modExp(num, d, n));
-    }
+        vector<long long> plainNums;
+        for (long long num : cipherNums) {
+            plainNums.push_back(modExp(num, d, n));
+        }
 
-    return intToString(plainNums);
+        return intToString(plainNums);
+    } catch (const std::exception& e) {
+        throw std::invalid_argument("Error during RSA decryption.");
+    }
 }
 
 vector<long long> RSA::stringToInt(const string &str) {
@@ -127,11 +140,11 @@ string RSA::intToString(const vector<long long> &nums) {
     }
     return result;
 }
-void RSA::set_plaintext(const string& p)
-{
-    plaintext=p;
+
+void RSA::set_plaintext(const string& p) {
+    plaintext = p;
 }
-void RSA::set_ciphertext(const string& c)
-{
-    ciphertext=c;
+
+void RSA::set_ciphertext(const string& c) {
+    ciphertext = c;
 }
