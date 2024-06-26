@@ -2,15 +2,25 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cctype>
+#include <iostream>
+
+using namespace std;
 
 int AffineCipher::m = 26;
 
 AffineCipher::AffineCipher(const string& plain_text, const string& cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
 {
-    if (__gcd(a, m) != 1)
+    try
     {
-        cout << "a and m must be coprime." << endl;
-        throw invalid_argument("a and m must be coprime.");
+        if (__gcd(a, m) != 1)
+        {
+            throw invalid_argument("a and m must be coprime.");
+        }
+    }
+    catch (const invalid_argument& e)
+    {
+        cerr << e.what() << endl;
+        throw; 
     }
 }
 
@@ -39,52 +49,78 @@ string AffineCipher::get_decrypt()
 
 string AffineCipher::encrypt()
 {
-    int n = plaintext.size();
-    string cipher_text ;
-    for (char &c : plaintext)
+    try
     {
-        if (isalpha(c))
+        int n = plaintext.size();
+        if (n == 0) 
         {
-            char base = islower(c) ? 'a' : 'A';
-            int x = c - base;
-            int encrypted_char = (a * x + b) % m;
-            c = encrypted_char + base;
+            throw runtime_error("Plaintext cannot be empty.");
         }
-        // Add the character to ciphertext whether it's transformed or not
-        cipher_text += c;
+
+        string cipher_text;
+        for (char &c : plaintext)
+        {
+            if (isalpha(c))
+            {
+                char base = islower(c) ? 'a' : 'A';
+                int x = c - base;
+                int encrypted_char = (a * x + b) % m;
+                c = encrypted_char + base;
+            }
+            // Add the character to ciphertext whether it's transformed or not
+            cipher_text += c;
+        }
+        this->ciphertext = cipher_text; // Update the member variable
+        return ciphertext;
     }
-    this->ciphertext = cipher_text; // Update the member variable
-    return ciphertext;
+    catch (const exception& e)
+    {
+        cerr << "Encryption error: " << e.what() << endl;
+        throw; // Re-throw the exception for the caller to handle
+    }
 }
 
 string AffineCipher::decrypt()
 {
-    int n = ciphertext.size();
-    string plain_text ;
-    int a_inv = modInverse(a, m);
-
-    for (char &c : ciphertext)
+    try
     {
-        if (isalpha(c))
+        int n = ciphertext.size();
+        if (n == 0) 
         {
-            char base = islower(c) ? 'a' : 'A';
-            int x = c - base;
-            int decrypted_char = a_inv * (x - b + m) % m;
-            c = decrypted_char + base;
-            
+            throw runtime_error("Ciphertext cannot be empty.");
         }
-        // Add the character to decrypt_text whether it's transformed or not
-        plain_text += c;
+
+        string plain_text;
+        int a_inv = modInverse(a, m);
+
+        for (char &c : ciphertext)
+        {
+            if (isalpha(c))
+            {
+                char base = islower(c) ? 'a' : 'A';
+                int x = c - base;
+                int decrypted_char = a_inv * (x - b + m) % m;
+                c = decrypted_char + base;
+            }
+            // Add the character to plain_text whether it's transformed or not
+            plain_text += c;
+        }
+        this->plaintext = plain_text; // Update the member variable
+        return plain_text;
     }
-    this->plaintext = plain_text; // Update the member variable
-   // return decrypt_text;
-   return plain_text;
+    catch (const exception& e)
+    {
+        cerr << "Decryption error: " << e.what() << std::endl;
+        throw; // Re-throw the exception for the caller to handle
+    }
 }
+
 void AffineCipher::set_plaintext(const string& p)
 {
-    plaintext=p;
+    plaintext = p;
 }
+
 void AffineCipher::set_ciphertext(const string& c)
 {
-    ciphertext=c;
+    ciphertext = c;
 }
