@@ -73,7 +73,7 @@ void FileCryptography::encryptFile(const string& inputFilePath, const string& ou
             string encryptedLine = cipher->encrypt();
             outputFile << encryptedLine << endl;
         }
-    } catch (const std::exception& e) {
+    } catch (const exception& e) {
         delete cipher;
         inputFile.close();
         outputFile.close();
@@ -113,7 +113,7 @@ void FileCryptography::decryptFile(const string& inputFilePath, const string& ou
             cout << "Decrypted line: " << decryptedLine << endl;  // Debug: Show decrypted line
             outputFile << decryptedLine << endl;
         }
-    } catch (const std::exception& e) {
+    } catch (const exception& e) {
         delete cipher;
         inputFile.close();
         outputFile.close();
