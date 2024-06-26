@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
-#include <numeric> // for std::gcd
+#include <numeric> 
 
 using namespace std;
 
@@ -27,10 +27,18 @@ void FileCryptography::processFiles() {
 
         switch (choice) {
             case 1:
-                encryptFile(inputFilePath, outputFilePath);
+                try {
+                    encryptFile(inputFilePath, outputFilePath);
+                } catch (const exception& e) {
+                    cerr << "Encryption Error: " << e.what() << endl;
+                }
                 break;
             case 2:
-                decryptFile(inputFilePath, outputFilePath);
+                try {
+                    decryptFile(inputFilePath, outputFilePath);
+                } catch (const exception& e) {
+                    cerr << "Decryption Error: " << e.what() << endl;
+                }
                 break;
             default:
                 cout << "Invalid input" << endl;
@@ -42,67 +50,80 @@ void FileCryptography::processFiles() {
 void FileCryptography::encryptFile(const string& inputFilePath, const string& outputFilePath) {
     ifstream inputFile(inputFilePath);
     if (!inputFile) {
-        cerr << "Error opening input file: " << inputFilePath << endl;
-        return;
+        throw runtime_error("Error opening input file: " + inputFilePath);
     }
 
     ofstream outputFile(outputFilePath);
     if (!outputFile) {
-        cerr << "Error creating output file: " << outputFilePath << endl;
-        return;
+        inputFile.close();
+        throw runtime_error("Error creating output file: " + outputFilePath);
     }
 
     Cryptography* cipher = selectCipher();
     if (!cipher) {
-        return;  // User did not select a valid cipher
+        inputFile.close();
+        outputFile.close();
+        throw runtime_error("Invalid cipher selection.");
     }
 
-    string line;
-    while (getline(inputFile, line)) {
-        cipher->set_plaintext(line);
-        string encryptedLine = cipher->encrypt();
-        outputFile << encryptedLine << endl;
+    try {
+        string line;
+        while (getline(inputFile, line)) {
+            cipher->set_plaintext(line);
+            string encryptedLine = cipher->encrypt();
+            outputFile << encryptedLine << endl;
+        }
+    } catch (const std::exception& e) {
+        delete cipher;
+        inputFile.close();
+        outputFile.close();
+        throw;  // Re-throw exception for outer handling
     }
-
-    inputFile.close();
-    outputFile.close();
 
     delete cipher;  // Clean up dynamically allocated memory
+    inputFile.close();
+    outputFile.close();
 }
 
 void FileCryptography::decryptFile(const string& inputFilePath, const string& outputFilePath) {
     ifstream inputFile(inputFilePath);
     if (!inputFile) {
-        cerr << "Error opening input file: " << inputFilePath << endl;
-        return;
+        throw runtime_error("Error opening input file: " + inputFilePath);
     }
 
     ofstream outputFile(outputFilePath);
     if (!outputFile) {
-        cerr << "Error creating output file: " << outputFilePath << endl;
-        return;
+        inputFile.close();
+        throw runtime_error("Error creating output file: " + outputFilePath);
     }
 
     Cryptography* cipher = selectCipher();
     if (!cipher) {
-        return;  // User did not select a valid cipher
+        inputFile.close();
+        outputFile.close();
+        throw runtime_error("Invalid cipher selection.");
     }
 
-    string line;
-    while (getline(inputFile, line)) {
-        cout << "Decrypting line: " << line << endl;  // Debug: Show line to be decrypted
-        cipher->set_ciphertext(line);
-        string decryptedLine = cipher->decrypt();
-        cout << "Decrypted line: " << decryptedLine << endl;  // Debug: Show decrypted line
-        outputFile << decryptedLine << endl;
+    try {
+        string line;
+        while (getline(inputFile, line)) {
+            cout << "Decrypting line: " << line << endl;  // Debug: Show line to be decrypted
+            cipher->set_ciphertext(line);
+            string decryptedLine = cipher->decrypt();
+            cout << "Decrypted line: " << decryptedLine << endl;  // Debug: Show decrypted line
+            outputFile << decryptedLine << endl;
+        }
+    } catch (const std::exception& e) {
+        delete cipher;
+        inputFile.close();
+        outputFile.close();
+        throw;  // Re-throw exception for outer handling
     }
-
-    inputFile.close();
-    outputFile.close();
 
     delete cipher;  // Clean up dynamically allocated memory
+    inputFile.close();
+    outputFile.close();
 }
-
 
 Cryptography* FileCryptography::selectCipher() {
     int choice;
