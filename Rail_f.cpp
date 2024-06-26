@@ -2,12 +2,15 @@
 #include "rail_f.h"
 #include <string>
 #include <vector>
+#include <stdexcept>
+
 using namespace std;
 
-    RailFenceCipher::RailFenceCipher(const string& p,const string& c, int railKey) : Cryptography(p,c), key(railKey) {}
+RailFenceCipher::RailFenceCipher(const string& p,const string& c, int railKey) : Cryptography(p,c), key(railKey) {}
 
-    // Function to encrypt plaintext using rail fence cipher
-    string RailFenceCipher::encrypt() {
+// Function to encrypt plaintext using rail fence cipher
+string RailFenceCipher::encrypt() {
+    try {
         if (key == 1 || key >= plaintext.length()) {
             return plaintext;
         }
@@ -34,9 +37,15 @@ using namespace std;
         ciphertext = result;
         return ciphertext;
     }
+    catch (const exception& e) {
+        cerr << "Exception caught in encrypt(): " << e.what() << endl;
+        return ""; // Return empty string or handle the error accordingly
+    }
+}
 
-    // Function to decrypt rail fence cipher
-    string RailFenceCipher::decrypt() {
+// Function to decrypt rail fence cipher
+string RailFenceCipher::decrypt() {
+    try {
         if (key == 1 || key >= ciphertext.length()) {
             return ciphertext;
         }
@@ -65,7 +74,7 @@ using namespace std;
             }
         }
 
-    string result;
+        string result;
         row = 0, col = 0;
         for (int i = 0; i < ciphertext.length(); ++i) {
             if (row == 0) {
@@ -83,11 +92,16 @@ using namespace std;
         plaintext = result;
         return plaintext;
     }
-void RailFenceCipher::set_plaintext(const string& p)
-{
-    plaintext=p;
+    catch (const exception& e) {
+        cerr << "Exception caught in decrypt(): " << e.what() << endl;
+        return ""; // Return empty string or handle the error accordingly
+    }
 }
-void RailFenceCipher::set_ciphertext(const string& c)
-{
-    ciphertext=c;
+
+void RailFenceCipher::set_plaintext(const string& p) {
+    plaintext = p;
+}
+
+void RailFenceCipher::set_ciphertext(const string& c) {
+    ciphertext = c;
 }
