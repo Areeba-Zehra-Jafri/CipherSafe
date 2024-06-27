@@ -130,7 +130,7 @@ Cryptography* FileCryptography::selectCipher() {
             return new AffineCipher("","",5,8);
         case 4:
             cout << "Selected Vigenère Cipher" << endl;
-           // return new VigenereCipher("", "", "KEY");  // Example key
+            return new VigenereCipher("","","MOM");  // Example key
         case 5:
             cout << "Selected Rail Fence Cipher" << endl;
             return new RailFenceCipher("", "", 3);

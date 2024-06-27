@@ -11,6 +11,7 @@
 #include"rail_f.h"
 #include"RSACipher.h"
 #include"Vernam_Cipher.h"
+#include "VigenereCipher.h"
 
 
 using namespace std;

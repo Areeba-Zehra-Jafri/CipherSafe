@@ -58,14 +58,15 @@ const uint8_t Rcon[11] = {
 // Constructor implementation
 AES::AES(const string& p, const string& c, const vector<vector<int>>& k) : Cryptography(p, c), key(k)
 {
-    padPlaintext();
+    //padPlaintext();
 }
 
-// Padding function
-void AES::padPlaintext() {
-    size_t padding = 16 - (plaintext.size() % 16);
-    plaintext.append(padding, static_cast<char>(padding));
-}
+// // Padding function
+// void AES::padPlaintext() {
+//     size_t padding = 16 - (plaintext.size() % 16);
+//     plaintext.append(padding, static_cast<char>(padding));
+// }
+
 
 // Substitute bytes using the S-box
 void AES::subBytes(vector<uint8_t>& state)
@@ -355,9 +356,9 @@ std::string AES::decrypt()
         plaintext.push_back(static_cast<char>(byte));
     }
 
-    // Remove padding
-    int padding = plaintext.back();
-    plaintext.erase(plaintext.end() - padding, plaintext.end());
+    // // Remove padding
+    // int padding = plaintext.back();
+    // plaintext.erase(plaintext.end() - padding, plaintext.end());
 
     return plaintext;
 }
