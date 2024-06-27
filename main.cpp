@@ -1,27 +1,21 @@
+#include "Steganography.h"
 #include <iostream>
-#include "RSACipher.h"
+#include <string>
+
 using namespace std;
 
 int main() {
-    long long p = 61; 
-    long long q = 53; 
-    long long e = 17; 
+    Steganography stego;
+    string inputImage = "input.bmp";
+    string outputImage = "output.bmp";
+    cout<<"Enter the message to hide"<<endl;
+    string message;
+    getline(cin, message);
 
-    string plaintext, ciphertext;
-    cout << "Enter the string to be encrypted: ";
-    getline(cin, plaintext);
+    stego.hideMessage(inputImage, outputImage, message);
 
-    RSA rsa(p, q, e, plaintext, ciphertext);
-
-    cout << "Public Key (e, n): (" << rsa.getPublicKey().first << ", " << rsa.getPublicKey().second << ")" << endl;
-    cout << "Private Key (d, n): (" << rsa.getPrivateKey().first << ", " << rsa.getPrivateKey().second << ")" << endl;
-
-    string encryptedText = rsa.encrypt();
-    cout << "Encrypted text: " << encryptedText << endl;
-
-    RSA rsaDecrypt(p, q, e, "", encryptedText); 
-    string decryptedText = rsaDecrypt.decrypt();
-    cout << "Decrypted text: " << decryptedText << endl;
+    string extractedMessage = stego.extractMessage(outputImage);
+    cout << "Extracted Message: " << extractedMessage << endl;
 
     return 0;
 }
