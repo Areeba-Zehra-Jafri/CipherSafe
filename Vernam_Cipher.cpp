@@ -13,10 +13,10 @@ string VernamCipher::encrypt()
     try {
         if (plaintext.length() != key.length())
         {
-            throw std::invalid_argument("Key must be the same length as plaintext.");
+            throw invalid_argument("Key must be the same length as plaintext.");
         }
 
-        std::string ciphertext;
+        string ciphertext;
         for (size_t i = 0; i < plaintext.length(); ++i)
         {
             char encrypted_char = ((plaintext[i] - 'A') ^ (key[i] - 'A')) + 'A'; // Map to A-Z
@@ -25,8 +25,8 @@ string VernamCipher::encrypt()
         this->ciphertext = ciphertext;
         return ciphertext;
 
-    } catch (const std::exception& e) {
-        std::cerr << "Encryption error: " << e.what() << std::endl;
+    } catch (const exception& e) {
+        cerr << "Encryption error: " << e.what() << endl;
         throw; // Re-throw the exception to propagate it further if needed
     }
 }
@@ -36,10 +36,10 @@ string VernamCipher::decrypt()
     try {
         if (ciphertext.length() != key.length())
         {
-            throw std::invalid_argument("Key must be the same length as ciphertext.");
+            throw invalid_argument("Key must be the same length as ciphertext.");
         }
 
-        std::string plaintext;
+        string plaintext;
         for (size_t i = 0; i < ciphertext.length(); ++i)
         {
             char decrypted_char = ((ciphertext[i] - 'A') ^ (key[i] - 'A')) + 'A'; // Reverse the mapping
@@ -48,8 +48,8 @@ string VernamCipher::decrypt()
         this->plaintext = plaintext;
         return plaintext;
 
-    } catch (const std::exception& e) {
-        std::cerr << "Decryption error: " << e.what() << std::endl;
+    } catch (const exception& e) {
+        std::cerr << "Decryption error: " << e.what() << endl;
         throw; // Re-throw the exception to propagate it further if needed
     }
 }
