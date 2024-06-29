@@ -5,6 +5,46 @@
 #include <iterator>
 #include <bitset>
 
+void Steganography::runSteganography(Steganography &stego) {
+    int choice;
+    std::string inputImage, outputImage;
+    std::string message, extractedMessage;
+
+    while (true) {
+        std::cout << "1-Hide message" << std::endl;
+        std::cout << "2-Extract message" << std::endl;
+        std::cout << "3-Exit" << std::endl;
+        std::cin >> choice;
+        std::cin.ignore(); // Ignore newline left in input buffer after cin >>
+
+        if (choice == 3) {
+            exit(0);
+        }
+
+        std::cout << "Enter the path of the input image: ";
+        std::cin >> inputImage;
+
+        std::cout << "Enter the path of the output image: ";
+        std::cin >> outputImage;
+        std::cin.ignore();
+
+        switch (choice) {
+            case 1:
+                std::cout << "Enter the message to hide: ";
+                std::getline(std::cin, message);
+                stego.hideMessage(inputImage, outputImage, message);
+                break;
+            case 2:
+                extractedMessage = stego.extractMessage(outputImage);
+                std::cout << "Extracted Message: " << extractedMessage << std::endl;
+                break;
+            default:
+                std::cout << "Invalid input" << std::endl;
+                break;
+        }
+    }
+}
+
 void Steganography::readImage(const string &filename, vector<unsigned char> &header, vector<unsigned char> &data) {
     ifstream file(filename, ios::binary | ios::ate);
     if (!file) {
