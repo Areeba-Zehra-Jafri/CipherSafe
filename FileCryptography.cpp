@@ -130,7 +130,7 @@ Cryptography* FileCryptography::selectCipher() {
     cout << "1-Caesar Cipher" << endl;
     cout << "2-Hill Cipher" << endl;
     cout << "3-Affine Cipher" << endl;
-    cout << "4-Vigenère Cipher" << endl;
+    cout << "4-Vigenere Cipher" << endl;
     cout << "5-Rail Fence Cipher" << endl;
     cout << "6-Monoalphabetic Cipher" << endl;
     cout << "7-Vernam Cipher" << endl;
@@ -145,7 +145,7 @@ Cryptography* FileCryptography::selectCipher() {
             return new CaesarCipher("", "", 3);  // Example with shift 3
         case 2:
             cout << "Selected Hill Cipher" << endl;
-            return new HillCipher("","","cfik");
+            return new HillCipher("","","qwerty");
         case 3:
             cout << "Selected Affine Cipher" << endl;
             return new AffineCipher("","",5,8);
