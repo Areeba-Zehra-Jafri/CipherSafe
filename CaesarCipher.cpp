@@ -8,18 +8,7 @@ using namespace std;
 
 CaesarCipher::CaesarCipher(const string& p, const string& c, int s) : Cryptography(p, c), shift(s)
 {
-    try
-    {
-        if (shift < 0 || shift >= 26)
-        {
-            throw invalid_argument("Shift value must be in the range [0, 25].");
-        }
-    }
-    catch (const invalid_argument& e)
-    {
-        cerr << "Initialization error: " << e.what() << endl;
-        throw; // Re-throw to signal construction failure
-    }
+   
 }
 
 string CaesarCipher::encrypt()

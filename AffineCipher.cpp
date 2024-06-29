@@ -13,18 +13,7 @@ int AffineCipher::m = 26;
 
 AffineCipher::AffineCipher(const string& plain_text, const string& cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
 {
-    try
-    {
-        if (__gcd(a, m) != 1)
-        {
-            throw invalid_argument("a and m must be coprime.");
-        }
-    }
-    catch (const invalid_argument& e)
-    {
-        cerr << e.what() << endl;
-        throw; 
-    }
+    
 }
 
 int AffineCipher::modInverse(int a, int m)
@@ -107,7 +96,7 @@ string AffineCipher::decrypt()
             throw runtime_error("Ciphertext cannot be empty.");
         }
 
-        srand(time(0)); // Seed the random number generator
+        srand(time(0)); 
 
         auto start = chrono::high_resolution_clock::now(); // Start time
 

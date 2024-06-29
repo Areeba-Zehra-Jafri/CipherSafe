@@ -13,11 +13,8 @@ VernamCipher::VernamCipher(const string& plaintext, const string& ciphertext, co
 
 string VernamCipher::encrypt()
 {
-    try {
-        if (plaintext.length() != key.length())
-        {
-            throw invalid_argument("Key must be the same length as plaintext.");
-        }
+    
+        
 
         srand(time(0)); // Seed the random number generator
         auto start = chrono::high_resolution_clock::now(); // Start time
@@ -41,11 +38,9 @@ string VernamCipher::encrypt()
 
         return ciphertext;
 
-    } catch (const exception& e) {
-        cerr << "Encryption error: " << e.what() << endl;
-        throw; // Re-throw the exception to propagate it further if needed
+    
     }
-}
+
 
 string VernamCipher::decrypt()
 {
