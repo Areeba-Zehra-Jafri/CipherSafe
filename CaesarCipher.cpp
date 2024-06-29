@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <cctype>
 #include <iostream>
+#include <chrono> // Include the chrono library
 
 using namespace std;
 
@@ -30,6 +31,11 @@ string CaesarCipher::encrypt()
             throw runtime_error("Plaintext cannot be empty.");
         }
 
+         srand(time(0)); // Seed the random number generator
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
+
         ciphertext = plaintext;
         for (char &c : ciphertext)
         {
@@ -38,7 +44,15 @@ string CaesarCipher::encrypt()
                 char base = islower(c) ? 'a' : 'A';
                 c = (c - base + shift) % 26 + base;
             }
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return ciphertext;
     }
     catch (const exception& e)
@@ -57,6 +71,10 @@ string CaesarCipher::decrypt()
             throw runtime_error("Ciphertext cannot be empty.");
         }
 
+        srand(time(0)); // Seed the random number generator
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
         string plaintext = ciphertext;
         for (char &c : plaintext)
         {
@@ -65,7 +83,15 @@ string CaesarCipher::decrypt()
                 char base = islower(c) ? 'a' : 'A';
                 c = (c - base - shift + 26) % 26 + base;
             }
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return plaintext;
     }
     catch (const exception& e)

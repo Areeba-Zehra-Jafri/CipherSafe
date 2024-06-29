@@ -3,6 +3,10 @@
 #include <random>
 #include <sstream>
 #include <stdexcept>
+#include <chrono> // Include the chrono library
+#include <cstdlib> // For srand and rand
+#include <ctime>   // For time
+
 using namespace std;
 
 RSA::RSA(const string& plaintext, const string& ciphertext, long long p, long long q, long long e)
@@ -91,15 +95,30 @@ string RSA::encrypt() {
     try {
         vector<long long> plainNums = stringToInt(plaintext);
         vector<long long> cipherNums;
+
+        srand(time(0)); // Seed the random number generator
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
         for (long long num : plainNums) {
             cipherNums.push_back(modExp(num, e, n));
+
+            // Introduce an artificial delay
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
 
         ostringstream oss;
         for (long long num : cipherNums) {
             oss << num << " ";
         }
-        return oss.str();
+        ciphertext = oss.str();
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
+        return ciphertext;
     } catch (const std::exception& e) {
         throw std::invalid_argument("Error during RSA encryption.");
     }
@@ -115,11 +134,26 @@ string RSA::decrypt() {
         }
 
         vector<long long> plainNums;
+
+        srand(time(0)); // Seed the random number generator
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
         for (long long num : cipherNums) {
             plainNums.push_back(modExp(num, d, n));
+
+            // Introduce an artificial delay
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
 
-        return intToString(plainNums);
+        plaintext = intToString(plainNums);
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
+        return plaintext;
     } catch (const std::exception& e) {
         throw std::invalid_argument("Error during RSA decryption.");
     }

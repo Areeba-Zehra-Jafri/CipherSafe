@@ -3,10 +3,15 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <chrono> // Include the chrono library
+#include <cstdlib> // For srand and rand
+#include <ctime>   // For time
 
 using namespace std;
 
-RailFenceCipher::RailFenceCipher(const string& p,const string& c, int railKey) : Cryptography(p,c), key(railKey) {}
+RailFenceCipher::RailFenceCipher(const string& p, const string& c, int railKey) : Cryptography(p, c), key(railKey) {
+    srand(time(0)); // Seed the random number generator
+}
 
 // Function to encrypt plaintext using rail fence cipher
 string RailFenceCipher::encrypt() {
@@ -14,6 +19,8 @@ string RailFenceCipher::encrypt() {
         if (key == 1 || key >= plaintext.length()) {
             return plaintext;
         }
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
 
         vector<string> rail(key);
         int dir = 1;
@@ -27,14 +34,24 @@ string RailFenceCipher::encrypt() {
                 dir = -1;
             }
             row += dir;
+
+            // Introduce an artificial delay
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
 
         string result;
-        for (const std::string& r : rail) {
+        for (const string& r : rail) {
             result += r;
         }
 
         ciphertext = result;
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return ciphertext;
     }
     catch (const exception& e) {
@@ -49,6 +66,8 @@ string RailFenceCipher::decrypt() {
         if (key == 1 || key >= ciphertext.length()) {
             return ciphertext;
         }
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
 
         vector<vector<char>> rail(key, vector<char>(ciphertext.length(), '\n'));
         int dir;
@@ -74,6 +93,11 @@ string RailFenceCipher::decrypt() {
             }
         }
 
+        // Introduce an artificial delay
+        int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+        auto delay_start = chrono::high_resolution_clock::now();
+        while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+
         string result;
         row = 0, col = 0;
         for (int i = 0; i < ciphertext.length(); ++i) {
@@ -87,9 +111,19 @@ string RailFenceCipher::decrypt() {
                 result += rail[row][col++];
             }
             row += dir;
+
+            // Introduce an artificial delay
+            delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
 
         plaintext = result;
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return plaintext;
     }
     catch (const exception& e) {

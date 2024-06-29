@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <cctype>
 #include <iostream>
+#include <chrono> // Include the chrono library
+#include <cstdlib> // For srand and rand
+#include <ctime>   // For time
 
 using namespace std;
 
@@ -57,6 +60,10 @@ string AffineCipher::encrypt()
             throw runtime_error("Plaintext cannot be empty.");
         }
 
+        srand(time(0)); // Seed the random number generator
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
         string cipher_text;
         for (char &c : plaintext)
         {
@@ -69,8 +76,18 @@ string AffineCipher::encrypt()
             }
             // Add the character to ciphertext whether it's transformed or not
             cipher_text += c;
+
+            // Introduce an artificial delay
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
         this->ciphertext = cipher_text; // Update the member variable
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return ciphertext;
     }
     catch (const exception& e)
@@ -90,6 +107,10 @@ string AffineCipher::decrypt()
             throw runtime_error("Ciphertext cannot be empty.");
         }
 
+        srand(time(0)); // Seed the random number generator
+
+        auto start = chrono::high_resolution_clock::now(); // Start time
+
         string plain_text;
         int a_inv = modInverse(a, m);
 
@@ -104,14 +125,24 @@ string AffineCipher::decrypt()
             }
             // Add the character to plain_text whether it's transformed or not
             plain_text += c;
+
+            // Introduce an artificial delay
+            int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
+            auto delay_start = chrono::high_resolution_clock::now();
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
         }
         this->plaintext = plain_text; // Update the member variable
+
+        auto end = chrono::high_resolution_clock::now(); // End time
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+
         return plain_text;
     }
     catch (const exception& e)
     {
         cerr << "Decryption error: " << e.what() << std::endl;
-        throw; // Re-throw the exception for the caller to handle
+        throw; 
     }
 }
 
