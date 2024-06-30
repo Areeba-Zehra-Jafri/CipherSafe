@@ -78,6 +78,12 @@ string HillCipher::encrypt() {
             throw runtime_error("Plaintext cannot be empty.");
         }
 
+         for (char ch : plaintext) {
+            if (!islower(ch)) {  
+                throw invalid_argument("Plaintext should only contain lowercase alphabetic characters.");
+            }
+        }
+
         srand(time(0)); // Seed the random number generator
 
         auto start = chrono::high_resolution_clock::now(); // Start time
