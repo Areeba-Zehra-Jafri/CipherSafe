@@ -13,8 +13,11 @@ VernamCipher::VernamCipher(const string& plaintext, const string& ciphertext, co
 
 string VernamCipher::encrypt()
 {
-    
-        
+    try
+    {
+        if (plaintext.length() != key.length()) {
+        throw std::invalid_argument("In Vernam Cipher, key must be the same length as plaintext.");
+        } 
 
         srand(time(0)); // Seed the random number generator
         auto start = chrono::high_resolution_clock::now(); // Start time
@@ -36,8 +39,13 @@ string VernamCipher::encrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
 
+    
         return ciphertext;
-
+    }
+    catch (const exception& e) {
+        std::cerr << "Encryption error: " << e.what() << endl;
+        throw; // Re-throw the exception to propagate it further if needed
+    }
     
     }
 
