@@ -15,7 +15,7 @@ VernamCipher::VernamCipher(const string &plaintext, const string &ciphertext)
     generateKey(plaintext.length());
     if (plaintext.length() != key.length())
     {
-        throw invalid_argument("In Vernam Cipher, key must be the same length as plaintext.");
+        throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext.\033[0m");
     }
 }
 
@@ -35,7 +35,7 @@ string VernamCipher::encrypt()
     {
         if (plaintext.length() != key.length())
         {
-            throw invalid_argument("In Vernam Cipher, key must be the same length as plaintext.");
+            throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext.\033[0m");
         }
 
         srand(time(0));                                    // Seed the random number generator
@@ -57,13 +57,21 @@ string VernamCipher::encrypt()
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return ciphertext;
     }
     catch (const exception &e)
     {
-        cerr << "Encryption error: " << e.what() << endl;
+        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
         throw; // Re-throw the exception to propagate it further if needed
     }
 }
@@ -74,7 +82,7 @@ string VernamCipher::decrypt()
     {
         if (ciphertext.length() != key.length())
         {
-            throw invalid_argument("Key must be the same length as ciphertext.");
+            throw invalid_argument("\033[1;31mKey must be the same length as ciphertext.\033[0m");
         }
 
         srand(time(0));                                    // Seed the random number generator
@@ -96,13 +104,21 @@ string VernamCipher::decrypt()
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return plaintext;
     }
     catch (const exception &e)
     {
-        cerr << "Decryption error: " << e.what() << endl;
+        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
         throw; // Re-throw the exception to propagate it further if needed
     }
 }

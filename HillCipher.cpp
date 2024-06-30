@@ -12,40 +12,46 @@ using namespace std;
 using namespace std::chrono;
 
 // Function to compute the determinant of a 2x2 matrix
-int HillCipher::determinant(int a, int b, int c, int d) {
+int HillCipher::determinant(int a, int b, int c, int d)
+{
     return (a * d - b * c + 26) % 26;
 }
 
 // Function to calculate the modular inverse using the extended Euclidean algorithm
-int HillCipher::modInverse(int a, int m) {
+int HillCipher::modInverse(int a, int m)
+{
     a = a % m;
-    for (int x = 1; x < m; x++) {
-        if ((a * x) % m == 1) {
+    for (int x = 1; x < m; x++)
+    {
+        if ((a * x) % m == 1)
+        {
             return x;
         }
     }
-    return -1;  // If modular inverse does not exist
+    return -1; // If modular inverse does not exist
 }
 
 // Function to generate the key matrix from the given key string
-void HillCipher::generateKeyMatrix() {
+void HillCipher::generateKeyMatrix()
+{
     keyMatrix.resize(2, vector<int>(2));
 
     keyMatrix[0][0] = key[0] - 'a';
     keyMatrix[0][1] = key[1] - 'a';
     keyMatrix[1][0] = key[2] - 'a';
     keyMatrix[1][1] = key[3] - 'a';
-
 }
 
 // Function to generate the inverse key matrix using the key matrix
-void HillCipher::generateInverseKeyMatrix() {
+void HillCipher::generateInverseKeyMatrix()
+{
     generateKeyMatrix();
     int det = determinant(keyMatrix[0][0], keyMatrix[0][1], keyMatrix[1][0], keyMatrix[1][1]);
     int detInverse = modInverse(det, 26);
 
-    if (detInverse == -1) {
-        throw runtime_error("Inverse key matrix cannot be generated; determinant has no modular inverse.");
+    if (detInverse == -1)
+    {
+        throw runtime_error("\033[1;31mInverse key matrix cannot be generated; determinant has no modular inverse.\033[0m");
     }
 
     inverseKeyMatrix.resize(2, vector<int>(2));
@@ -56,31 +62,38 @@ void HillCipher::generateInverseKeyMatrix() {
     inverseKeyMatrix[1][1] = (keyMatrix[0][0] * detInverse) % 26;
 
     // Ensure all elements in the inverse key matrix are positive modulo 26
-    for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < 2; ++j) {
-            if (inverseKeyMatrix[i][j] < 0) {
+    for (int i = 0; i < 2; ++i)
+    {
+        for (int j = 0; j < 2; ++j)
+        {
+            if (inverseKeyMatrix[i][j] < 0)
+            {
                 inverseKeyMatrix[i][j] += 26;
             }
         }
     }
-
 }
 
 // Constructor to initialize the HillCipher object with key and plaintext
-HillCipher::HillCipher(const string& c, const string& p, const string& k) : Cryptography(p, c), key(k) {}
+HillCipher::HillCipher(const string &c, const string &p, const string &k) : Cryptography(p, c), key(k) {}
 
 // Function to encrypt the plaintext using the Hill cipher
-string HillCipher::encrypt() {
-    try {
+string HillCipher::encrypt()
+{
+    try
+    {
         generateKeyMatrix();
 
-        if (plaintext.empty()) {
-            throw runtime_error("Plaintext cannot be empty.");
+        if (plaintext.empty())
+        {
+            throw runtime_error("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
 
-         for (char ch : plaintext) {
-            if (!islower(ch)) {  
-                throw invalid_argument("Plaintext should only contain lowercase alphabetic characters.");
+        for (char ch : plaintext)
+        {
+            if (!islower(ch))
+            {
+                throw invalid_argument("\033[1;31mPlaintext should only contain lowercase alphabetic characters.\033[0m");
             }
         }
 
@@ -90,13 +103,15 @@ string HillCipher::encrypt() {
 
         string paddedPlaintext = plaintext;
 
-        if (paddedPlaintext.length() % 2 != 0) {
+        if (paddedPlaintext.length() % 2 != 0)
+        {
             paddedPlaintext += 'x'; // Padding with 'x' to make plaintext length even
         }
 
         ciphertext = "";
 
-        for (size_t i = 0; i < paddedPlaintext.length(); i += 2) {
+        for (size_t i = 0; i < paddedPlaintext.length(); i += 2)
+        {
             int first = paddedPlaintext[i] - 'a';
             int second = paddedPlaintext[i + 1] - 'a';
 
@@ -108,30 +123,45 @@ string HillCipher::encrypt() {
 
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return ciphertext;
-    } catch (const exception& e) {
-        cerr << "Encryption error: " << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
 
-string HillCipher::decrypt() {
-    try {
+string HillCipher::decrypt()
+{
+    try
+    {
         generateInverseKeyMatrix();
 
-        if (ciphertext.empty()) {
-            throw runtime_error("Ciphertext cannot be empty.");
+        if (ciphertext.empty())
+        {
+            throw runtime_error("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
 
-        if (ciphertext.length() % 2 != 0) {
-            throw invalid_argument("Ciphertext length must be even");
+        if (ciphertext.length() % 2 != 0)
+        {
+            throw invalid_argument("\033[1;31mCiphertext length must be even\033[0m");
         }
 
         srand(time(0)); // Seed the random number generator
@@ -140,7 +170,8 @@ string HillCipher::decrypt() {
 
         plaintext = "";
 
-        for (size_t i = 0; i < ciphertext.length(); i += 2) {
+        for (size_t i = 0; i < ciphertext.length(); i += 2)
+        {
             int first = ciphertext[i] - 'a';
             int second = ciphertext[i + 1] - 'a';
 
@@ -152,46 +183,68 @@ string HillCipher::decrypt() {
 
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         // Remove padding 'x' characters added during encryption
         size_t paddingLength = plaintext.length() - ciphertext.length();
-        if (paddingLength > 0) {
+        if (paddingLength > 0)
+        {
             plaintext = plaintext.substr(0, plaintext.length() - paddingLength);
         }
 
         return plaintext;
-    } catch (const exception& e) {
-        cerr << "Decryption error: " << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
 
-void HillCipher::set_plaintext(const string& p) {
-    try {
-        if (p.empty()) {
-            throw invalid_argument("Plaintext cannot be empty.");
+void HillCipher::set_plaintext(const string &p)
+{
+    try
+    {
+        if (p.empty())
+        {
+            throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
         plaintext = p;
-    } catch (const invalid_argument& e) {
-        cerr << "Set plaintext error: " << e.what() << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "\033[1;31mSet plaintext error: \033[0m" << e.what() << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
 
-void HillCipher::set_ciphertext(const string& c) {
-    try {
-        if (c.empty()) {
-            throw invalid_argument("Ciphertext cannot be empty.");
+void HillCipher::set_ciphertext(const string &c)
+{
+    try
+    {
+        if (c.empty())
+        {
+            throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
         ciphertext = c;
-    } catch (const invalid_argument& e) {
-        cerr << "Set ciphertext error: " << e.what() << endl;
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "\033[1;31mSet ciphertext error:\033[0m " << e.what() << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }

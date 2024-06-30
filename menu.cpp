@@ -16,9 +16,10 @@ void welcome_screen(void)
     system("cls");
     char login;
     cout << "  ___  __  ____  _  _  ____  ____    ____   __   ____  ____" << endl;
-    cout << " / __)(  )(  _ \\/ )( \\(  __)(  _ \\  / ___) / _\\ (  __)(  __)"<< endl;
-    cout << "( (__  )(  ) __/) __ ( ) _)  )   /  \\___ \\/    \\ ) _)  ) _) "<<endl;
-    cout << " \\___)(__)(__)  \\_)(_/(____)(__\\_)  (____/\\_/\\_/(__)  (____)" <<endl; 
+    cout << " / __)(  )(  _ \\/ )( \\(  __)(  _ \\  / ___) / _\\ (  __)(  __)" << endl;
+    cout << "( (__  )(  ) __/) __ ( ) _)  )   /  \\___ \\/    \\ ) _)  ) _) " << endl;
+    cout << " \\___)(__)(__)  \\_)(_/(____)(__\\_)  (____/\\_/\\_/(__)  (____)" << endl;
+    cout << "============================================================" << endl;
     cout << "Enter S/s to start and E/e to exit" << std::endl;
     cin >> login;
     if (login == 'S' || login == 's')
@@ -33,7 +34,7 @@ void welcome_screen(void)
     }
     else
     {
-        cout << "Invalid input" << std::endl;
+        cout << "\033[1;31mInvalid input\033[0m" << std::endl;
         welcome_screen();
     }
     cin.get();
@@ -50,46 +51,65 @@ void password_screen()
         int choice;
         while (true)
         {
-            cout << "1. Sign_up\n2. Change password\n3. Login\n4. Exit\nEnter choice: ";
+            cout << "=== Password Management ===" << endl;
+            cout << "1. Sign up" << endl;
+            cout << "2. Change password" << endl;
+            cout << "3. Login" << endl;
+            cout << "4. Exit" << endl;
+            cout << "Enter choice: ";
             cin >> choice;
             switch (choice)
             {
             case 1:
+                cout << "=== Sign Up ===" << endl;
+                cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                cout << "--------------------" << endl;
                 cin >> username;
+                cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                cout << "--------------------" << endl;
                 cin >> password;
                 m1.sign_up(username, password);
                 m1.save_accounts("data.txt");
                 break;
             case 2:
+                cout << "=== Change Password ===" << endl;
+                cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                cout << "--------------------" << endl;
                 cin >> username;
+                cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                cout << "--------------------" << endl;
                 cin >> password;
                 m1.change_password(username, password);
                 break;
             case 3:
+                cout << "=== Login ===" << endl;
+                cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                cout << "--------------------" << endl;
                 cin >> username;
+                cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                cout << "--------------------" << endl;
                 cin >> password;
                 m1.login(username, password);
                 break;
             case 4:
                 exit(0);
             default:
-                cout << "Invalid input. Try again." << std::endl;
+                cout << "\033[1;31mInvalid input.\033[0m Try again." << std::endl;
                 break;
             }
         }
     }
     catch (const exception &e)
     {
-        cerr << "Exception caught in password_screen: " << e.what() << endl;
+        cerr << "\033[1;31mException caught in password_screen:\033[0m " << e.what() << endl;
     }
 }
-
 
 void main_screen(void)
 {
@@ -97,19 +117,21 @@ void main_screen(void)
     int choice;
     while (1)
     {
-        cout << "1-Start" << std::endl;
-        cout << "2-Instructions" << std::endl;
-        cout << "3-Exit" << std::endl;
-        cout << "4-Change login id" << std::endl;
+        cout << "=== Main Menu ===" << endl;
+        cout << "1. Start" << endl;
+        cout << "2. Instructions" << endl;
+        cout << "3. Exit" << endl;
+        cout << "4. Change login id" << endl;
+        cout << "Enter choice: ";
         cin >> choice;
         switch (choice)
         {
         case 1:
-            cout << "start" << std::endl;
+            cout << "=== Start Menu ===" << endl;
             start_screen();
             break;
         case 2:
-            cout << "instructions" << std::endl;
+            cout << "=== Instructions ===" << endl;
             instructions();
             break;
         case 3:
@@ -119,7 +141,7 @@ void main_screen(void)
             password_screen();
             break;
         default:
-            cout << "Invalid input" << std::endl;
+            cout << "\033[1;31mInvalid input\033[0m" << std::endl;
             break;
         }
     }
@@ -132,6 +154,7 @@ void start_screen(void)
     int choice;
     while (1)
     {
+        cout << "=== Start Menu ===" << endl;
         cout << "Select one of the following: " << endl;
         cout << "1-Text Encryption/Decryption" << endl;
         cout << "2-File Encryption/Decryption" << endl;
@@ -142,22 +165,22 @@ void start_screen(void)
         switch (choice)
         {
         case 1:
-            cout << "Text Encryption/Decryption" << endl;
+            cout << "=== Text Encryption/Decryption ===" << endl;
             TextCryptography textCrypt;
             textCrypt.processText();
             break;
         case 2:
-            cout << "File Encryption/Decryption" << endl;
+            cout << "=== File Encryption/Decryption ===" << endl;
             FileCryptography fileCrypt;
             fileCrypt.processFiles();
             break;
         case 3:
-            cout << "Image Encryption/Decryption (Steganography)" << endl;
+            cout << "=== Image Encryption/Decryption (Steganography) ===" << endl;
             Steganography stego;
             stego.runSteganography(stego);
             break;
         case 4:
-            cout << "Hybrid Encryption/Decryption" << endl;
+            cout << "=== Hybrid Encryption/Decryption ===" << endl;
             HybridCryptography hybrid;
             hybrid.processTextHybrid();
             break;
@@ -165,7 +188,7 @@ void start_screen(void)
             main_screen();
             break;
         default:
-            cout << "Invalid input" << endl;
+            cout << "\033[1;31mInvalid input\033[0m" << endl;
             break;
         }
     }

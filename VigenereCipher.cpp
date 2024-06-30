@@ -2,20 +2,20 @@
 #include <stdexcept>
 #include <chrono>  // Include the chrono library
 #include <cstdlib> // For srand and rand
-#include <ctime>  // For time
-#include <cctype> 
+#include <ctime>   // For time
+#include <cctype>
 #include <algorithm>
 
 using namespace std;
 
 VigenereCipher::VigenereCipher(const string &p, const string &c, const string &k)
-    : Cryptography(p, c), key(k) {
-         if (!std::all_of(p.begin(), p.end(), ::isupper))
+    : Cryptography(p, c), key(k)
+{
+    if (!std::all_of(p.begin(), p.end(), ::isupper))
     {
-        throw invalid_argument("Plaintext must contain only uppercase letters.");
+        throw invalid_argument("\033[1;31mPlaintext must contain only uppercase letters.\033[0m");
     }
 }
-    
 
 void VigenereCipher::set_key(const string &k)
 {
@@ -28,7 +28,7 @@ string VigenereCipher::encrypt()
     {
         if (plaintext.empty() || key.empty())
         {
-            throw invalid_argument("Empty plaintext or key.");
+            throw invalid_argument("\033[1;31mEmpty plaintext or key.\033[0m");
         }
 
         srand(time(0));                                    // Seed the random number generator
@@ -52,13 +52,20 @@ string VigenereCipher::encrypt()
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
 
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
         return ciphertext;
     }
     catch (const exception &e)
     {
-        cerr << "Encryption error: " << e.what() << endl;
+        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
         throw; // Rethrow the exception for handling in the caller code
     }
 }
@@ -69,7 +76,7 @@ string VigenereCipher::decrypt()
     {
         if (ciphertext.empty() || key.empty())
         {
-            throw std::invalid_argument("Empty ciphertext or key.");
+            throw std::invalid_argument("\033[1;31mEmpty ciphertext or key.\033[0m");
         }
 
         srand(time(0));                                    // Seed the random number generator
@@ -93,13 +100,21 @@ string VigenereCipher::decrypt()
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
 
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
+                  
         return plaintext;
     }
     catch (const exception &e)
     {
-        cerr << "Decryption error: " << e.what() << endl;
+        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
         throw; // Rethrow the exception for handling in the caller code
     }
 }

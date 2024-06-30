@@ -3,45 +3,56 @@
 #include <random>
 #include <sstream>
 #include <stdexcept>
-#include <chrono> // Include the chrono library
+#include <chrono>  // Include the chrono library
 #include <cstdlib> // For srand and rand
 #include <ctime>   // For time
 
 using namespace std;
 
-RSA::RSA(const string& plaintext, const string& ciphertext, long long p, long long q, long long e)
-    : p(p), q(q), e(e), plaintext(plaintext), ciphertext(ciphertext), Cryptography(plaintext, ciphertext) {
+RSA::RSA(const string &plaintext, const string &ciphertext, long long p, long long q, long long e)
+    : p(p), q(q), e(e), plaintext(plaintext), ciphertext(ciphertext), Cryptography(plaintext, ciphertext)
+{
     n = p * q;
     phi = (p - 1) * (q - 1);
-    try {
+    try
+    {
         d = modInverse(e, phi);
-    } catch (const std::exception& e) {
-        throw std::invalid_argument("Invalid parameters for RSA encryption.");
+    }
+    catch (const std::exception &e)
+    {
+        throw std::invalid_argument("\033[1;31mInvalid parameters for RSA encryption.\033[0m");
     }
 }
 
-long long generatePrime() {
+long long generatePrime()
+{
     static std::random_device rd;
     static mt19937 gen(rd());
     static uniform_int_distribution<long long> dis(100, 999);
 
     long long prime;
-    while (true) {
+    while (true)
+    {
         prime = dis(gen);
         bool isPrime = true;
-        for (long long i = 2; i <= sqrt(prime); ++i) {
-            if (prime % i == 0) {
+        for (long long i = 2; i <= sqrt(prime); ++i)
+        {
+            if (prime % i == 0)
+            {
                 isPrime = false;
                 break;
             }
         }
-        if (isPrime) break;
+        if (isPrime)
+            break;
     }
     return prime;
 }
 
-long long RSA::gcd(long long a, long long b) {
-    while (b != 0) {
+long long RSA::gcd(long long a, long long b)
+{
+    while (b != 0)
+    {
         long long temp = b;
         b = a % b;
         a = temp;
@@ -49,14 +60,16 @@ long long RSA::gcd(long long a, long long b) {
     return a;
 }
 
-long long RSA::modInverse(long long a, long long m) {
+long long RSA::modInverse(long long a, long long m)
+{
     long long m0 = m, t, q;
     long long x0 = 0, x1 = 1;
 
     if (m == 1)
         return 0;
 
-    while (a > 1) {
+    while (a > 1)
+    {
         q = a / m;
         t = m;
         m = a % m, a = t;
@@ -71,10 +84,13 @@ long long RSA::modInverse(long long a, long long m) {
     return x1;
 }
 
-long long RSA::modExp(long long base, long long exp, long long mod) {
+long long RSA::modExp(long long base, long long exp, long long mod)
+{
     long long result = 1;
-    while (exp > 0) {
-        if (exp % 2 == 1) {
+    while (exp > 0)
+    {
+        if (exp % 2 == 1)
+        {
             result = (result * base) % mod;
         }
         base = (base * base) % mod;
@@ -83,102 +99,140 @@ long long RSA::modExp(long long base, long long exp, long long mod) {
     return result;
 }
 
-pair<long long, long long> RSA::getPublicKey() {
+pair<long long, long long> RSA::getPublicKey()
+{
     return {e, n};
 }
 
-pair<long long, long long> RSA::getPrivateKey() {
+pair<long long, long long> RSA::getPrivateKey()
+{
     return {d, n};
 }
 
-string RSA::encrypt() {
-    try {
+string RSA::encrypt()
+{
+    try
+    {
         vector<long long> plainNums = stringToInt(plaintext);
         vector<long long> cipherNums;
 
-        srand(time(0)); // Seed the random number generator
+        srand(time(0));                                    // Seed the random number generator
         auto start = chrono::high_resolution_clock::now(); // Start time
 
-        for (long long num : plainNums) {
+        for (long long num : plainNums)
+        {
             cipherNums.push_back(modExp(num, e, n));
 
             // Introduce an artificial delay
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         ostringstream oss;
-        for (long long num : cipherNums) {
+        for (long long num : cipherNums)
+        {
             oss << num << " ";
         }
         ciphertext = oss.str();
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return ciphertext;
-    } catch (const std::exception& e) {
-        throw std::invalid_argument("Error during RSA encryption.");
+    }
+    catch (const std::exception &e)
+    {
+        throw std::invalid_argument("\033[1;31mError during RSA encryption.\033[0m");
     }
 }
 
-string RSA::decrypt() {
-    try {
+string RSA::decrypt()
+{
+    try
+    {
         istringstream iss(ciphertext);
         vector<long long> cipherNums;
         long long num;
-        while (iss >> num) {
+        while (iss >> num)
+        {
             cipherNums.push_back(num);
         }
 
         vector<long long> plainNums;
 
-        srand(time(0)); // Seed the random number generator
+        srand(time(0));                                    // Seed the random number generator
         auto start = chrono::high_resolution_clock::now(); // Start time
 
-        for (long long num : cipherNums) {
+        for (long long num : cipherNums)
+        {
             plainNums.push_back(modExp(num, d, n));
 
             // Introduce an artificial delay
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         plaintext = intToString(plainNums);
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return plaintext;
-    } catch (const std::exception& e) {
-        throw std::invalid_argument("Error during RSA decryption.");
+    }
+    catch (const std::exception &e)
+    {
+        throw std::invalid_argument("\033[1;31mError during RSA decryption.\033[0m");
     }
 }
 
-vector<long long> RSA::stringToInt(const string &str) {
+vector<long long> RSA::stringToInt(const string &str)
+{
     vector<long long> result;
-    for (char c : str) {
+    for (char c : str)
+    {
         result.push_back(static_cast<long long>(c));
     }
     return result;
 }
 
-string RSA::intToString(const vector<long long> &nums) {
+string RSA::intToString(const vector<long long> &nums)
+{
     string result;
-    for (long long num : nums) {
+    for (long long num : nums)
+    {
         result += static_cast<char>(num);
     }
     return result;
 }
 
-void RSA::set_plaintext(const string& p) {
+void RSA::set_plaintext(const string &p)
+{
     plaintext = p;
 }
 
-void RSA::set_ciphertext(const string& c) {
+void RSA::set_ciphertext(const string &c)
+{
     ciphertext = c;
 }

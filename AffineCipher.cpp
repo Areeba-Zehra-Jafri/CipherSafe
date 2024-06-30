@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cctype>
 #include <iostream>
-#include <chrono> // Include the chrono library
+#include <chrono>  // Include the chrono library
 #include <cstdlib> // For srand and rand
 #include <ctime>   // For time
 
@@ -11,9 +11,8 @@ using namespace std;
 
 int AffineCipher::m = 26;
 
-AffineCipher::AffineCipher(const string& plain_text, const string& cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
+AffineCipher::AffineCipher(const string &plain_text, const string &cipher_text, int a, int b) : Cryptography(plain_text, cipher_text), a(a), b(b)
 {
-    
 }
 
 int AffineCipher::modInverse(int a, int m)
@@ -26,7 +25,7 @@ int AffineCipher::modInverse(int a, int m)
             return x;
         }
     }
-    throw invalid_argument("Multiplicative inverse does not exist.");
+    throw invalid_argument("\033[1;31mMultiplicative inverse does not exist.\033[0m");
 }
 
 string AffineCipher::get_cipher()
@@ -44,9 +43,9 @@ string AffineCipher::encrypt()
     try
     {
         int n = plaintext.size();
-        if (n == 0) 
+        if (n == 0)
         {
-            throw runtime_error("Plaintext cannot be empty.");
+            throw runtime_error("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
 
         srand(time(0)); // Seed the random number generator
@@ -69,19 +68,28 @@ string AffineCipher::encrypt()
             // Introduce an artificial delay
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
         this->ciphertext = cipher_text; // Update the member variable
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+             
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return ciphertext;
     }
-    catch (const exception& e)
+    catch (const exception &e)
     {
-        cerr << "Encryption error: " << e.what() << endl;
+        cerr << "\033[1;31mPlaintext cannot be empty.\033[0m " << e.what() << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
@@ -91,12 +99,12 @@ string AffineCipher::decrypt()
     try
     {
         int n = ciphertext.size();
-        if (n == 0) 
+        if (n == 0)
         {
-            throw runtime_error("Ciphertext cannot be empty.");
+            throw runtime_error("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
 
-        srand(time(0)); 
+        srand(time(0));
 
         auto start = chrono::high_resolution_clock::now(); // Start time
 
@@ -118,29 +126,38 @@ string AffineCipher::decrypt()
             // Introduce an artificial delay
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
         this->plaintext = plain_text; // Update the member variable
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return plain_text;
     }
-    catch (const exception& e)
+    catch (const exception &e)
     {
-        cerr << "Decryption error: " << e.what() << std::endl;
-        throw; 
+        cerr << "\033[1;31mDecryption error: \033[0m " << e.what() << std::endl;
+        throw;
     }
 }
 
-void AffineCipher::set_plaintext(const string& p)
+void AffineCipher::set_plaintext(const string &p)
 {
     plaintext = p;
 }
 
-void AffineCipher::set_ciphertext(const string& c)
+void AffineCipher::set_ciphertext(const string &c)
 {
     ciphertext = c;
 }
