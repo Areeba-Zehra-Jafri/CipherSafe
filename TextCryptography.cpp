@@ -130,8 +130,8 @@ Cryptography* TextCryptography::selectCipher() {
             return new monoalphabetic("", "", keyT6);  // Example key
         case 7:
             cout << "Selected Vernam Cipher" << endl;
-            keyT7 =obj.getVernamCipherKey();
-            return new VernamCipher("", "", keyT7);  // Example key
+            //keyT7 =obj.getVernamCipherKey();
+            return new VernamCipher("", "");  // Example key
         case 8:
             cout << "Selected RSA Algorithm" << endl;
             keyT8 = obj.getRSACipherKey();

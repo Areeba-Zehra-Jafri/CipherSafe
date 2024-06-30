@@ -173,8 +173,8 @@ Cryptography* FileCryptography::selectCipher() {
             return new monoalphabetic("", "", key6);  // Example key
         case 7:
             cout << "Selected Vernam Cipher" << endl;
-            key7 =obj.getVernamCipherKey();
-            return new VernamCipher("", "", key7);  // Example key
+           // key7 =obj.getVernamCipherKey();
+            return new VernamCipher("", "");  // Example key
         case 8:
             cout << "Selected RSA Algorithm" << endl;
             key8 = obj.getRSACipherKey();
