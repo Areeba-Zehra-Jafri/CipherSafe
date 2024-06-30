@@ -13,7 +13,6 @@ RailFenceCipher::RailFenceCipher(const string& p, const string& c, int railKey) 
     srand(time(0)); // Seed the random number generator
 }
 
-// Function to encrypt plaintext using rail fence cipher
 string RailFenceCipher::encrypt() {
     try {
         if (key == 1 || key >= plaintext.length()) {
@@ -133,6 +132,11 @@ string RailFenceCipher::decrypt() {
 }
 
 void RailFenceCipher::set_plaintext(const string& p) {
+     for (char c : p) {
+        if (!isalpha(c)) {
+            throw invalid_argument("Invalid character found in plaintext. Only alphabetic characters are allowed.");
+        }
+    } 
     plaintext = p;
 }
 
