@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include <vector>
+#include <algorithm>
+#include <cctype>
+#include <unordered_set>
 #include "Cryptography.h"
 #include "AffineCipher.h"
 #include "CaesarCipher.h"
@@ -10,63 +14,136 @@
 #include "Vernam_Cipher.h"
 #include "VigenereCipher.h"
 #include "AESCipher.h"
+#include "monoalphabetic.h" 
 
 using namespace std;
 
 class CipherInput {
 public:
-    static AffineCipher getAffineCipher(const string& plaintext, const string& ciphertext, int a, int b) {
+    static int getAffineCipherKey() {
+        int a, b;
+        cout << "Enter a and b for Affine Cipher: ";
+        cin >> a >> b;
         if (gcd(a, 26) != 1) {
             throw invalid_argument("In Affine Cipher, 'a' must be coprime with 26.");
         }
-        return AffineCipher(plaintext, ciphertext, a, b);
+        return a * 100 + b; 
     }
 
-    static CaesarCipher getCaesarCipher(const string& plaintext, const string& ciphertext, int shift) {
+    static int getCaesarCipherKey() {
+        int shift;
+        cout << "Enter shift for Caesar Cipher: ";
+        cin >> shift;
         if (shift < 0 || shift >= 26) {
             throw invalid_argument("In Caesar Cipher, shift must be in the range [0, 25].");
         }
-        return CaesarCipher(plaintext, ciphertext, shift);
+        return shift;
     }
 
-    static HillCipher getHillCipher(const string& plaintext, const string& ciphertext, const string& key) {
+    static void validateHillCipherKey(const std::string& key) {
         if (key.length() != 4) {
-            throw invalid_argument("In Hill Cipher, key must be 4 characters long.");
+            throw std::invalid_argument("In Hill Cipher, key must be 4 characters long.");
         }
-        return HillCipher(plaintext, ciphertext, key);
+
+        // Validate characters are within 'a' to 'z' range and convert to matrix values
+        std::vector<std::vector<int>> keyMatrix(2, std::vector<int>(2));
+
+        keyMatrix = {
+            {(key[0] - 'a') % 26, (key[1] - 'a') % 26},
+            {(key[2] - 'a') % 26, (key[3] - 'a') % 26}
+        };
     }
 
-    static RailFenceCipher getRailFenceCipher(const string& plaintext, const string& ciphertext, int railKey) {
+    static int getRailFenceCipherKey() {
+        int railKey;
+        cout << "Enter rail key for Rail Fence Cipher: ";
+        cin >> railKey;
         if (railKey < 2) {
             throw invalid_argument("In Rail Fence Cipher, rail key must be at least 2.");
         }
-        return RailFenceCipher(plaintext, ciphertext, railKey);
+        return railKey;
     }
 
-    static RSA getRSACipher(const string& plaintext, const string& ciphertext, long long p, long long q, long long e) {
+    static std::vector<long long> getRSACipherKey() {
+        long long p, q, e;
+        cout << "Enter p, q, and e for RSA: ";
+        cin >> p >> q >> e;
         if (!isPrime(p) || !isPrime(q)) {
             throw invalid_argument("In RSA, both p and q must be prime numbers.");
         }
         if (e <= 1 || gcd(e, (p - 1) * (q - 1)) != 1) {
             throw invalid_argument("In RSA, e must be greater than 1 and coprime with (p-1)*(q-1).");
         }
-        return RSA(plaintext, ciphertext, p, q, e);
+        std::vector<long long> rsaKey = {p, q, e};
+        return rsaKey;
     }
 
-    static VernamCipher getVernamCipher(const string& plaintext, const string& ciphertext, const string& key) {
+    static string getVernamCipherKey(const string& plaintext) {
+        string key;
+        cout << "Enter key for Vernam Cipher (length " << plaintext.length() << "): ";
+        cin >> key;
         if (plaintext.length() != key.length()) {
             throw invalid_argument("In Vernam Cipher, key must be the same length as plaintext.");
         }
-        return VernamCipher(plaintext, ciphertext, key);
+        return key;
     }
 
-    static VigenereCipher getVigenereCipher(const string& plaintext, const string& ciphertext, const string& key) {
+    static string getVigenereCipherKey() {
+        string key;
+        cout << "Enter key for Vigenere Cipher (uppercase letters only): ";
+        cin >> key;
         for (char c : key) {
             if (!isupper(c)) {
                 throw invalid_argument("In Vigenere Cipher, key must be uppercase letters only.");
             }
         }
-        return VigenereCipher(plaintext, ciphertext, key);
+        return key;
+    }
+
+    static std::vector<std::vector<int>> getAESCipherKey() {
+        std::string keyText; // Example 128-bit key in text format
+        cout << "Enter AES key (exactly 16 characters): ";
+        cin >> keyText;
+
+        // Validate key length and characters
+        if (keyText.size() != 16 || !std::all_of(keyText.begin(), keyText.end(), [](char c) {
+            return std::isalnum(static_cast<unsigned char>(c));
+        })) {
+            throw std::invalid_argument("Key must be exactly 16 alphanumeric characters.");
+        }
+
+        // Convert keyText to 2D vector in AES format
+        std::vector<std::vector<int>> aesKey(4, std::vector<int>(4));
+
+        for (int i = 0; i < 16; ++i) {
+            aesKey[i % 4][i / 4] = static_cast<int>(keyText[i]);
+        }
+
+        return aesKey;
+    }
+
+    static std::string getMonoalphabeticCipherKey() {
+        std::string key;
+        cout << "Enter key for Monoalphabetic Cipher (26 lowercase letters): ";
+        cin >> key;
+
+        // Validate key length and characters
+        if (key.length() != 26) {
+            throw invalid_argument("In Monoalphabetic Cipher, key length must be 26 characters.");
+        }
+
+        unordered_set<char> charSet;
+        for (char c : key) {
+            if (!islower(c)) {
+                throw invalid_argument("In Monoalphabetic Cipher, key must contain only lowercase alphabetic characters.");
+            }
+            if (charSet.find(c) != charSet.end()) {
+                throw invalid_argument("In Monoalphabetic Cipher, key must not contain duplicate characters.");
+            }
+            charSet.insert(c);
+        }
+
+        return key;
     }
 
 private:
@@ -87,80 +164,3 @@ private:
         return true;
     }
 };
-
-int main() {
-    try {
-        string plaintext, ciphertext;
-        int a, b, shift, railKey;
-        long long p, q, e;
-        string key, vernamKey, vigenereKey;
-
-        cout << "Enter plaintext for Affine Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter a and b for Affine Cipher: ";
-        cin >> a >> b;
-        cin.ignore(); 
-        AffineCipher ac = CipherInput::getAffineCipher(plaintext, "", a, b);
-        cout << "Affine Cipher Encrypted: " << ac.encrypt() << endl;
-        cout << "Affine Cipher Decrypted: " << ac.decrypt() << endl;
-
-        cout << "Enter plaintext for Caesar Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter shift for Caesar Cipher: ";
-        cin >> shift;
-        cin.ignore(); 
-        CaesarCipher cc = CipherInput::getCaesarCipher(plaintext, "", shift);
-        cout << "Caesar Cipher Encrypted: " << cc.encrypt() << endl;
-        cout << "Caesar Cipher Decrypted: " << cc.decrypt() << endl;
-
-        cout << "Enter plaintext for Hill Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter key for Hill Cipher: ";
-        getline(cin, key);
-        HillCipher hc = CipherInput::getHillCipher(plaintext, "", key);
-        cout << "Hill Cipher Encrypted: " << hc.encrypt() << endl;
-        cout << "Hill Cipher Decrypted: " << hc.decrypt() << endl;
-
-        cout << "Enter plaintext for Rail Fence Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter rail key for Rail Fence Cipher: ";
-        cin >> railKey;
-        cin.ignore(); 
-        RailFenceCipher rfc = CipherInput::getRailFenceCipher(plaintext, "", railKey);
-        cout << "Rail Fence Cipher Encrypted: " << rfc.encrypt() << endl;
-        cout << "Rail Fence Cipher Decrypted: " << rfc.decrypt() << endl;
-
-        cout << "Enter p, q, and e for RSA: ";
-        cin >> p >> q >> e;
-        cin.ignore(); 
-        RSA rsa = CipherInput::getRSACipher(plaintext, ciphertext, p, q, e);
-        cout << "Enter plaintext for RSA: ";
-        getline(cin, plaintext);
-        rsa.set_plaintext(plaintext);
-        rsa.set_ciphertext("");
-        cout << "RSA Encrypted: " << rsa.encrypt() << endl;
-        cout << "RSA Decrypted: " << rsa.decrypt() << endl;
-
-        cout << "Enter plaintext for Vernam Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter key for Vernam Cipher: ";
-        getline(cin, vernamKey);
-        VernamCipher vc = CipherInput::getVernamCipher(plaintext, ciphertext, vernamKey);
-        cout << "Vernam Cipher Encrypted: " << vc.encrypt() << endl;
-        cout << "Vernam Cipher Decrypted: " << vc.decrypt() << endl;
-
-        cout << "Enter plaintext for Vigenere Cipher: ";
-        getline(cin, plaintext);
-        cout << "Enter key for Vigenere Cipher: ";
-        getline(cin, vigenereKey);
-        VigenereCipher vigc = CipherInput::getVigenereCipher(plaintext, "", vigenereKey);
-        cout << "Vigenere Cipher Encrypted: " << vigc.encrypt() << endl;
-        cout << "Vigenere Cipher Decrypted: " << vigc.decrypt() << endl;
-
-    } catch (const invalid_argument& e) {
-        cout << "Error: " << e.what() << endl;
-    } catch (const runtime_error& e) {
-        cout << "Error: " << e.what() << endl;
-    }
-    return 0;
-}
