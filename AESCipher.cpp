@@ -363,10 +363,26 @@ std::string AES::decrypt()
     return plaintext;
 }
 void AES::set_plaintext(const string& p)
-{
-    plaintext=p;
+{for (char c : p)
+    {
+        if (!isalnum(c)) 
+        {
+            throw invalid_argument("Plaintext should only contain alphanumeric characters.");
+        }
+    }
+
+    plaintext = p;
 }
+   
 void AES::set_ciphertext(const string& c)
 {
+    for (char ch : c)
+    {
+        if (!isxdigit(ch)) 
+        {
+            throw invalid_argument("Ciphertext should only contain hexadecimal characters (0-9, A-F).");
+        }
+    }
+
     ciphertext=c;
 }
