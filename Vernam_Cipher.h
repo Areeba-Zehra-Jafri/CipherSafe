@@ -7,11 +7,13 @@
 
 using namespace std;
 
-class VernamCipher:public Cryptography {
+class VernamCipher : public Cryptography {
 private:
     string key;
+    void generateKey(size_t length); // Function to generate a random key
+
 public:
-    VernamCipher(const string& p,const string& c,string key);
+    VernamCipher(const string& p, const string& c); // Default parameter for key
     string get_plain_text();
     string get_cipher();
     string encrypt();
@@ -20,4 +22,4 @@ public:
     void set_ciphertext(const string& p);
 };
 
-#endif
+#endif // VERNAMCIPHER_H
