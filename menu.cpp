@@ -6,6 +6,7 @@
 #include "login.h"
 #include "FileCryptography.h"
 #include "Steganography.h"
+#include "TextCryptography.h"
 
 using namespace std;
 
@@ -139,8 +140,9 @@ void start_screen(void)
         switch (choice)
         {
         case 1:
-            //cout << "Customizable Patterns" << endl;
-            // customizable_screen();
+            cout << "Text Encryption/Decryption" << endl;
+            TextCryptography textCrypt;
+            textCrypt.processText();
             break;
         case 2:
             cout << "File Encryption/Decryption" << endl;
