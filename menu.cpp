@@ -7,6 +7,7 @@
 #include "FileCryptography.h"
 #include "Steganography.h"
 #include "TextCryptography.h"
+#include "HybridCryptography.h"
 
 using namespace std;
 
@@ -135,7 +136,8 @@ void start_screen(void)
         cout << "1-Text Encryption/Decryption" << endl;
         cout << "2-File Encryption/Decryption" << endl;
         cout << "3-Image Encryption/Decryption (Steganography)" << endl;
-        cout << "4-Go back to main" << endl;
+        cout << "4-Hybrid Encryption/Decryption" << endl;
+        cout << "6-Go back to main" << endl;
         cin >> choice;
         switch (choice)
         {
@@ -155,6 +157,11 @@ void start_screen(void)
             stego.runSteganography(stego);
             break;
         case 4:
+            cout << "Hybrid Encryption/Decryption" << endl;
+            HybridCryptography hybrid;
+            hybrid.processTextHybrid();
+            break;
+        case 6:
             main_screen();
             break;
         default:
