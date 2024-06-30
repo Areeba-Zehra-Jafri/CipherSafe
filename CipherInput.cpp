@@ -55,12 +55,7 @@ std::vector<long long> CipherInput::getRSACipherKey() {
     return rsaKey;
 }
 
-std::string CipherInput::getVernamCipherKey() {
-    std::string key;
-    std::cout << "Enter key for Vernam Cipher: ";
-    std::cin >> key;
-    return key;
-}
+
 
 std::string CipherInput::getVigenereCipherKey() {
     std::string key;
