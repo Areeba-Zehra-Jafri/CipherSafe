@@ -4,15 +4,15 @@ void Management::load_accounts(const std::string &filename)
 {
     try
     {
-        std::ifstream file(filename);
+        std::ifstream file(filename, std::ios::binary);
         if (!file.is_open())
         {
             throw std::runtime_error("Error opening file: " + filename);
         }
 
         Account temp;
-        while (file >> temp.username >> temp.password)
-        {
+        while (file.peek() != EOF) {
+            deserialize(temp, file);
             accounts.push_back(temp);
         }
 
@@ -28,7 +28,7 @@ void Management::save_accounts(const std::string &filename)
 {
     try
     {
-        std::ofstream file(filename);
+        std::ofstream file(filename, std::ios::binary);
         if (!file.is_open())
         {
             throw std::runtime_error("Error opening file: " + filename);
@@ -36,7 +36,7 @@ void Management::save_accounts(const std::string &filename)
 
         for (const auto &acc : accounts)
         {
-            file << acc.username << " " << acc.password << std::endl;
+            serialize(acc, file);
         }
 
         file.close();
@@ -46,6 +46,7 @@ void Management::save_accounts(const std::string &filename)
         std::cerr << "Exception caught in save_accounts: " << e.what() << std::endl;
     }
 }
+
 
 void Management::sign_up(const std::string &username, const std::string &password)
 {
@@ -123,4 +124,25 @@ void Management::login(const std::string &username, const std::string &password)
     {
         std::cerr << "Exception caught in login: " << e.what() << std::endl;
     }
+}
+void Management::serialize(const Account& account, std::ofstream& file) {
+    size_t username_size = account.username.size();
+    file.write(reinterpret_cast<const char*>(&username_size), sizeof(username_size));
+    file.write(account.username.c_str(), username_size);
+    
+    size_t password_size = account.password.size();
+    file.write(reinterpret_cast<const char*>(&password_size), sizeof(password_size));
+    file.write(account.password.c_str(), password_size);
+}
+
+void Management::deserialize(Account& account, std::ifstream& file) {
+    size_t username_size;
+    file.read(reinterpret_cast<char*>(&username_size), sizeof(username_size));
+    account.username.resize(username_size);
+    file.read(&account.username[0], username_size);
+    
+    size_t password_size;
+    file.read(reinterpret_cast<char*>(&password_size), sizeof(password_size));
+    account.password.resize(password_size);
+    file.read(&account.password[0], password_size);
 }
