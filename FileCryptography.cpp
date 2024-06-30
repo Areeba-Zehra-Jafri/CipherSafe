@@ -1,4 +1,5 @@
 #include "FileCryptography.h"
+#include "CipherInput.h"
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -138,41 +139,50 @@ Cryptography* FileCryptography::selectCipher() {
     cout << "9-AES" << endl;
     cout << "0-Exit" << endl;
     cin >> choice;
+    int key1,key3,key5;
+    string key2,key4,key6,key7;
+    vector<long long> key8;
+    vector<vector<int>> key9;
+
+    CipherInput obj;
 
     switch (choice) {
         case 1:
             cout << "Selected Caesar Cipher" << endl;
-            return new CaesarCipher("", "", 3);  // Example with shift 3
+            key1= obj.getCaesarCipherKey();
+            return new CaesarCipher("", "", key1);  // Example with shift 3
         case 2:
             cout << "Selected Hill Cipher" << endl;
-            return new HillCipher("","","qwerty");
+            key2 = obj.getHillCipherKey();
+            return new HillCipher("","",key2);
         case 3:
             cout << "Selected Affine Cipher" << endl;
-            return new AffineCipher("","",5,8);
+            key3 = obj.getAffineCipherKey();
+            return new AffineCipher("","",key3 / 100,key3 % 100);
         case 4:
             cout << "Selected Vigenère Cipher" << endl;
-            return new VigenereCipher("","","MOM");  // Example key
+            key4 = obj.getVigenereCipherKey();
+            return new VigenereCipher("","",key4);  // Example key
         case 5:
             cout << "Selected Rail Fence Cipher" << endl;
-            return new RailFenceCipher("", "", 3);
+            key5 = obj.getRailFenceCipherKey();
+            return new RailFenceCipher("", "", key5);
         case 6:
              cout << "Selected Monoalphabetic Cipher" << endl;
-            // return new MonoalphabeticCipher("", "", "ZYXWVUTSRQPONMLKJIHGFEDCBA");  // Example key
+             key6 = obj.getMonoalphabeticCipherKey();
+            return new monoalphabetic("", "", key6);  // Example key
         case 7:
             cout << "Selected Vernam Cipher" << endl;
-            return new VernamCipher("", "", "MYNAMEISNOO");  // Example key
+            key7 =obj.getVernamCipherKey();
+            return new VernamCipher("", "", key7);  // Example key
         case 8:
             cout << "Selected RSA Algorithm" << endl;
-            return new RSA("", "", 61, 53, 17);  // Example keys
+            key8 = obj.getRSACipherKey();
+            return new RSA("", "", key8[0], key8[1], key8[2]);  // Example keys
         case 9: {
             cout << "Selected Advanced Encryption Standard (AES)" << endl;
-            std::vector<std::vector<int>> key = {
-                {0x2b, 0x28, 0xab, 0x09},
-                {0x7e, 0xae, 0xf7, 0xcf},
-                {0x15, 0xd2, 0x15, 0x4f},
-                {0x16, 0xa6, 0x88, 0x3c}
-            };
-            return new AES("", "", key);
+            key9 =obj.getAESCipherKey();
+            return new AES("", "", key9);
         }
         case 0:
             exit(0);

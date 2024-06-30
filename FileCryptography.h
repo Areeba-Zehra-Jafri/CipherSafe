@@ -12,6 +12,7 @@
 #include"RSACipher.h"
 #include"Vernam_Cipher.h"
 #include "VigenereCipher.h"
+#include "monoalphabetic.h"
 
 
 using namespace std;
