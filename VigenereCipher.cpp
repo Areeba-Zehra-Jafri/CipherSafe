@@ -2,12 +2,20 @@
 #include <stdexcept>
 #include <chrono>  // Include the chrono library
 #include <cstdlib> // For srand and rand
-#include <ctime>   // For time
+#include <ctime>  // For time
+#include <cctype> 
+#include <algorithm>
 
 using namespace std;
 
 VigenereCipher::VigenereCipher(const string &p, const string &c, const string &k)
-    : Cryptography(p, c), key(k) {}
+    : Cryptography(p, c), key(k) {
+         if (!std::all_of(p.begin(), p.end(), ::isupper))
+    {
+        throw invalid_argument("Plaintext must contain only uppercase letters.");
+    }
+}
+    
 
 void VigenereCipher::set_key(const string &k)
 {
