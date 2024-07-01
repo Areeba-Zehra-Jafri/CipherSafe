@@ -112,7 +112,7 @@ void HybridCryptography::extractAndDecryptText()
     }
     
     cout << "----------------------------------------" << endl;
-    cout << "Extracted Message" << extractedMessage << endl;
+    cout << "Extracted Message: " << extractedMessage << endl;
     cout << "----------------------------------------" << endl;
     // Decrypt extracted message
     Cryptography *cipher = selectTextCipher();
