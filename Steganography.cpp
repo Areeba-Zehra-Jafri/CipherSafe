@@ -13,12 +13,12 @@ void Steganography::runSteganography(Steganography &stego) {
     while (true) {
         std::cout << "1-Hide message" << std::endl;
         std::cout << "2-Extract message" << std::endl;
-        std::cout << "3-Exit" << std::endl;
+        std::cout << "3-Go back" << std::endl;
         std::cin >> choice;
-        std::cin.ignore(); // Ignore newline left in input buffer after cin >>
+        std::cin.ignore(); 
 
         if (choice == 3) {
-            exit(0);
+            return ;
         }
 
         std::cout << "Enter the path of the input image: ";
@@ -81,7 +81,7 @@ void Steganography::hideMessage(const string &inputImage, const string &outputIm
     for (char c : message) {
         binaryMessage += bitset<8>(c).to_string();
     }
-    binaryMessage += bitset<8>(0).to_string(); // Null terminator
+    binaryMessage += bitset<8>(0).to_string();
 
     if (binaryMessage.size() > data.size()) {
         cerr << "Error: Message is too large to be hidden in the image." << endl;
@@ -109,7 +109,7 @@ string Steganography::extractMessage(const string &image) {
     for (size_t i = 0; i < binaryMessage.size(); i += 8) {
         bitset<8> bits(binaryMessage.substr(i, 8));
         char c = static_cast<char>(bits.to_ulong());
-        if (c == '\0') break; // Null terminator
+        if (c == '\0') break; 
         message += c;
     }
 

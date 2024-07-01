@@ -8,31 +8,36 @@
 using namespace std;
 
 void HybridCryptography::processTextHybrid() {
-    int subChoice;
-    cout << "1-Encrypt and Embed Text" << endl;
-    cout << "2-Extract and Decrypt Text" << endl;
-    cin >> subChoice;
+    while(1)
+    {
+        int subChoice;
+        cout << "1-Encrypt and Embed Text" << endl;
+        cout << "2-Extract and Decrypt Text" << endl;
+        cout << "3-Go back"<<endl; 
+        cin >> subChoice;
 
-    switch (subChoice) {
-        case 1:
-            encryptAndEmbedText();
-            break;
-        case 2:
-            extractAndDecryptText();
-            break;
-        default:
-            cout << "Invalid input" << endl;
-            break;
+        switch (subChoice) {
+            case 1:
+                encryptAndEmbedText();
+                break;
+            case 2:
+                extractAndDecryptText();
+                break;
+            case 3:
+                return ;
+            default:
+                cout << "Invalid input" << endl;
+                break;
+        }
     }
 }
 
 void HybridCryptography::encryptAndEmbedText() {
     string text,inputImage,outputImage;
     cout << "Enter the text to encrypt and embed: ";
-    cin.ignore(); // Ignore any newline characters left in the input buffer
+    cin.ignore(); 
     getline(cin, text);
 
-    // Encrypt text
     Cryptography* cipher = selectTextCipher();
     if (!cipher) {
         cerr << "Invalid cipher selection." << endl;
@@ -43,6 +48,7 @@ void HybridCryptography::encryptAndEmbedText() {
     try {
         cipher->set_plaintext(text);
         encryptedText = cipher->encrypt();
+        cout<<"Encrypted Text:"<<encryptedText<<endl;
         delete cipher;
     } catch (const exception& e) {
         cerr << "Encryption Error: " << e.what() << endl;
@@ -71,7 +77,7 @@ void HybridCryptography::extractAndDecryptText() {
 
     // Extract message from image
     extractedMessage = stego.extractMessage(inputImage);
-
+    cout<<"Extracted Message"<<extractedMessage<<endl;
     // Decrypt extracted message
     Cryptography* cipher = selectTextCipher();
     if (!cipher) {
@@ -105,6 +111,7 @@ Cryptography* HybridCryptography::selectTextCipher() {
     cout << "7-Vernam Cipher" << endl;
     cout << "8-RSA Algorithm " << endl;
     cout << "9-AES" << endl;
+    cout << "0-Go back"<<endl;
     cin >> choice;
     int keyF1,keyF3,keyF5;
     string keyF2,keyF4,keyF6;
@@ -139,7 +146,6 @@ Cryptography* HybridCryptography::selectTextCipher() {
             return new monoalphabetic("", "", keyF6);  // Example key
         case 7:
             cout << "Selected Vernam Cipher" << endl;
-            //string keyT7 = obj.getVernamCipherKey();
             return new VernamCipher("", "");  // Example key
         case 8:
             cout << "Selected RSA Algorithm" << endl;
@@ -150,6 +156,8 @@ Cryptography* HybridCryptography::selectTextCipher() {
             keyF9 = obj.getAESCipherKey();
             return new AES("", "", keyF9);
         }
+        case 0:
+            processTextHybrid();
         default:
             cout << "Invalid input" << endl;
             break;

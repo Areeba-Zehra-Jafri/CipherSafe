@@ -14,11 +14,11 @@ void FileCryptography::processFiles() {
     while (true) {
         cout << "1-Encrypt a file" << endl;
         cout << "2-Decrypt a file" << endl;
-        cout << "3-Exit" << endl;
+        cout << "3-Go back" << endl;
         cin >> choice;
 
         if (choice == 3) {
-            exit(0);
+            return ;
         }
 
         cout << "Enter the input file path: ";
@@ -72,16 +72,17 @@ void FileCryptography::encryptFile(const string& inputFilePath, const string& ou
         while (getline(inputFile, line)) {
             cipher->set_plaintext(line);
             string encryptedLine = cipher->encrypt();
+            cout << "Encrypted line" << encryptedLine << endl;
             outputFile << encryptedLine << endl;
         }
     } catch (const exception& e) {
         delete cipher;
         inputFile.close();
         outputFile.close();
-        throw;  // Re-throw exception for outer handling
+        throw;  
     }
 
-    delete cipher;  // Clean up dynamically allocated memory
+    delete cipher; 
     inputFile.close();
     outputFile.close();
 }
@@ -108,20 +109,19 @@ void FileCryptography::decryptFile(const string& inputFilePath, const string& ou
     try {
         string line;
         while (getline(inputFile, line)) {
-            cout << "Decrypting line: " << line << endl;  // Debug: Show line to be decrypted
             cipher->set_ciphertext(line);
             string decryptedLine = cipher->decrypt();
-            cout << "Decrypted line: " << decryptedLine << endl;  // Debug: Show decrypted line
+            cout << "Decrypted line: " << decryptedLine << endl;  
             outputFile << decryptedLine << endl;
         }
     } catch (const exception& e) {
         delete cipher;
         inputFile.close();
         outputFile.close();
-        throw;  // Re-throw exception for outer handling
+        throw;  
     }
 
-    delete cipher;  // Clean up dynamically allocated memory
+    delete cipher;  
     inputFile.close();
     outputFile.close();
 }
@@ -137,10 +137,10 @@ Cryptography* FileCryptography::selectCipher() {
     cout << "7-Vernam Cipher" << endl;
     cout << "8-RSA Algorithm " << endl;
     cout << "9-AES" << endl;
-    cout << "0-Exit" << endl;
+    cout << "0-Go back" << endl;
     cin >> choice;
     int key1,key3,key5;
-    string key2,key4,key6,key7;
+    string key2,key4,key6;
     vector<long long> key8;
     vector<vector<int>> key9;
 
@@ -150,7 +150,7 @@ Cryptography* FileCryptography::selectCipher() {
         case 1:
             cout << "Selected Caesar Cipher" << endl;
             key1= obj.getCaesarCipherKey();
-            return new CaesarCipher("", "", key1);  // Example with shift 3
+            return new CaesarCipher("", "", key1);
         case 2:
             cout << "Selected Hill Cipher" << endl;
             key2 = obj.getHillCipherKey();
@@ -162,7 +162,7 @@ Cryptography* FileCryptography::selectCipher() {
         case 4:
             cout << "Selected Vigenère Cipher" << endl;
             key4 = obj.getVigenereCipherKey();
-            return new VigenereCipher("","",key4);  // Example key
+            return new VigenereCipher("","",key4);  
         case 5:
             cout << "Selected Rail Fence Cipher" << endl;
             key5 = obj.getRailFenceCipherKey();
@@ -170,22 +170,21 @@ Cryptography* FileCryptography::selectCipher() {
         case 6:
              cout << "Selected Monoalphabetic Cipher" << endl;
              key6 = obj.getMonoalphabeticCipherKey();
-            return new monoalphabetic("", "", key6);  // Example key
+            return new monoalphabetic("", "", key6); 
         case 7:
             cout << "Selected Vernam Cipher" << endl;
-           // key7 =obj.getVernamCipherKey();
-            return new VernamCipher("", "");  // Example key
+            return new VernamCipher("", "");  
         case 8:
             cout << "Selected RSA Algorithm" << endl;
             key8 = obj.getRSACipherKey();
-            return new RSA("", "", key8[0], key8[1], key8[2]);  // Example keys
+            return new RSA("", "", key8[0], key8[1], key8[2]);  
         case 9: {
             cout << "Selected Advanced Encryption Standard (AES)" << endl;
             key9 =obj.getAESCipherKey();
             return new AES("", "", key9);
         }
         case 0:
-            exit(0);
+            processFiles();
             break;
         default:
             cout << "Invalid input" << endl;

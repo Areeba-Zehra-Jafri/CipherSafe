@@ -137,7 +137,7 @@ void start_screen(void)
         cout << "2-File Encryption/Decryption" << endl;
         cout << "3-Image Encryption/Decryption (Steganography)" << endl;
         cout << "4-Hybrid Encryption/Decryption" << endl;
-        cout << "6-Go back to main" << endl;
+        cout << "5-Go back to main" << endl;
         cin >> choice;
         switch (choice)
         {
@@ -161,7 +161,7 @@ void start_screen(void)
             HybridCryptography hybrid;
             hybrid.processTextHybrid();
             break;
-        case 6:
+        case 5:
             main_screen();
             break;
         default:
