@@ -113,6 +113,11 @@ string RSA::encrypt()
 {
     try
     {
+         if (plaintext.empty())
+        {
+            throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
+        }
+
         vector<long long> plainNums = stringToInt(plaintext);
         vector<long long> cipherNums;
 
@@ -160,6 +165,11 @@ string RSA::decrypt()
 {
     try
     {
+
+        if (ciphertext.empty())
+        {
+            throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
+        }
         istringstream iss(ciphertext);
         vector<long long> cipherNums;
         long long num;
