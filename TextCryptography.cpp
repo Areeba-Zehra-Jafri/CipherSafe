@@ -156,7 +156,7 @@ Cryptography *TextCryptography::selectCipher()
         return new AffineCipher("", "", keyT3 / 100, keyT3 % 100);
     case 4:
         cout << "----------------------------------------" << endl;
-        cout << "Selected Vigenère Cipher" << endl;
+        cout << "Selected Vigenere Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyT4 = obj.getVigenereCipherKey();
         return new VigenereCipher("", "", keyT4);

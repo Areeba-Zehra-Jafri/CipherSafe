@@ -205,7 +205,7 @@ Cryptography *FileCryptography::selectCipher()
         return new AffineCipher("", "", key3 / 100, key3 % 100);
     case 4:
         cout << "----------------------------------------" << endl;
-        cout << "Selected Vigenère Cipher" << endl;
+        cout << "Selected Vigenere Cipher" << endl;
         cout << "----------------------------------------" << endl;
         key4 = obj.getVigenereCipherKey();
         return new VigenereCipher("", "", key4);

@@ -4,52 +4,53 @@
 #include <vector>
 #include <iterator>
 #include <bitset>
+using namespace std;
 
 void Steganography::runSteganography(Steganography &stego)
 {
     int choice;
-    std::string inputImage, outputImage;
-    std::string message, extractedMessage;
+    string inputImage, outputImage;
+    string message, extractedMessage;
 
     while (true)
     {
         cout << "----------------------------------------" << endl;
-        std::cout << "1-Hide message" << std::endl;
-        std::cout << "2-Extract message" << std::endl;
-        std::cout << "3-Go back" << std::endl;
+        cout << "1-Hide message" << endl;
+        cout << "2-Extract message" << endl;
+        cout << "3-Go back" << endl;
         cout << "----------------------------------------" << endl;
-        std::cin >> choice;
-        std::cin.ignore();
+        cin >> choice;
+        cin.ignore();
 
         if (choice == 3)
         {
             return;
         }
         cout << "----------------------------------------" << endl;
-        std::cout << "Enter the path of the input image: ";
-        std::cin >> inputImage;
+        cout << "Enter the path of the input image: ";
+        cin >> inputImage;
 
-        std::cout << "Enter the path of the output image: ";
-        std::cin >> outputImage;
+        cout << "Enter the path of the output image: ";
+        cin >> outputImage;
         cout << "----------------------------------------" << endl;
-        std::cin.ignore();
+        cin.ignore();
 
         switch (choice)
         {
         case 1:
             cout << "--------------------------------------" << endl;
-            std::cout << "Enter the message to hide: ";
-            std::getline(std::cin, message);
+            cout << "Enter the message to hide: ";
+            getline(cin, message);
             stego.hideMessage(inputImage, outputImage, message);
             break;
         case 2:
             extractedMessage = stego.extractMessage(outputImage);
             cout << "----------------------------------------" << endl;
-            std::cout << "Extracted Message: " << extractedMessage << std::endl;
+            cout << "Extracted Message: " << extractedMessage << endl;
             cout << "----------------------------------------" << endl;
             break;
         default:
-            std::cout << "\033[1;31mInvalid input\033[0m" << std::endl;
+            cout << "\033[1;31mInvalid input\033[0m" << endl;
             break;
         }
     }
@@ -79,7 +80,7 @@ void Steganography::writeImage(const string &filename, const vector<unsigned cha
     ofstream file(filename, ios::binary);
     if (!file)
     {
-        std::cerr << "\033[1;31mError: Could not open the file\033[0m " << filename << std::endl;
+        cerr << "\033[1;31mError: Could not open the file\033[0m " << filename << endl;
         return;
     }
 
@@ -111,9 +112,9 @@ void Steganography::hideMessage(const string &inputImage, const string &outputIm
     }
 
     writeImage(outputImage, header, data);
-    std::cout << "\n\033[1;34m---------------------------\n";
+    cout << "\n\033[1;34m---------------------------\n";
     cout << "Message hidden successfully!" << endl;
-    std::cout << "\n---------------------------\033[0m\n";
+    cout << "\n---------------------------\033[0m\n";
 }
 
 string Steganography::extractMessage(const string &image)

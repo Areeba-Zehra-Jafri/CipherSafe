@@ -64,12 +64,12 @@ void password_screen()
                 cout << "=== Sign Up ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                getline(cin, username);
                 cout << "--------------------" << endl;
-                cin >> username;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                getline(cin, password);
                 cout << "--------------------" << endl;
-                cin >> password;
                 m1.sign_up(username, password);
                 m1.save_accounts("data.txt");
                 break;
@@ -77,24 +77,24 @@ void password_screen()
                 cout << "=== Change Password ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                getline(cin, username);
                 cout << "--------------------" << endl;
-                cin >> username;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                getline(cin, password);
                 cout << "--------------------" << endl;
-                cin >> password;
                 m1.change_password(username, password);
                 break;
             case 3:
                 cout << "=== Login ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
+                getline(cin, username);
                 cout << "--------------------" << endl;
-                cin >> username;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
+                getline(cin, password);
                 cout << "--------------------" << endl;
-                cin >> password;
                 m1.login(username, password);
                 break;
             case 4:
