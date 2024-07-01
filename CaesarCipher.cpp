@@ -6,9 +6,8 @@
 
 using namespace std;
 
-CaesarCipher::CaesarCipher(const string& p, const string& c, int s) : Cryptography(p, c), shift(s)
+CaesarCipher::CaesarCipher(const string &p, const string &c, int s) : Cryptography(p, c), shift(s)
 {
-   
 }
 
 string CaesarCipher::encrypt()
@@ -17,13 +16,12 @@ string CaesarCipher::encrypt()
     {
         if (plaintext.empty())
         {
-            throw runtime_error("Plaintext cannot be empty.");
+            throw runtime_error("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
 
-         srand(time(0)); // Seed the random number generator
+        srand(time(0)); // Seed the random number generator
 
         auto start = chrono::high_resolution_clock::now(); // Start time
-
 
         ciphertext = plaintext;
         for (char &c : ciphertext)
@@ -35,18 +33,28 @@ string CaesarCipher::encrypt()
             }
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
-        cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "\n---------------------------\n";
+        cout << "Encryption time: " << duration.count() << " ns" << endl;
+        cout << "---------------------------\n"
+             << endl; // Print the duration in nanoseconds
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
 
         return ciphertext;
     }
-    catch (const exception& e)
+    catch (const exception &e)
     {
-        cerr << "Encryption error: " << e.what() << endl;
+
+        cerr << "\033[1;31mEncryption error: " << e.what() << "\033[0m" << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
@@ -57,7 +65,7 @@ string CaesarCipher::decrypt()
     {
         if (ciphertext.empty())
         {
-            throw runtime_error("Ciphertext cannot be empty.");
+            throw runtime_error("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
 
         srand(time(0)); // Seed the random number generator
@@ -74,52 +82,60 @@ string CaesarCipher::decrypt()
             }
             int delay = rand() % 100 + 1; // Random delay between 1 and 100 nanoseconds
             auto delay_start = chrono::high_resolution_clock::now();
-            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay);
+            while (chrono::duration_cast<chrono::nanoseconds>(chrono::high_resolution_clock::now() - delay_start).count() < delay)
+                ;
         }
 
         auto end = chrono::high_resolution_clock::now(); // End time
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
+        cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl;
 
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Decryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
         return plaintext;
     }
-    catch (const exception& e)
+    catch (const exception &e)
     {
-        cerr << "Decryption error: " << e.what() << endl;
+        cerr << "\033[1;31mDecryption error: " << e.what() << "\033[0m" << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
 
-void CaesarCipher::set_plaintext(const string& p)
+void CaesarCipher::set_plaintext(const string &p)
 {
     try
     {
         if (p.empty())
         {
-            throw invalid_argument("Plaintext cannot be empty.");
+            throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
         plaintext = p;
     }
-    catch (const invalid_argument& e)
+    catch (const invalid_argument &e)
     {
-        cerr << "Set plaintext error: " << e.what() << endl;
+        cerr << "\033[1;31mSet plaintext error:" << e.what() << "\033[0m" << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }
 
-void CaesarCipher::set_ciphertext(const string& c)
+void CaesarCipher::set_ciphertext(const string &c)
 {
     try
     {
         if (c.empty())
         {
-            throw invalid_argument("Ciphertext cannot be empty.");
+            throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
         ciphertext = c;
     }
-    catch (const invalid_argument& e)
+    catch (const invalid_argument &e)
     {
-        cerr << "Set ciphertext error: " << e.what() << endl;
+        cerr << "\033[1;31mSet ciphertext error: " << e.what() << "\033[0m" << endl;
         throw; // Re-throw the exception for the caller to handle
     }
 }

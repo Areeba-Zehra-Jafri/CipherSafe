@@ -246,6 +246,11 @@ string AES::encrypt()
         ciphertext.append(buffer);
     }
 
+     std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Encryption successful." << endl;
+        std::cout << "\n---------------------------\033[0m\n"
+                  << endl;
+
     return ciphertext;
 }
 
@@ -356,6 +361,8 @@ std::string AES::decrypt()
         plaintext.push_back(static_cast<char>(byte));
     }
 
+
+
     // // Remove padding
     // int padding = plaintext.back();
     // plaintext.erase(plaintext.end() - padding, plaintext.end());
@@ -367,7 +374,7 @@ void AES::set_plaintext(const string& p)
     {
         if (!isalnum(c)) 
         {
-            throw invalid_argument("Plaintext should only contain alphanumeric characters.");
+            throw invalid_argument("\033[1;31mPlaintext should only contain alphanumeric characters.\033[0m");
         }
     }
 
@@ -380,7 +387,7 @@ void AES::set_ciphertext(const string& c)
     {
         if (!isxdigit(ch)) 
         {
-            throw invalid_argument("Ciphertext should only contain hexadecimal characters (0-9, A-F).");
+            throw invalid_argument("\033[1;31mCiphertext should only contain hexadecimal characters (0-9, A-F).\033[0m");
         }
     }
 

@@ -7,84 +7,114 @@
 
 using namespace std;
 
-void TextCryptography::processText() {
+void TextCryptography::processText()
+{
     int choice;
     string text;
 
-    while (true) {
+    while (true)
+    {
+        cout << "---------------------------------------" << endl;
         cout << "1-Encrypt a text" << endl;
         cout << "2-Decrypt a text" << endl;
         cout << "3-Go back" << endl;
+        cout << "---------------------------------------" << endl;
         cin >> choice;
 
-        if (choice == 3) {
-            return ;
+        if (choice == 3)
+        {
+            return;
         }
 
-        cin.ignore(); 
+        cin.ignore();
+        cout << "------------------" << endl;
         cout << "Enter the text: ";
+        cout << "------------------" << endl;
         getline(cin, text);
 
-        switch (choice) {
-            case 1:
-                try {
-                    encryptText(text);
-                } catch (const exception& e) {
-                    cerr << "Encryption Error: " << e.what() << endl;
-                }
-                break;
-            case 2:
-                try {
-                    decryptText(text);
-                } catch (const exception& e) {
-                    cerr << "Decryption Error: " << e.what() << endl;
-                }
-                break;
-            default:
-                cout << "Invalid input" << endl;
-                break;
+        switch (choice)
+        {
+        case 1:
+            try
+            {
+                encryptText(text);
+            }
+            catch (const exception &e)
+            {
+                cerr << "\033[1;31mEncryption Error:\033[0m " << e.what() << endl;
+            }
+            break;
+        case 2:
+            try
+            {
+                decryptText(text);
+            }
+            catch (const exception &e)
+            {
+                cerr << "\033[1;31mDecryption Error:\033[0m " << e.what() << endl;
+            }
+            break;
+        default:
+            cout << "\033[1;31mInvalid input\033[0m" << endl;
+            break;
         }
     }
 }
 
-void TextCryptography::encryptText(const string& plaintext) {
-    Cryptography* cipher = selectCipher();
-    if (!cipher) {
-        throw runtime_error("Invalid cipher selection.");
+void TextCryptography::encryptText(const string &plaintext)
+{
+    Cryptography *cipher = selectCipher();
+    if (!cipher)
+    {
+        throw runtime_error("\033[1;31mInvalid cipher selection.\033[0m");
     }
 
-    try {
+    try
+    {
         cipher->set_plaintext(plaintext);
         string encryptedText = cipher->encrypt();
+        cout << "-------------------" << endl;
         cout << "Encrypted text: " << encryptedText << endl;
-    } catch (const exception& e) {
+        cout << "-------------------" << endl;
+    }
+    catch (const exception &e)
+    {
         delete cipher;
-        throw;  
+        throw;
     }
 
-    delete cipher; 
+    delete cipher;
 }
 
-void TextCryptography::decryptText(const string& ciphertext) {
-    Cryptography* cipher = selectCipher();
-    if (!cipher) {
-        throw runtime_error("Invalid cipher selection.");
+void TextCryptography::decryptText(const string &ciphertext)
+{
+    Cryptography *cipher = selectCipher();
+    if (!cipher)
+    {
+        throw runtime_error("\033[1;31mInvalid cipher selection.\033[0m");
     }
 
-    try {
+    try
+    {
         cipher->set_ciphertext(ciphertext);
         string decryptedText = cipher->decrypt();
+        cout << "-------------------" << endl;
         cout << "Decrypted text: " << decryptedText << endl;
-    } catch (const exception& e) {
+        cout << "-------------------" << endl;
+    }
+    catch (const exception &e)
+    {
         delete cipher;
-        throw; 
+        throw;
     }
 
-    delete cipher; 
+    delete cipher;
 }
 
-Cryptography* TextCryptography::selectCipher() {
+Cryptography *TextCryptography::selectCipher()
+{
     int choice;
+    cout << "----------------------------------------" << endl;
     cout << "1-Caesar Cipher" << endl;
     cout << "2-Hill Cipher" << endl;
     cout << "3-Affine Cipher" << endl;
@@ -95,57 +125,78 @@ Cryptography* TextCryptography::selectCipher() {
     cout << "8-RSA Algorithm " << endl;
     cout << "9-AES" << endl;
     cout << "0-Go back" << endl;
+    cout << "----------------------------------------" << endl;
     cin >> choice;
-    int keyT1,keyT3,keyT5;
-    string keyT2,keyT4,keyT6;
+    int keyT1, keyT3, keyT5;
+    string keyT2, keyT4, keyT6;
     vector<long long> keyT8;
     vector<vector<int>> keyT9;
 
     CipherInput obj;
 
-    switch (choice) {
-        case 1:
-            cout << "Selected Caesar Cipher" << endl;
-            keyT1= obj.getCaesarCipherKey();
-            return new CaesarCipher("", "", keyT1); 
-        case 2:
-            cout << "Selected Hill Cipher" << endl;
-            keyT2 = obj.getHillCipherKey();
-            return new HillCipher("","",keyT2);
-        case 3:
-            cout << "Selected Affine Cipher" << endl;
-            keyT3 = obj.getAffineCipherKey();
-            return new AffineCipher("","",keyT3 / 100,keyT3 % 100);
-        case 4:
-            cout << "Selected Vigenère Cipher" << endl;
-            keyT4 = obj.getVigenereCipherKey();
-            return new VigenereCipher("","",keyT4); 
-        case 5:
-            cout << "Selected Rail Fence Cipher" << endl;
-            keyT5 = obj.getRailFenceCipherKey();
-            return new RailFenceCipher("", "", keyT5);
-        case 6:
-             cout << "Selected Monoalphabetic Cipher" << endl;
-             keyT6 = obj.getMonoalphabeticCipherKey();
-            return new monoalphabetic("", "", keyT6); 
-        case 7:
-            cout << "Selected Vernam Cipher" << endl;
-            return new VernamCipher("", "");  
-        case 8:
-            cout << "Selected RSA Algorithm" << endl;
-            keyT8 = obj.getRSACipherKey();
-            return new RSA("", "", keyT8[0], keyT8[1], keyT8[2]);  
-        case 9: {
-            cout << "Selected Advanced Encryption Standard (AES)" << endl;
-            keyT9 =obj.getAESCipherKey();
-            return new AES("", "", keyT9);
-        }
-        case 0:
-            processText();
-            break;
-        default:
-            cout << "Invalid input" << endl;
-            break;
+    switch (choice)
+    {
+    case 1:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Caesar Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT1 = obj.getCaesarCipherKey();
+        return new CaesarCipher("", "", keyT1);
+    case 2:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Hill Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT2 = obj.getHillCipherKey();
+        return new HillCipher("", "", keyT2);
+    case 3:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Affine Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT3 = obj.getAffineCipherKey();
+        return new AffineCipher("", "", keyT3 / 100, keyT3 % 100);
+    case 4:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Vigenère Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT4 = obj.getVigenereCipherKey();
+        return new VigenereCipher("", "", keyT4);
+    case 5:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Rail Fence Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT5 = obj.getRailFenceCipherKey();
+        return new RailFenceCipher("", "", keyT5);
+    case 6:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Monoalphabetic Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT6 = obj.getMonoalphabeticCipherKey();
+        return new monoalphabetic("", "", keyT6);
+    case 7:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Vernam Cipher" << endl;
+        cout << "----------------------------------------" << endl;
+        return new VernamCipher("", "");
+    case 8:
+        cout << "----------------------------------------" << endl;
+        cout << "Selected RSA Algorithm" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT8 = obj.getRSACipherKey();
+        return new RSA("", "", keyT8[0], keyT8[1], keyT8[2]);
+    case 9:
+    {
+        cout << "----------------------------------------" << endl;
+        cout << "Selected Advanced Encryption Standard (AES)" << endl;
+        cout << "----------------------------------------" << endl;
+        keyT9 = obj.getAESCipherKey();
+        return new AES("", "", keyT9);
+    }
+    case 0:
+        processText();
+        break;
+    default:
+        cout << "\033[1;31mInvalid input\033[0m" << endl;
+        break;
     }
 
     return nullptr;
