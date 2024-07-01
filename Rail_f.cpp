@@ -18,6 +18,10 @@ string RailFenceCipher::encrypt()
 {
     try
     {
+        if (plaintext.empty())
+        {
+            throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
+        }
         if (key == 1 || key >= plaintext.length())
         {
             return plaintext;
@@ -81,6 +85,10 @@ string RailFenceCipher::decrypt()
 {
     try
     {
+         if (ciphertext.empty())
+        {
+            throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
+        }
         if (key == 1 || key >= ciphertext.length())
         {
             return ciphertext;
@@ -172,17 +180,39 @@ string RailFenceCipher::decrypt()
 
 void RailFenceCipher::set_plaintext(const string &p)
 {
-    for (char c : p)
+     try
     {
-        if (!isalpha(c))
+        if (p.empty())
         {
-            throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only alphabetic characters are allowed.\033[0m");
+            throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
+        for (char c : p)
+        {
+            if (!isalpha(c))
+            {
+                throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only alphabetic characters are allowed.\033[0m");
+            }
+        }
+        plaintext = p;
     }
-    plaintext = p;
+    catch (const invalid_argument &e)
+    {
+        cerr << "\033[1;31mSet plaintext error:" << e.what() << "\033[0m" << endl;
+    }
 }
 
 void RailFenceCipher::set_ciphertext(const string &c)
 {
-    ciphertext = c;
+     try
+    {
+        if (c.empty())
+        {
+            throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
+        }
+        ciphertext = c;
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << "\033[1;31mSet ciphertext error: " << e.what() << "\033[0m" << endl;
+    }
 }
