@@ -1,0 +1,256 @@
+IPHER SAFE INSTRUCTION MANUAL
+Introduction
+Welcome to the Cipher Project! This program allows you to encrypt and decrypt messages using a variety of ciphers. The ciphers included in this project are:
+
+Vigenère Cipher
+Monoalphabetic Cipher
+AES (Advanced Encryption Standard)
+RSA (Rivest–Shamir–Adleman)
+Vernam Cipher
+Hill Cipher
+Affine Cipher
+Caesar Cipher
+Rail Fence Cipher
+General Instructions
+Launch the Program: Start the program to access the main menu.
+Select a Cipher: Choose the cipher you want to use from the menu.
+Choose an Operation: Select either encryption or decryption.
+Input Your Message: Enter the message you wish to encrypt or decrypt.
+Provide Necessary Keys/Parameters: Input any required keys or parameters for the chosen cipher.
+Execute the Operation: Run the encryption or decryption.
+View the Result: The output will be displayed on the screen.
+Detailed Instructions for Each Cipher
+
+
+
+
+
+1. Vigenère Cipher
+The Vigenère Cipher is a polyalphabetic substitution cipher that uses a keyword to determine the shift for each letter in the plaintext.
+
+Encryption:
+
+Select Vigenère Cipher.
+Choose the encryption option.
+Enter the plaintext message in upper case.
+Enter the keyword (uppercase letters only).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Vigenère Cipher.
+Choose the decryption option.
+Enter the ciphertext.
+Enter the keyword (uppercase letters only).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+2. Monoalphabetic Cipher
+A substitution cipher where each letter of the plaintext is mapped to a fixed letter of the ciphertext alphabet.
+
+Encryption:
+
+Select Monoalphabetic Cipher.
+Choose the encryption option.
+Enter the plaintext message (uppercase, lowercase, and digits).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Monoalphabetic Cipher.
+Choose the decryption option.
+Enter the ciphertext (uppercase, lowercase, and digits).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+3. AES (Advanced Encryption Standard)
+A symmetric encryption algorithm that encrypts data in fixed blocks of 128 bits using keys of 128, 192, or 256 bits.
+
+Encryption:
+
+Select AES Cipher.
+Choose the encryption option.
+Enter the plaintext message (alphanumeric characters).
+Enter the secret key (exactly 16 characters).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select AES Cipher.
+Choose the decryption option.
+Enter the ciphertext (alphanumeric characters).
+Enter the secret key (exactly 16 characters).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+
+4. RSA (Rivest–Shamir–Adleman)
+An asymmetric encryption algorithm that uses a pair of public and private keys.
+
+Encryption:
+
+Select RSA Cipher.
+Choose the encryption option.
+Enter the plaintext message.
+plaintext could be number uppercase and lowecase
+Enter the public key (p and q must be prime, e must be greater than 1 and coprime with (p-1)*(q-1)).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select RSA Cipher.
+Choose the decryption option.
+Enter the ciphertext.
+ciphertext could be number uppercase and lowecase
+Enter the private key (p and q must be prime, e must be greater than 1 and coprime with (p-1)*(q-1)).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+5. Vernam Cipher
+Also known as the One-Time Pad, it is a symmetric cipher where a random key equal to the length of the plaintext is used only once.
+
+Encryption:
+
+Select Vernam Cipher.
+Choose the encryption option.
+Enter the plaintext message.
+plaintext could be number uppercase and lowecase
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Vernam Cipher.
+Choose the decryption option.
+Enter the ciphertext.
+plaintext could be number uppercase and lowecase
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+6. Hill Cipher
+A polygraphic substitution cipher based on linear algebra.
+
+Encryption:
+
+Select Hill Cipher.
+Choose the encryption option.
+Enter the plaintext message.(in lower case if characters of plaintext are in even number so padding with x will show on terminal)
+Enter the key matrix (in lower case letter 4 characters long).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Hill Cipher.
+Choose the decryption option.
+Enter the ciphertext.
+Enter the key matrix (lowercase letter 4 characters long).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+7. Affine Cipher
+A type of substitution cipher that uses mathematical functions to encrypt letters.
+
+Encryption:
+
+Select Affine Cipher.
+Choose the encryption option.
+Enter the plaintext message.
+plaintext could be number uppercase and lowecase
+Enter the values for a and b (a must be coprime with 26).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Affine Cipher.
+Choose the decryption option.
+Enter the ciphertext.
+ciphertext could be number uppercase and lowecase
+Enter the values for a and b (a must be coprime with 26).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+8. Caesar Cipher
+A substitution cipher where each letter in the plaintext is shifted a fixed number of positions down or up the alphabet.
+
+Encryption:
+
+Select Caesar Cipher.
+Choose the encryption option.
+Enter the plaintext message (uppercase and lowercase).
+Enter the shift value (key in the range [0, 25]).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Caesar Cipher.
+Choose the decryption option.
+Enter the ciphertext (uppercase and lowercase).
+Enter the shift value (key in the range [0, 25]).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+
+9. Rail Fence Cipher
+A transposition cipher that arranges the plaintext in a zigzag pattern across multiple "rails".
+
+Encryption:
+
+Select Rail Fence Cipher.
+Choose the encryption option.
+Enter the plaintext message (uppercase and lowercase).
+Enter the key (number of rails, at least 2).
+Press "Encrypt" to see the ciphertext.
+Decryption:
+
+Select Rail Fence Cipher.
+Choose the decryption option.
+Enter the ciphertext (uppercase and lowercase).
+Enter the key (number of rails, at least 2).
+Press "Decrypt" to see the plaintext.
+
+
+
+
+Steganography in Cryptography
+Overview
+In this project, we will utilize steganography to hide text within a 24-bit BMP image. This process includes both encryption (hiding the text) and decryption (extracting the hidden text) using steganography.
+
+Encryption Process
+Input:
+
+An original 24-bit BMP image.
+The text that needs to be hidden within the image.
+Procedure:
+
+Use steganography techniques to embed the given text into the original BMP image.
+Ensure the hidden text is imperceptible to human vision.
+Output:
+
+An encrypted 24-bit BMP image that contains the hidden text.
+Decryption Process
+Input:
+
+The encrypted 24-bit BMP image containing the hidden text.
+The original 24-bit BMP image used for comparison.
+Procedure:
+
+Use steganography techniques to extract the hidden text from the encrypted image.
+Compare the encrypted image with the original image to identify the hidden information.
+Output:
+
+The original text that was hidden within the image.
+Conclusion
+Thank you for using the Cipher Project! If you encounter any issues or have any questions, please refer to the documentation or contact support.
