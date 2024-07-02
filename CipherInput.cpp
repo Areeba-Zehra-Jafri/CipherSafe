@@ -122,7 +122,7 @@ string CipherInput::getVigenereCipherKey()
     cout << "\n-------------------------------------------------------\n";
     cout << "Enter key for Vigenere Cipher (uppercase letters only): ";
     cout << "\n-------------------------------------------------------\n";
-    getline(cin , key);
+    cin>>key;
     for (char c : key)
     {
         if (!isupper(c))
@@ -163,7 +163,7 @@ string CipherInput::getMonoalphabeticCipherKey()
     cout << "\n----------------------------------------------------------\n";
     cout << "Enter key for Monoalphabetic Cipher (26 lowercase letters): ";
     cout << "\n----------------------------------------------------------\n";
-    getline(cin,key);
+    cin>>key;
 
     if (key.length() != 26)
     {
