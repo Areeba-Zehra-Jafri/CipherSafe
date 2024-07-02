@@ -71,8 +71,7 @@ void Management::sign_up(const string &username, const string &password)
         accounts.push_back(new_account);
         cout << "\n\033[1;34m---------------------------\n";
         cout << " Account created successfully! ";
-        cout << "\n---------------------------\033[0m\n"
-                  << std::endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
     }
     catch (const std::exception &e)
     {

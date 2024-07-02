@@ -77,8 +77,16 @@ void HybridCryptography::encryptAndEmbedText()
     std::cin >> outputImage;
     cout << "----------------------------------------" << endl;
     std::cin.ignore();
+    try
+    {
+        stego.hideMessage(inputImage, outputImage, encryptedText);
+    }
+    catch(const std::exception& e)
+    {
+        return;
+    }
+    
 
-    stego.hideMessage(inputImage, outputImage, encryptedText);
      std::cout << "\n\033[1;34m---------------------------\n";
     cout << "Text encrypted and embedded successfully!" << endl;
      std::cout << "\n---------------------------\033[0m\n";
@@ -94,7 +102,15 @@ void HybridCryptography::extractAndDecryptText()
     getline(cin, inputImage);
 
     // Extract message from image
-    extractedMessage = stego.extractMessage(inputImage);
+    try
+    {
+        extractedMessage = stego.extractMessage(inputImage);
+    }
+    catch(const std::exception& e)
+    {
+        return;
+    }
+    
     cout << "----------------------------------------" << endl;
     cout << "Extracted Message" << extractedMessage << endl;
     cout << "----------------------------------------" << endl;
@@ -153,7 +169,7 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Caesar Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF1 = obj.getCaesarCipherKey();
-        return new CaesarCipher("", "", keyF1); // Example with shift 3
+        return new CaesarCipher("", "", keyF1); 
     case 2:
         cout << "----------------------------------------" << endl;
         cout << "Selected Hill Cipher" << endl;
@@ -171,7 +187,7 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Vigenère Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF4 = obj.getVigenereCipherKey();
-        return new VigenereCipher("", "", keyF4); // Example key
+        return new VigenereCipher("", "", keyF4); 
     case 5:
         cout << "----------------------------------------" << endl;
         cout << "Selected Rail Fence Cipher" << endl;
@@ -183,18 +199,18 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Monoalphabetic Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF6 = obj.getMonoalphabeticCipherKey();
-        return new monoalphabetic("", "", keyF6); // Example key
+        return new monoalphabetic("", "", keyF6); 
     case 7:
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        return new VernamCipher("", ""); // Example key
+        return new VernamCipher("", ""); 
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;
         cout << "----------------------------------------" << endl;
         keyF8 = obj.getRSACipherKey();
-        return new RSA("", "", keyF8[0], keyF8[1], keyF8[2]); // Example keys
+        return new RSA("", "", keyF8[0], keyF8[1], keyF8[2]); 
     case 9:
     {
         cout << "----------------------------------------" << endl;
