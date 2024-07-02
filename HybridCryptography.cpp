@@ -68,13 +68,13 @@ void HybridCryptography::encryptAndEmbedText()
         return;
     }
 
-    std::cin.ignore(); // Ignore newline left in input buffer after cin >>
+    cin.ignore(); // Ignore newline left in input buffer after cin >>
     cout << "----------------------------------------" << endl;
-    std::cout << "Enter the path of the input image: ";
-    std::cin >> inputImage;
+    cout << "Enter the path of the input image: ";
+    cin >> inputImage;
 
-    std::cout << "Enter the path of the output image: ";
-    std::cin >> outputImage;
+    cout << "Enter the path of the output image: ";
+    cin >> outputImage;
     cout << "----------------------------------------" << endl;
     std::cin.ignore();
     try
@@ -89,7 +89,7 @@ void HybridCryptography::encryptAndEmbedText()
 
      std::cout << "\n\033[1;34m---------------------------\n";
     cout << "Text encrypted and embedded successfully!" << endl;
-     std::cout << "\n---------------------------\033[0m\n";
+     cout << "\n---------------------------\033[0m\n";
 }
 
 void HybridCryptography::extractAndDecryptText()
@@ -184,7 +184,7 @@ Cryptography *HybridCryptography::selectTextCipher()
         return new AffineCipher("", "", keyF3 / 100, keyF3 % 100);
     case 4:
         cout << "----------------------------------------" << endl;
-        cout << "Selected Vigenère Cipher" << endl;
+        cout << "Selected Vigenere Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF4 = obj.getVigenereCipherKey();
         return new VigenereCipher("", "", keyF4); 

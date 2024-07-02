@@ -73,7 +73,7 @@ void Management::sign_up(const string &username, const string &password)
         cout << " Account created successfully! ";
         cout << "\n---------------------------\033[0m\n"<< endl;
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
         cerr << "\033[1;31mException caught in sign_up: " << e.what() << "\033[0m" << endl;
     }
@@ -92,7 +92,7 @@ void Management::change_password(const string &username, const string &password)
                 if (it->password == password)
                 {
                     cout << "Enter your new password: ";
-                    std::cin >> pass;
+                    getline(cin , pass);
                     it->password = pass;
                     cout << "\n\033[1;34m---------------------------\n";
                     cout << " Password changed successfully! ";
@@ -125,7 +125,7 @@ void Management::login(const string &username, const string &password)
                 cout << "\n\033[1;34m---------------------------\n";
                 cout << " Login successfull! ";
                 cout << "\n---------------------------\033[0m\n"
-                          << std::endl;
+                          << endl;
                 main_screen();
                 return;
             }

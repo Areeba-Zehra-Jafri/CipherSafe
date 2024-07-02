@@ -150,31 +150,31 @@
 void Steganography::runSteganography(Steganography &stego)
 {
     int choice;
-    std::string inputImage, outputImage;
-    std::string message, extractedMessage;
+    string inputImage, outputImage;
+    string message, extractedMessage;
 
     while (true)
     {
         cout << "----------------------------------------" << endl;
-        std::cout << "1-Hide message" << std::endl;
-        std::cout << "2-Extract message" << std::endl;
-        std::cout << "3-Go back" << std::endl;
+        cout << "1-Hide message" << endl;
+        cout << "2-Extract message" << endl;
+        cout << "3-Go back" << endl;
         cout << "----------------------------------------" << endl;
-        std::cin >> choice;
-        std::cin.ignore();
+        cin >> choice;
+        cin.ignore();
 
         if (choice == 3)
         {
             return;
         }
         cout << "----------------------------------------" << endl;
-        std::cout << "Enter the path of the input image: ";
-        std::cin >> inputImage;
+        cout << "Enter the path of the input image: ";
+        cin >> inputImage;
 
-        std::cout << "Enter the path of the output image: ";
-        std::cin >> outputImage;
+        cout << "Enter the path of the output image: ";
+        cin >> outputImage;
         cout << "----------------------------------------" << endl;
-        std::cin.ignore();
+        cin.ignore();
 
         try
         {
