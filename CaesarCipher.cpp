@@ -41,13 +41,11 @@ string CaesarCipher::encrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl;
-        cout << "---------------------------\n"
-             << endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"<< endl; // Print the duration in nanoseconds
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return ciphertext;
     }
@@ -55,7 +53,6 @@ string CaesarCipher::encrypt()
     {
 
         cerr << "\033[1;31mEncryption error: " << e.what() << "\033[0m" << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -90,19 +87,16 @@ string CaesarCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"
-             << endl;
+        cout << "---------------------------\n"<< endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
         return plaintext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption error: " << e.what() << "\033[0m" << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -119,7 +113,6 @@ void CaesarCipher::set_plaintext(const string &p)
     catch (const invalid_argument &e)
     {
         cerr << "\033[1;31mSet plaintext error:" << e.what() << "\033[0m" << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -136,7 +129,6 @@ void CaesarCipher::set_ciphertext(const string &c)
     catch (const invalid_argument &e)
     {
         cerr << "\033[1;31mSet ciphertext error: " << e.what() << "\033[0m" << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 

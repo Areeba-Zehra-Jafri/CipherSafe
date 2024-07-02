@@ -20,7 +20,7 @@ RSA::RSA(const string &plaintext, const string &ciphertext, long long p, long lo
     }
     catch (const std::exception &e)
     {
-        throw std::invalid_argument("\033[1;31mInvalid parameters for RSA encryption.\033[0m");
+        cerr<<"\033[1;31mInvalid parameters for RSA encryption.\033[0m"<<endl;
     }
 }
 
@@ -144,16 +144,15 @@ string RSA::encrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return ciphertext;
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        throw std::invalid_argument("\033[1;31mError during RSA encryption.\033[0m");
+        cerr<<"\033[1;31mError during RSA encryption.\033[0m"<<endl;
     }
 }
 
@@ -194,16 +193,15 @@ string RSA::decrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return plaintext;
     }
     catch (const std::exception &e)
     {
-        throw std::invalid_argument("\033[1;31mError during RSA decryption.\033[0m");
+        cerr<<"\033[1;31mError during RSA decryption.\033[0m"<<endl;
     }
 }
 

@@ -26,8 +26,7 @@ const uint8_t sbox[256] = {
     0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
     0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
     0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
-    0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
-};
+    0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16};
 
 // Rijndael Inverse S-box
 const uint8_t rsbox[256] = {
@@ -47,18 +46,16 @@ const uint8_t rsbox[256] = {
     0x1f, 0xdd, 0xa8, 0x33, 0x88, 0x07, 0xc7, 0x31, 0xb1, 0x12, 0x10, 0x59, 0x27, 0x80, 0xec, 0x5f,
     0x60, 0x51, 0x7f, 0xa9, 0x19, 0xb5, 0x4a, 0x0d, 0x2d, 0xe5, 0x7a, 0x9f, 0x93, 0xc9, 0x9c, 0xef,
     0xa0, 0xe0, 0x3b, 0x4d, 0xae, 0x2a, 0xf5, 0xb0, 0xc8, 0xeb, 0xbb, 0x3c, 0x83, 0x53, 0x99, 0x61,
-    0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d
-};
+    0x17, 0x2b, 0x04, 0x7e, 0xba, 0x77, 0xd6, 0x26, 0xe1, 0x69, 0x14, 0x63, 0x55, 0x21, 0x0c, 0x7d};
 
 // Rcon values
-const uint8_t Rcon[11] = { 
-    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36 
-};
+const uint8_t Rcon[11] = {
+    0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1B, 0x36};
 
 // Constructor implementation
-AES::AES(const string& p, const string& c, const vector<vector<int>>& k) : Cryptography(p, c), key(k)
+AES::AES(const string &p, const string &c, const vector<vector<int>> &k) : Cryptography(p, c), key(k)
 {
-    //padPlaintext();
+    // padPlaintext();
 }
 
 // // Padding function
@@ -67,17 +64,16 @@ AES::AES(const string& p, const string& c, const vector<vector<int>>& k) : Crypt
 //     plaintext.append(padding, static_cast<char>(padding));
 // }
 
-
 // Substitute bytes using the S-box
-void AES::subBytes(vector<uint8_t>& state)
+void AES::subBytes(vector<uint8_t> &state)
 {
-    for (auto& byte : state)
+    for (auto &byte : state)
     {
         byte = sbox[byte];
     }
 }
 
-void AES::shiftRows(vector<uint8_t>& state)
+void AES::shiftRows(vector<uint8_t> &state)
 {
     uint8_t temp;
 
@@ -106,16 +102,20 @@ void AES::shiftRows(vector<uint8_t>& state)
     state[15] = temp;
 }
 
-uint8_t AES::gmul(uint8_t a, uint8_t b) {
+uint8_t AES::gmul(uint8_t a, uint8_t b)
+{
     uint8_t p = 0;
     uint8_t hi_bit_set;
-    for (int counter = 0; counter < 8; counter++) {
-        if (b & 1) {
+    for (int counter = 0; counter < 8; counter++)
+    {
+        if (b & 1)
+        {
             p ^= a;
         }
         hi_bit_set = (a & 0x80);
         a <<= 1;
-        if (hi_bit_set) {
+        if (hi_bit_set)
+        {
             a ^= 0x1b; // x^8 + x^4 + x^3 + x + 1
         }
         b >>= 1;
@@ -123,31 +123,35 @@ uint8_t AES::gmul(uint8_t a, uint8_t b) {
     return p;
 }
 
-uint8_t AES::gmul_02(uint8_t x) {
+uint8_t AES::gmul_02(uint8_t x)
+{
     return gmul(x, 0x02);
 }
 
-uint8_t AES::gmul_03(uint8_t x) {
+uint8_t AES::gmul_03(uint8_t x)
+{
     return gmul(x, 0x03);
 }
 
-void AES::mixColumns(vector<uint8_t>& state) {
+void AES::mixColumns(vector<uint8_t> &state)
+{
     uint8_t temp_state[16];
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++)
+    {
         temp_state[i] = state[i];
     }
 
-    for (int i = 0; i < 4; i++) {
-        state[i*4] = gmul_02(temp_state[i*4]) ^ gmul_03(temp_state[i*4+1]) ^ temp_state[i*4+2] ^ temp_state[i*4+3];
-        state[i*4+1] = temp_state[i*4] ^ gmul_02(temp_state[i*4+1]) ^ gmul_03(temp_state[i*4+2]) ^ temp_state[i*4+3];
-        state[i*4+2] = temp_state[i*4] ^ temp_state[i*4+1] ^ gmul_02(temp_state[i*4+2]) ^ gmul_03(temp_state[i*4+3]);
-        state[i*4+3] = gmul_03(temp_state[i*4]) ^ temp_state[i*4+1] ^ temp_state[i*4+2] ^ gmul_02(temp_state[i*4+3]);
+    for (int i = 0; i < 4; i++)
+    {
+        state[i * 4] = gmul_02(temp_state[i * 4]) ^ gmul_03(temp_state[i * 4 + 1]) ^ temp_state[i * 4 + 2] ^ temp_state[i * 4 + 3];
+        state[i * 4 + 1] = temp_state[i * 4] ^ gmul_02(temp_state[i * 4 + 1]) ^ gmul_03(temp_state[i * 4 + 2]) ^ temp_state[i * 4 + 3];
+        state[i * 4 + 2] = temp_state[i * 4] ^ temp_state[i * 4 + 1] ^ gmul_02(temp_state[i * 4 + 2]) ^ gmul_03(temp_state[i * 4 + 3]);
+        state[i * 4 + 3] = gmul_03(temp_state[i * 4]) ^ temp_state[i * 4 + 1] ^ temp_state[i * 4 + 2] ^ gmul_02(temp_state[i * 4 + 3]);
     }
 }
 
-
 // Add round key
-void AES::addRoundKey(vector<uint8_t>& state, const vector<uint8_t>& roundKey)
+void AES::addRoundKey(vector<uint8_t> &state, const vector<uint8_t> &roundKey)
 {
     for (size_t i = 0; i < state.size(); ++i)
     {
@@ -156,7 +160,7 @@ void AES::addRoundKey(vector<uint8_t>& state, const vector<uint8_t>& roundKey)
 }
 
 // Key expansion
-vector<uint8_t> AES::keyExpansion(const vector<vector<int>>& key)
+vector<uint8_t> AES::keyExpansion(const vector<vector<int>> &key)
 {
     vector<uint8_t> expandedKey(176); // AES-128 bit key expands to 176 bytes
     int i = 0;
@@ -246,25 +250,25 @@ string AES::encrypt()
         ciphertext.append(buffer);
     }
 
-     std::cout << "\n\033[1;34m---------------------------\n";
-        cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+    cout << "\n\033[1;34m---------------------------\n";
+    cout << "Encryption successful." << endl;
+    cout << "\n---------------------------\033[0m\n"
+         << endl;
 
     return ciphertext;
 }
 
 // Inverse substitute bytes
-void AES::invSubBytes(vector<uint8_t>& state)
+void AES::invSubBytes(vector<uint8_t> &state)
 {
-    for (auto& byte : state)
+    for (auto &byte : state)
     {
         byte = rsbox[byte];
     }
 }
 
 // Shift rows to the right
-void AES::invShiftRows(vector<uint8_t>& state)
+void AES::invShiftRows(vector<uint8_t> &state)
 {
     uint8_t temp;
 
@@ -293,44 +297,51 @@ void AES::invShiftRows(vector<uint8_t>& state)
     state[12] = temp;
 }
 
-uint8_t AES::gmul_09(uint8_t x) {
+uint8_t AES::gmul_09(uint8_t x)
+{
     return gmul(x, 0x09);
 }
 
-uint8_t AES::gmul_0b(uint8_t x) {
+uint8_t AES::gmul_0b(uint8_t x)
+{
     return gmul(x, 0x0b);
 }
 
-uint8_t AES::gmul_0d(uint8_t x) {
+uint8_t AES::gmul_0d(uint8_t x)
+{
     return gmul(x, 0x0d);
 }
 
-uint8_t AES::gmul_0e(uint8_t x) {
+uint8_t AES::gmul_0e(uint8_t x)
+{
     return gmul(x, 0x0e);
 }
 
-void AES::invMixColumns(vector<uint8_t>& state) {
+void AES::invMixColumns(vector<uint8_t> &state)
+{
     uint8_t temp_state[16];
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 16; i++)
+    {
         temp_state[i] = state[i];
     }
 
-    for (int i = 0; i < 4; i++) {
-        state[i*4] = gmul_0e(temp_state[i*4]) ^ gmul_0b(temp_state[i*4+1]) ^ gmul_0d(temp_state[i*4+2]) ^ gmul_09(temp_state[i*4+3]);
-        state[i*4+1] = gmul_09(temp_state[i*4]) ^ gmul_0e(temp_state[i*4+1]) ^ gmul_0b(temp_state[i*4+2]) ^ gmul_0d(temp_state[i*4+3]);
-        state[i*4+2] = gmul_0d(temp_state[i*4]) ^ gmul_09(temp_state[i*4+1]) ^ gmul_0e(temp_state[i*4+2]) ^ gmul_0b(temp_state[i*4+3]);
-        state[i*4+3] = gmul_0b(temp_state[i*4]) ^ gmul_0d(temp_state[i*4+1]) ^ gmul_09(temp_state[i*4+2]) ^ gmul_0e(temp_state[i*4+3]);
+    for (int i = 0; i < 4; i++)
+    {
+        state[i * 4] = gmul_0e(temp_state[i * 4]) ^ gmul_0b(temp_state[i * 4 + 1]) ^ gmul_0d(temp_state[i * 4 + 2]) ^ gmul_09(temp_state[i * 4 + 3]);
+        state[i * 4 + 1] = gmul_09(temp_state[i * 4]) ^ gmul_0e(temp_state[i * 4 + 1]) ^ gmul_0b(temp_state[i * 4 + 2]) ^ gmul_0d(temp_state[i * 4 + 3]);
+        state[i * 4 + 2] = gmul_0d(temp_state[i * 4]) ^ gmul_09(temp_state[i * 4 + 1]) ^ gmul_0e(temp_state[i * 4 + 2]) ^ gmul_0b(temp_state[i * 4 + 3]);
+        state[i * 4 + 3] = gmul_0b(temp_state[i * 4]) ^ gmul_0d(temp_state[i * 4 + 1]) ^ gmul_09(temp_state[i * 4 + 2]) ^ gmul_0e(temp_state[i * 4 + 3]);
     }
 }
 
 // Decrypt function
-std::string AES::decrypt()
+string AES::decrypt()
 {
     // Convert ciphertext to state array
     vector<uint8_t> state;
     for (size_t i = 0; i < ciphertext.size(); i += 2)
     {
-        uint8_t byte = std::stoi(ciphertext.substr(i, 2), nullptr, 16);
+        uint8_t byte = stoi(ciphertext.substr(i, 2), nullptr, 16);
         state.push_back(byte);
     }
 
@@ -361,18 +372,17 @@ std::string AES::decrypt()
         plaintext.push_back(static_cast<char>(byte));
     }
 
-
-
     // // Remove padding
     // int padding = plaintext.back();
     // plaintext.erase(plaintext.end() - padding, plaintext.end());
 
     return plaintext;
 }
-void AES::set_plaintext(const string& p)
-{for (char c : p)
+void AES::set_plaintext(const string &p)
+{
+    for (char c : p)
     {
-        if (!isalnum(c)) 
+        if (!isalnum(c))
         {
             throw invalid_argument("\033[1;31mPlaintext should only contain alphanumeric characters.\033[0m");
         }
@@ -380,16 +390,16 @@ void AES::set_plaintext(const string& p)
 
     plaintext = p;
 }
-   
-void AES::set_ciphertext(const string& c)
+
+void AES::set_ciphertext(const string &c)
 {
     for (char ch : c)
     {
-        if (!isxdigit(ch)) 
+        if (!isxdigit(ch))
         {
             throw invalid_argument("\033[1;31mCiphertext should only contain hexadecimal characters (0-9, A-F).\033[0m");
         }
     }
 
-    ciphertext=c;
+    ciphertext = c;
 }

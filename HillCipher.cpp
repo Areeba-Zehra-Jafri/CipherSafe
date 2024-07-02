@@ -131,20 +131,17 @@ string HillCipher::encrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"
-             << endl;
+        cout << "---------------------------\n"<< endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return ciphertext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -191,13 +188,11 @@ string HillCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"
-             << endl;
+        cout << "---------------------------\n"<< endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         // Remove padding 'x' characters added during encryption
         size_t paddingLength = plaintext.length() - ciphertext.length();
@@ -211,7 +206,6 @@ string HillCipher::decrypt()
     catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -228,7 +222,6 @@ void HillCipher::set_plaintext(const string &p)
     catch (const invalid_argument &e)
     {
         cerr << "\033[1;31mSet plaintext error: \033[0m" << e.what() << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -245,6 +238,5 @@ void HillCipher::set_ciphertext(const string &c)
     catch (const invalid_argument &e)
     {
         cerr << "\033[1;31mSet ciphertext error:\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }

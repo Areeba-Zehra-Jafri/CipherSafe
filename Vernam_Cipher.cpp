@@ -62,17 +62,15 @@ string VernamCipher::encrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return ciphertext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception to propagate it further if needed
     }
 }
 
@@ -109,17 +107,15 @@ string VernamCipher::decrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
 
         return plaintext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception to propagate it further if needed
     }
 }
 

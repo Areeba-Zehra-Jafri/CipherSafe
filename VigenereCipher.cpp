@@ -57,16 +57,14 @@ string VigenereCipher::encrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
         return ciphertext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
-        throw; // Rethrow the exception for handling in the caller code
     }
 }
 
@@ -76,7 +74,7 @@ string VigenereCipher::decrypt()
     {
         if (ciphertext.empty() || key.empty())
         {
-            throw std::invalid_argument("\033[1;31mEmpty ciphertext or key.\033[0m");
+            throw invalid_argument("\033[1;31mEmpty ciphertext or key.\033[0m");
         }
 
         srand(time(0));                                    // Seed the random number generator
@@ -102,20 +100,17 @@ string VigenereCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"
-             << endl;
+        cout << "---------------------------\n"<< endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"<< endl;
                   
         return plaintext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
-        throw; // Rethrow the exception for handling in the caller code
     }
 }
 

@@ -79,18 +79,17 @@ string AffineCipher::encrypt()
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
         cout << "---------------------------\n"
              << endl;
-             
-        std::cout << "\n\033[1;34m---------------------------\n";
+
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
-                  << endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return ciphertext;
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mPlaintext cannot be empty.\033[0m " << e.what() << endl;
-        throw; // Re-throw the exception for the caller to handle
     }
 }
 
@@ -138,9 +137,9 @@ string AffineCipher::decrypt()
         cout << "---------------------------\n"
              << endl;
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        std::cout << "\n---------------------------\033[0m\n"
+        cout << "\n---------------------------\033[0m\n"
                   << endl;
 
         return plain_text;
@@ -148,7 +147,6 @@ string AffineCipher::decrypt()
     catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption error: \033[0m " << e.what() << std::endl;
-        throw;
     }
 }
 
