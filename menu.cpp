@@ -58,17 +58,19 @@ void password_screen()
             cout << "4. Exit" << endl;
             cout << "Enter choice: ";
             cin >> choice;
+            cin.ignore();
             switch (choice)
             {
             case 1:
                 cout << "=== Sign Up ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
-                getline(cin, username);
+                cin>>username;
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
-                getline(cin, password);
+                cin.ignore();
+                cin>>password;
                 cout << "--------------------" << endl;
                 m1.sign_up(username, password);
                 m1.save_accounts("data.txt");
@@ -77,11 +79,11 @@ void password_screen()
                 cout << "=== Change Password ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
-                getline(cin, username);
+                cin>>username;
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
-                getline(cin, password);
+                cin>>password;
                 cout << "--------------------" << endl;
                 m1.change_password(username, password);
                 break;
@@ -89,11 +91,11 @@ void password_screen()
                 cout << "=== Login ===" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
-                getline(cin, username);
+                cin>>username;
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
-                getline(cin, password);
+                cin>>password;
                 cout << "--------------------" << endl;
                 m1.login(username, password);
                 break;
@@ -200,7 +202,7 @@ void instructions(void)
     system("cls");
     string line;
     ifstream in;
-    in.open("instructions.txt");
+    in.open("instruction.txt");
     while (in.eof() == 0)
     {
         getline(in, line);

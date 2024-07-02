@@ -92,7 +92,7 @@ void Management::change_password(const string &username, const string &password)
                 if (it->password == password)
                 {
                     cout << "Enter your new password: ";
-                    getline(cin , pass);
+                    cin>>pass;
                     it->password = pass;
                     cout << "\n\033[1;34m---------------------------\n";
                     cout << " Password changed successfully! ";
@@ -113,30 +113,64 @@ void Management::change_password(const string &username, const string &password)
     }
 }
 
+// void Management::login(const string &username, const string &password)
+// {
+//     try
+//     {
+//         system("cls");
+//         for (const auto &acc : accounts)
+//         {
+//             if (acc.username == username && acc.password == password)
+//             {
+//                 cout << "\n\033[1;34m---------------------------\n";
+//                 cout << " Login successfull! ";
+//                 cout << "\n---------------------------\033[0m\n"
+//                           << endl;
+//                 main_screen();
+//                 return;
+//             }
+//             else
+//             {
+//                 throw runtime_error("\033[1;31mInvalid username or password. Try again.\033[0m");
+//             }
+//         }
+        
+//     }
+//     catch (const exception &e)
+//     {
+//         cerr << "\033[1;31mException caught in login: " << e.what() << "\033[0m" << endl;
+//     }
+// }
+
 void Management::login(const string &username, const string &password)
 {
     try
     {
         system("cls");
+        bool login_successful = false;
         for (const auto &acc : accounts)
         {
             if (acc.username == username && acc.password == password)
             {
                 cout << "\n\033[1;34m---------------------------\n";
-                cout << " Login successfull! ";
-                cout << "\n---------------------------\033[0m\n"
-                          << endl;
+                cout << " Login successful! ";
+                cout << "\n---------------------------\033[0m\n" << endl;
                 main_screen();
-                return;
+                login_successful = true;
+                break;
             }
         }
-        throw runtime_error("\033[1;31mInvalid username or password. Try again.\033[0m");
+        if (!login_successful)
+        {
+            throw runtime_error("\033[1;31mInvalid username or password. Try again.\033[0m");
+        }
     }
     catch (const exception &e)
     {
         cerr << "\033[1;31mException caught in login: " << e.what() << "\033[0m" << endl;
     }
 }
+
 
 void Management::serialize(const Account &account, ofstream &file)
 {
