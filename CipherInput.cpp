@@ -209,3 +209,20 @@ bool CipherInput::isPrime(long long n)
     }
     return true;
 }
+string CipherInput::getVernamCipherKey()
+{
+    string key;
+    cout << "Enter the key for Vernam Cipher (A-Z only): ";
+    cin>>key;
+
+    // Validate key (should contain only uppercase letters A-Z)
+    for (char c : key)
+    {
+        if (!(c >= 'A' && c <= 'Z'))
+        {
+            throw invalid_argument("\033[1;31mInvalid key. Key should contain only uppercase letters A-Z.\033[0m");
+        }
+    }
+
+    return key;
+}

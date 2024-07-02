@@ -16,10 +16,10 @@ public:
     static std::string getHillCipherKey();
     static int getRailFenceCipherKey();
     static std::vector<long long> getRSACipherKey();
-    static std::string getVernamCipherKey();
     static std::string getVigenereCipherKey();
     static std::vector<std::vector<int>> getAESCipherKey();
     static std::string getMonoalphabeticCipherKey();
+    static std::string getVernamCipherKey();
 
 private:
     static int gcd(int a, int b);

@@ -177,7 +177,7 @@ Cryptography *FileCryptography::selectCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int key1, key3, key5;
-    string key2, key4, key6;
+    string key2, key4, key6,key7;
     vector<long long> key8;
     vector<vector<int>> key9;
 
@@ -225,7 +225,8 @@ Cryptography *FileCryptography::selectCipher()
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        return new VernamCipher("", "");
+        key7= obj.getVernamCipherKey();
+        return new VernamCipher("", "",key7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;

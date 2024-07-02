@@ -157,7 +157,7 @@ Cryptography *HybridCryptography::selectTextCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int keyF1, keyF3, keyF5;
-    string keyF2, keyF4, keyF6;
+    string keyF2, keyF4, keyF6,keyF7;
     vector<long long> keyF8;
     vector<vector<int>> keyF9;
     CipherInput obj;
@@ -204,7 +204,8 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        return new VernamCipher("", ""); 
+        keyF7= obj.getVernamCipherKey();
+        return new VernamCipher("", "",keyF7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;

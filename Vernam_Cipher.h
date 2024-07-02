@@ -13,13 +13,14 @@ private:
     void generateKey(size_t length); // Function to generate a random key
 
 public:
-    VernamCipher(const string& p, const string& c); // Default parameter for key
+    VernamCipher(const string& p, const string& c,const string& k); // Default parameter for key
     string get_plain_text();
     string get_cipher();
     string encrypt();
     string decrypt();
     void set_plaintext(const string& p);
     void set_ciphertext(const string& p);
+    void set_key(const string &k);
 };
 
 #endif // VERNAMCIPHER_H

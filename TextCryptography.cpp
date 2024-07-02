@@ -128,7 +128,7 @@ Cryptography *TextCryptography::selectCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int keyT1, keyT3, keyT5;
-    string keyT2, keyT4, keyT6;
+    string keyT2, keyT4, keyT6,keyT7;
     vector<long long> keyT8;
     vector<vector<int>> keyT9;
 
@@ -176,7 +176,8 @@ Cryptography *TextCryptography::selectCipher()
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        return new VernamCipher("", "");
+        keyT7= obj.getVernamCipherKey();
+        return new VernamCipher("", "",keyT7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;
