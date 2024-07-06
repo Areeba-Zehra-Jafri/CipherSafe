@@ -51,7 +51,7 @@ void password_screen()
         int choice;
         while (true)
         {
-            cout << "=== Password Management ===" << endl;
+            cout << "\033[1;33m=== Password Management ===\033[0m" << endl;
             cout << "1. Sign up" << endl;
             cout << "2. Change password" << endl;
             cout << "3. Login" << endl;
@@ -62,7 +62,7 @@ void password_screen()
             switch (choice)
             {
             case 1:
-                cout << "=== Sign Up ===" << endl;
+                cout << "\033[1;33m=== Sign Up ===\033[0m" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
@@ -76,7 +76,7 @@ void password_screen()
                 m1.save_accounts("data.txt");
                 break;
             case 2:
-                cout << "=== Change Password ===" << endl;
+                cout << "\033[1;33m=== Change Password ===\033[0m" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
@@ -88,7 +88,7 @@ void password_screen()
                 m1.change_password(username, password);
                 break;
             case 3:
-                cout << "=== Login ===" << endl;
+                cout << "\033[1;33m=== Login ===\033[0m" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
@@ -119,7 +119,7 @@ void main_screen(void)
     int choice;
     while (1)
     {
-        cout << "=== Main Menu ===" << endl;
+        cout << "\033[1;33m=== Main Menu ===\033[0m" << endl;
         cout << "1. Start" << endl;
         cout << "2. Instructions" << endl;
         cout << "3. Exit" << endl;
@@ -129,11 +129,11 @@ void main_screen(void)
         switch (choice)
         {
         case 1:
-            cout << "=== Start Menu ===" << endl;
+            cout << "\033[1;33m=== Start Menu ===\033[0m" << endl;
             start_screen();
             break;
         case 2:
-            cout << "=== Instructions ===" << endl;
+            cout << "\033[1;33m=== Instructions ===\033[0m" << endl;
             instructions();
             break;
         case 3:
@@ -156,7 +156,7 @@ void start_screen(void)
     int choice;
     while (1)
     {
-        cout << "=== Start Menu ===" << endl;
+        cout << "\033[1;33m=== Start Menu ===\033[0m" << endl;
         cout << "Select one of the following: " << endl;
         cout << "1-Text Encryption/Decryption" << endl;
         cout << "2-File Encryption/Decryption" << endl;
