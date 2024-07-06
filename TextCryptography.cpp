@@ -29,7 +29,7 @@ void TextCryptography::processText()
         cin.ignore();
         cout << "------------------" << endl;
         cout << "Enter the text: ";
-        cout << "------------------" << endl;
+        cout << "\n------------------" << endl;
         getline(cin, text);
 
         switch (choice)

@@ -66,29 +66,12 @@ std::string CipherInput::getHillCipherKey()
 
 int CipherInput::getRailFenceCipherKey()
 {
-    string input;
+   
     int railKey;
     cout << "\n-------------------------------------\n";
     cout << "Enter rail key for Rail Fence Cipher: ";
     cout << "\n-------------------------------------\n";
-    getline(cin, input);
-
-    bool isNumeric = true;
-    for (char c : input)
-    {
-        if (!isdigit(c))
-        {
-            isNumeric = false;
-            break;
-        }
-    }
-
-    if (!isNumeric)
-    {
-        throw invalid_argument("\033[1;31mInvalid input: Rail key must be a numeric value.\033[0m");
-    }
-
-    railKey = stoi(input);
+    cin >> railKey;
 
     if (railKey < 2)
     {
