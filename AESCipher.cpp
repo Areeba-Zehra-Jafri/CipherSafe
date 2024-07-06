@@ -380,15 +380,36 @@ string AES::decrypt()
 }
 void AES::set_plaintext(const string &p)
 {
-    for (char c : p)
+    while (true)
     {
-        if (!isalnum(c))
-        {
-            throw invalid_argument("\033[1;31mPlaintext should only contain alphanumeric characters.\033[0m");
-        }
-    }
+        cout << "==INPUT RULES==";
+        cout << " Plaintext must be exactly 16 bytes long" << endl;
+        cout << "\n------------------\n";
+        cout << "Enter plaintext :\n ";
+        cout << "\n------------------\n";
+        cin >> plaintext;
 
-    plaintext = p;
+        if (p.size() == 16)
+        {
+
+            bool valid = true;
+            for (char c : plaintext)
+            {
+                if (!isalnum(c))
+                {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid)
+            {
+                break;
+            }
+        }
+
+        cout << "\033[1;31mInvalid plaintext. Please enter exactly 16 alphanumeric characters.\033[0m" << endl;
+    }
 }
 
 void AES::set_ciphertext(const string &c)
