@@ -131,11 +131,13 @@ string HillCipher::encrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"<< endl;
+        cout << "---------------------------\n"
+             << endl;
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return ciphertext;
     }
@@ -188,11 +190,13 @@ string HillCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"<< endl;
+        cout << "---------------------------\n"
+             << endl;
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         // Remove padding 'x' characters added during encryption
         size_t paddingLength = plaintext.length() - ciphertext.length();
@@ -213,15 +217,27 @@ void HillCipher::set_plaintext(const string &p)
 {
     try
     {
-        if (p.empty())
+        cout << "==INPUT RULES==";
+        cout << "Input must contain only lowercase alphabetic characters (no spaces)." << endl;
+        cout << "\n---------------------\n";
+        cout << "Enter the plaintext :\n";
+        cout << "-----------------------\n";
+        cin >> plaintext;
+        if (plaintext.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        plaintext = p;
+        for (char ch : plaintext)
+        {
+            if (!islower(ch))
+            {
+                throw invalid_argument("\033[1;31mPlaintext should only contain lowercase alphabetic characters.\033[0m");
+            }
+        }
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet plaintext error: \033[0m" << e.what() << endl;
+        cerr << "\033[1;31mSet plaintext error:\033[0m " << e.what() << endl;
     }
 }
 
@@ -229,11 +245,22 @@ void HillCipher::set_ciphertext(const string &c)
 {
     try
     {
-        if (c.empty())
+        cout << "\n---------------------\n";
+        cout << "Enter the ciphertext :\n";
+        cout << "-----------------------\n";
+        cin >> ciphertext;
+
+        if (ciphertext.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-        ciphertext = c;
+        for (char ch : ciphertext)
+        {
+            if (!islower(ch))
+            {
+                throw invalid_argument("\033[1;31mCiphertext should only contain lowercase alphabetic characters.\033[0m");
+            }
+        }
     }
     catch (const invalid_argument &e)
     {
