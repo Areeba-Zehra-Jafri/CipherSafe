@@ -11,6 +11,8 @@ private:
 
 public:
     VigenereCipher(const string& p,const string& c,const string& k);
+    string get_ciphertext();
+    string get_plaintext();
     string encrypt() override;
     string decrypt() override;
     void set_key(const string& k);

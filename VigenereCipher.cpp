@@ -13,6 +13,29 @@ VigenereCipher::VigenereCipher(const string &p, const string &c, const string &k
 {
 }
 
+string VigenereCipher::get_plaintext()
+{
+
+    cout << "== INPUT RULES==\n";
+    cout << "Input must contain only uppercase alphabetic characters (no spaces)\n";
+    cout << "\n----------------------\n";
+    cout << "Enter the plaintext : ";
+    cin >> plaintext;
+    cout << "\n----------------------\n";
+
+    return plaintext;
+}
+
+string VigenereCipher::get_ciphertext()
+{
+    cout << "\n---------------------\n";
+    cout << "Enter the ciphertext : ";
+    cin >> ciphertext;
+    cout << "\n---------------------\n";
+
+    return ciphertext;
+}
+
 void VigenereCipher::set_key(const string &k)
 {
     key = k;
@@ -115,18 +138,13 @@ string VigenereCipher::decrypt()
 
 void VigenereCipher::set_plaintext(const string &p)
 {
-    cout<<"== INPUT RULES==";
-    cout<<"Input must contain only uppercase alphabetic characters (no spaces)\n";
-    cout << "\n----------------------\n";
-    cout << "Enter the plaintext : ";
-    cin >> plaintext;
-    cout << "\n----------------------\n";
     try
     {
         if (!std::all_of(p.begin(), p.end(), ::isupper))
         {
             throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only uppercase letters are allowed.\033[0m");
         }
+        plaintext = p;
     }
     catch (const invalid_argument &e)
     {
@@ -136,16 +154,14 @@ void VigenereCipher::set_plaintext(const string &p)
 
 void VigenereCipher::set_ciphertext(const string &c)
 {
-    cout << "\n---------------------\n";
-    cout << "Enter the ciphertext : ";
-    cin >> ciphertext;
-    cout << "\n---------------------\n";
 
-   try{
-     if (!std::all_of(c.begin(), c.end(), ::isupper))
+    try
+    {
+        if (!std::all_of(c.begin(), c.end(), ::isupper))
         {
             throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only uppercase letters are allowed.\033[0m");
         }
+        ciphertext = c;
     }
     catch (const invalid_argument &e)
     {
