@@ -77,6 +77,28 @@ void HillCipher::generateInverseKeyMatrix()
 // Constructor to initialize the HillCipher object with key and plaintext
 HillCipher::HillCipher(const string &c, const string &p, const string &k) : Cryptography(p, c), key(k) {}
 
+string HillCipher::get_plaintext()
+{
+    cout << "==INPUT RULES==\n";
+    cout << "Input must contain only lowercase alphabetic characters (no spaces)." << endl;
+    cout << "\n---------------------\n";
+    cout << "Enter the plaintext :\n";
+    cout << "-----------------------\n";
+    cin >> plaintext;
+
+    return plaintext;
+}
+
+string HillCipher::get_ciphertext()
+{
+    cout << "\n---------------------\n";
+    cout << "Enter the ciphertext :\n";
+    cout << "-----------------------\n";
+    cin >> ciphertext;
+
+    return ciphertext;
+}
+
 // Function to encrypt the plaintext using the Hill cipher
 string HillCipher::encrypt()
 {
@@ -217,12 +239,7 @@ void HillCipher::set_plaintext(const string &p)
 {
     try
     {
-        cout << "==INPUT RULES==";
-        cout << "Input must contain only lowercase alphabetic characters (no spaces)." << endl;
-        cout << "\n---------------------\n";
-        cout << "Enter the plaintext :\n";
-        cout << "-----------------------\n";
-        cin >> plaintext;
+
         if (plaintext.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
@@ -234,6 +251,7 @@ void HillCipher::set_plaintext(const string &p)
                 throw invalid_argument("\033[1;31mPlaintext should only contain lowercase alphabetic characters.\033[0m");
             }
         }
+        plaintext = p;
     }
     catch (const invalid_argument &e)
     {
@@ -245,10 +263,6 @@ void HillCipher::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "\n---------------------\n";
-        cout << "Enter the ciphertext :\n";
-        cout << "-----------------------\n";
-        cin >> ciphertext;
 
         if (ciphertext.empty())
         {
@@ -261,6 +275,7 @@ void HillCipher::set_ciphertext(const string &c)
                 throw invalid_argument("\033[1;31mCiphertext should only contain lowercase alphabetic characters.\033[0m");
             }
         }
+        ciphertext = c;
     }
     catch (const invalid_argument &e)
     {
