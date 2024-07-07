@@ -83,15 +83,16 @@ string monoalphabetic::decrypt()
     return plaintext;
 }
 
-// Setter for plaintext
 void monoalphabetic::set_plaintext(const string &p)
 {
     try
     {
-        cout << "\n-------------------------------------------------------\n";
-        cout << "Enter the plaintext  (only alphanumeric characters): ";
+        cout<<"==INPUT RULES==\n";
+        cout<<"\nOnly alphabets are allowed (No spaces)."<<endl;
+        cout << "\n----------------------\n";
+        cout << "Enter the plaintext (only alphabetic characters) : ";
         cin >> plaintext;
-        cout << "\n-------------------------------------------------------\n";
+        cout << "\n----------------------\n";
 
         if (plaintext.empty())
         {
@@ -99,9 +100,9 @@ void monoalphabetic::set_plaintext(const string &p)
         }
         for (char ch : plaintext)
         {
-            if (!isalnum(ch))
+            if (!isalpha(ch))
             {
-                throw invalid_argument("\033[1;31mPlaintext should only contain alphanumeric characters.\033[0m");
+                throw invalid_argument("\033[1;31mPlaintext should only contain alphabetic characters.\033[0m");
             }
         }
     }
@@ -117,24 +118,28 @@ void monoalphabetic::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "\n--------------------------------------------------------\n";
-        cout << "Enter the ciphertext  (only alphanumeric characters): ";
+        cout << "\n-----------------------\n";
+        cout << "Enter the ciphertext : ";
         cin >> ciphertext;
-        cout << "\n--------------------------------------------------------\n";
+        cout << "\n-----------------------\n";
 
         if (ciphertext.empty())
         {
             throw std::invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-         for (char ch : ciphertext)
+        
+        for (char ch : ciphertext)
         {
-            if (!isalnum(ch))
+            if (!isalpha(ch))
             {
-                throw invalid_argument("\033[1;31mCiphertext should only contain alphanumeric characters.\033[0m");
+                throw invalid_argument("\033[1;31mCiphertext should only contain alphabetic characters.\033[0m");
+            }
+            if (!isupper(ch) && !islower(ch))
+            {
+                throw invalid_argument("\033[1;31mCiphertext should only contain uppercase or lowercase alphabetic characters.\033[0m");
             }
         }
     }
-    
     catch (const invalid_argument &e)
     {
         cerr << "\033[1;31mSet ciphertext error:\033[0m " << e.what() << endl;
