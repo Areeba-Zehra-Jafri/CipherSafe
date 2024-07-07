@@ -10,6 +10,30 @@ CaesarCipher::CaesarCipher(const string &p, const string &c, int s) : Cryptograp
 {
 }
 
+string CaesarCipher::get_ciphertext()
+{
+    cout << "\n-------------------------------\n";
+    cout << "Enter the ciphertext to decrypt:\n";
+    cout << "----------------------------------\n"
+         << endl;
+    cin >> ciphertext;
+
+    return ciphertext;
+}
+
+string CaesarCipher::get_plaintext()
+{
+    cout << "==INPUT RULES==\n";
+    cout << "Only alphabetic characters are allowed(no spaces)\n";
+    cout << "\n-------------------------------\n";
+    cout << "Enter the plaintext to encrypt:\n";
+    cout << "--------------------------------\n"
+         << endl;
+    cin >> plaintext;
+
+    return plaintext;
+}
+
 string CaesarCipher::encrypt()
 {
     try
@@ -108,13 +132,6 @@ void CaesarCipher::set_plaintext(const string &p)
 {
     try
     {
-        cout<<"==INPUT RULES==";
-        cout << "Only alphabetic characters are allowed(no spaces)\n";
-        cout << "\n-------------------------------\n";
-        cout << "Enter the plaintext to encrypt:\n";
-        cout << "--------------------------------\n"
-             << endl;
-        cin >> plaintext;
 
         if (plaintext.empty())
         {
@@ -128,6 +145,7 @@ void CaesarCipher::set_plaintext(const string &p)
                 throw invalid_argument("\033[1;31mPlaintext must contain only alphabetic characters.\033[0m");
             }
         }
+        plaintext = p;
     }
     catch (const invalid_argument &e)
     {
@@ -139,12 +157,6 @@ void CaesarCipher::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "Only alphabetic characters are allowed(no spaces)\n";
-        cout << "\n-------------------------------\n";
-        cout << "Enter the ciphertext to decrypt:\n";
-        cout << "----------------------------------\n"
-             << endl;
-        cin >> ciphertext;
 
         if (ciphertext.empty())
         {
@@ -158,6 +170,7 @@ void CaesarCipher::set_ciphertext(const string &c)
                 throw invalid_argument("\033[1;31mCiphertext must contain only alphabetic characters.\033[0m");
             }
         }
+        ciphertext = c;
     }
     catch (const invalid_argument &e)
     {
