@@ -215,6 +215,28 @@ vector<uint8_t> AES::keyExpansion(const vector<vector<int>> &key)
     return expandedKey;
 }
 
+string AES::get_plaintext()
+{
+
+    cout << "==INPUT RULES==\n";
+    cout << " Plaintext must be exactly 16 bytes long" << endl;
+    cout << "\n------------------\n";
+    cout << "Enter plaintext :\n ";
+    cout << "\n------------------\n";
+    cin >> plaintext;
+
+    return plaintext;
+}
+
+string AES::get_ciphertext()
+{
+    cout << "\n------------------\n";
+    cout << "Enter Ciphertext :\n ";
+    cout << "\n------------------\n";
+    cin >> ciphertext;
+
+    return ciphertext;
+}
 // Encrypt function
 string AES::encrypt()
 {
@@ -378,37 +400,24 @@ string AES::decrypt()
 
     return plaintext;
 }
+
 void AES::set_plaintext(const string &p)
 {
-    while (true)
+    if (p.size() == 16)
     {
-        cout << "==INPUT RULES==";
-        cout << " Plaintext must be exactly 16 bytes long" << endl;
-        cout << "\n------------------\n";
-        cout << "Enter plaintext :\n ";
-        cout << "\n------------------\n";
-        cin >> plaintext;
-
-        if (p.size() == 16)
+        for (char c : plaintext)
         {
-
-            bool valid = true;
-            for (char c : plaintext)
+            if (!isalnum(c))
             {
-                if (!isalnum(c))
-                {
-                    valid = false;
-                    break;
-                }
-            }
-
-            if (valid)
-            {
-                break;
+                throw invalid_argument("\033[1;31mInvalid plaintext. Please enter exactly 16 alphanumeric characters.\033[0m");
             }
         }
 
-        cout << "\033[1;31mInvalid plaintext. Please enter exactly 16 alphanumeric characters.\033[0m" << endl;
+        plaintext = p;
+    }
+    else
+    {
+        throw invalid_argument("\033[1;31mInvalid plaintext length. Please enter exactly 16 alphanumeric characters.\033[0m");
     }
 }
 

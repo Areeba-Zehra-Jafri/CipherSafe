@@ -28,6 +28,8 @@ private:
 
 public:
     AES(const string& p,const string& c, const vector<vector<int>>& k);
+    string get_plaintext();
+    string get_ciphertext();
     string encrypt() ;
     string decrypt() ;
     void set_plaintext(const string& p);
