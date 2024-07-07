@@ -158,7 +158,7 @@ void VernamCipher::set_plaintext(const string &p)
                 throw invalid_argument("\033[1;31mIn Vernam Cipher, plaintext must contain only alphanumeric characters.\033[0m");
             }
         }
-        if (plaintext.length() != key.length())
+        if (p.length() != key.length())
         {
             throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext.\033[0m");
         }
@@ -174,7 +174,7 @@ void VernamCipher::set_ciphertext(const string &c)
 {
     try
     {
-        if (ciphertext.length() != key.length())
+        if (c.length() != key.length())
         {
             throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as ciphertext.\033[0m");
         }

@@ -41,10 +41,6 @@ void HybridCryptography::processTextHybrid()
 void HybridCryptography::encryptAndEmbedText()
 {
     string text, inputImage, outputImage;
-    cout << "----------------------------------------" << endl;
-    cout << "Enter the text to encrypt and embed: ";
-    cin.ignore();
-    getline(cin, text);
 
     Cryptography *cipher = selectTextCipher();
     if (!cipher)
@@ -56,6 +52,7 @@ void HybridCryptography::encryptAndEmbedText()
     string encryptedText;
     try
     {
+        text=cipher->get_plaintext();
         cipher->set_plaintext(text);
         encryptedText = cipher->encrypt();
         cout << "--------------------------" << endl;
@@ -99,9 +96,9 @@ void HybridCryptography::extractAndDecryptText()
     string inputImage, extractedMessage;
     cout << "----------------------------------------" << endl;
     cout << "Enter the path of the steganographic image: ";
-    cout << "----------------------------------------" << endl;
     cin.ignore(); // Ignore any newline characters left in the input buffer
     getline(cin, inputImage);
+    cout << "----------------------------------------" << endl;
 
     // Extract message from image
     try

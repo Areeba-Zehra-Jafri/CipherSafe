@@ -405,7 +405,7 @@ void AES::set_plaintext(const string &p)
 {
     if (p.size() == 16)
     {
-        for (char c : plaintext)
+        for (char c : p)
         {
             if (!isalnum(c))
             {

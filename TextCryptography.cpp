@@ -27,10 +27,6 @@ void TextCryptography::processText()
         }
 
         cin.ignore();
-        cout << "------------------" << endl;
-        cout << "Enter the text: ";
-        cout << "\n------------------" << endl;
-        getline(cin, text);
 
         switch (choice)
         {
@@ -73,7 +69,8 @@ void TextCryptography::encryptText(const string &plaintext)
 
     try
     {
-        cipher->set_plaintext(plaintext);
+        string text = cipher->get_plaintext();
+        cipher->set_plaintext(text);
         string encryptedText = cipher->encrypt();
         cout << "-------------------" << endl;
         cout << "Encrypted text: " << encryptedText << endl;
@@ -98,7 +95,8 @@ void TextCryptography::decryptText(const string &ciphertext)
 
     try
     {
-        cipher->set_ciphertext(ciphertext);
+        string text=cipher->get_ciphertext();
+        cipher->set_ciphertext(text);
         string decryptedText = cipher->decrypt();
         cout << "-------------------" << endl;
         cout << "Decrypted text: " << decryptedText << endl;

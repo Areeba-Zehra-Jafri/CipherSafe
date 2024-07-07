@@ -266,7 +266,7 @@ void RSA::set_plaintext(const string &p)
     try
     {
 
-        for (char c : plaintext)
+        for (char c : p)
         {
             if (!isalnum(c))
             {
@@ -288,7 +288,7 @@ void RSA::set_ciphertext(const string &c)
     try
     {
 
-        istringstream iss(ciphertext);
+        istringstream iss(c);
         long long num;
         while (iss >> num)
         {

@@ -207,11 +207,11 @@ void RailFenceCipher::set_plaintext(const string &p)
     try
     {
 
-        if (plaintext.empty())
+        if (p.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        for (char c : plaintext)
+        for (char c : p)
         {
             if (!isalpha(c))
             {
@@ -231,13 +231,13 @@ void RailFenceCipher::set_ciphertext(const string &c)
     try
     {
 
-        if (ciphertext.empty())
+        if (c.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-        for (char c : ciphertext)
+        for (char ch : c)
         {
-            if (!isalpha(c))
+            if (!isalpha(ch))
             {
                 throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only alphabetic characters are allowed.\033[0m");
             }

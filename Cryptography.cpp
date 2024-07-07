@@ -10,4 +10,14 @@ void  Cryptography::set_ciphertext(const string& c)
     ciphertext=c;
 }
 
+string Cryptography::get_ciphertext()
+{
+    return ciphertext;
+}
+
+string Cryptography::get_plaintext()
+{
+    return plaintext;
+}
+
 Cryptography::~Cryptography() {}

@@ -8,27 +8,8 @@ using namespace std;
 monoalphabetic::monoalphabetic(const string &p, const string &c, const string &k)
     : Cryptography(p, c), key(k)
 {
-    // validateKey(key);
     createCipherAlphabet();
 }
-
-// Function to validate the key
-// void monoalphabetic::validateKey(const string& key) {
-//     if (key.length() != 26) {
-//         throw invalid_argument("Key length must be 26 characters.");
-//     }
-
-//     unordered_set<char> charSet;
-//     for (char c : key) {
-//         if (!islower(c)) {
-//             throw invalid_argument("Key must contain only lowercase alphabetic characters.");
-//         }
-//         if (charSet.find(c) != charSet.end()) {
-//             throw invalid_argument("Key must not contain duplicate characters.");
-//         }
-//         charSet.insert(c);
-//     }
-// }
 
 // Helper function to create the cipher and decipher maps
 void monoalphabetic::createCipherAlphabet()
@@ -111,11 +92,11 @@ void monoalphabetic::set_plaintext(const string &p)
     try
     {
 
-        if (plaintext.empty())
+        if (p.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        for (char ch : plaintext)
+        for (char ch : p)
         {
             if (!isalpha(ch))
             {
@@ -137,12 +118,12 @@ void monoalphabetic::set_ciphertext(const string &c)
     try
     {
 
-        if (ciphertext.empty())
+        if (c.empty())
         {
             throw std::invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
 
-        for (char ch : ciphertext)
+        for (char ch : c)
         {
             if (!isalpha(ch))
             {

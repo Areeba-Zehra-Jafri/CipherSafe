@@ -240,11 +240,11 @@ void HillCipher::set_plaintext(const string &p)
     try
     {
 
-        if (plaintext.empty())
+        if (p.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        for (char ch : plaintext)
+        for (char ch : p)
         {
             if (!islower(ch))
             {
@@ -264,11 +264,11 @@ void HillCipher::set_ciphertext(const string &c)
     try
     {
 
-        if (ciphertext.empty())
+        if (c.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-        for (char ch : ciphertext)
+        for (char ch : c)
         {
             if (!islower(ch))
             {
