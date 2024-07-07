@@ -23,7 +23,7 @@ void monoalphabetic::createCipherAlphabet()
 
 string monoalphabetic::get_plaintext()
 {
-    cout << "==INPUT RULES==\n";
+    cout << "\n==INPUT RULES==\n";
     cout << "\nOnly alphabets are allowed (No spaces)." << endl;
     cout << "\n----------------------\n";
     cout << "Enter the plaintext (only alphabetic characters) : ";
