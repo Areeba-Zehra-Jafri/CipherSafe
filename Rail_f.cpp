@@ -14,6 +14,28 @@ RailFenceCipher::RailFenceCipher(const string &p, const string &c, int railKey) 
     srand(time(0)); // Seed the random number generator
 }
 
+string RailFenceCipher::get_plaintext()
+{
+
+    cout << "==INPUT RULES==\n";
+    cout << "Input must contain only alphabetic characters (no spaces)." << endl;
+    cout << "\n---------------------\n";
+    cout << "Enter the plaintext : ";
+    cin >> plaintext;
+    cout << "\n---------------------\n";
+
+    return plaintext;
+}
+
+string RailFenceCipher::get_ciphertext()
+{
+    cout << "\n---------------------\n";
+    cout << "Enter the ciphertext : ";
+    cin >> ciphertext;
+    cout << "\n---------------------\n";
+
+    return ciphertext;
+}
 string RailFenceCipher::encrypt()
 {
     try
@@ -184,12 +206,6 @@ void RailFenceCipher::set_plaintext(const string &p)
 {
     try
     {
-         cout<<"==INPUT RULES==";
-    cout << "Input must contain only alphabetic characters (no spaces)." << endl;
-        cout << "\n---------------------\n";
-        cout << "Enter the plaintext : ";
-        cin >> plaintext;
-        cout << "\n---------------------\n";
 
         if (plaintext.empty())
         {
@@ -202,6 +218,7 @@ void RailFenceCipher::set_plaintext(const string &p)
                 throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only alphabetic characters are allowed.\033[0m");
             }
         }
+        plaintext = p;
     }
     catch (const invalid_argument &e)
     {
@@ -213,10 +230,6 @@ void RailFenceCipher::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "\n---------------------\n";
-        cout << "Enter the ciphertext : ";
-        cin >> ciphertext;
-        cout << "\n---------------------\n";
 
         if (ciphertext.empty())
         {
@@ -229,6 +242,7 @@ void RailFenceCipher::set_ciphertext(const string &c)
                 throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only alphabetic characters are allowed.\033[0m");
             }
         }
+        ciphertext = c;
     }
     catch (const invalid_argument &e)
     {
