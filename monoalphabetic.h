@@ -45,6 +45,8 @@ private:
 public:
 
     monoalphabetic(const string& p, const string& c, const string& k);
+    string get_ciphertext();
+    string get_plaintext();
     string encrypt();
     string decrypt();
     void set_plaintext(const string& p);
