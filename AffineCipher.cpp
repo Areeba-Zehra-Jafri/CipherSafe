@@ -42,7 +42,7 @@ string AffineCipher::get_ciphertext()
 string AffineCipher::get_plaintext()
 {
     cout << "==INPUT RULES ==\n";
-    cout << "Only alphabetic characters are allowed(no spaces)\n";
+   cout << "Only alphabetic characters and numbers are allowed (no spaces)\n";
     cout << "\n-------------------------------\n";
     cout << "Enter the plaintext to encrypt:\n";
     cout << "--------------------------------\n"
@@ -169,11 +169,11 @@ void AffineCipher::set_plaintext(const string &p)
     try
     {
 
-        for (char c : plaintext)
+        for (char c : p)
         {
-            if (!isalpha(c))
+            if (!isalnum(c))
             {
-                throw invalid_argument("\033[1;31mPlaintext should only contain alphabetic characters.\033[0m");
+                throw invalid_argument("\033[1;31mPlaintext should only contain alphanumeric characters.\033[0m");
             }
         }
         plaintext = p;
@@ -189,11 +189,11 @@ void AffineCipher::set_ciphertext(const string &c)
     try
     {
 
-        for (char ch : ciphertext)
+         for (char ch : c)
         {
-            if (!isalpha(ch))
+            if (!isalnum(ch))
             {
-                throw invalid_argument("\033[1;31mCiphertext should only contain alphabetic characters.\033[0m");
+                throw invalid_argument("\033[1;31mCiphertext should only contain alphanumeric characters.\033[0m");
             }
         }
         ciphertext = c;
