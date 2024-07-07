@@ -70,7 +70,8 @@ string RailFenceCipher::encrypt()
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return ciphertext;
     }
@@ -85,7 +86,7 @@ string RailFenceCipher::decrypt()
 {
     try
     {
-         if (ciphertext.empty())
+        if (ciphertext.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
@@ -168,7 +169,8 @@ string RailFenceCipher::decrypt()
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return plaintext;
     }
@@ -180,20 +182,26 @@ string RailFenceCipher::decrypt()
 
 void RailFenceCipher::set_plaintext(const string &p)
 {
-     try
+    try
     {
-        if (p.empty())
+         cout<<"==INPUT RULES==";
+    cout << "Input must contain only alphabetic characters (no spaces)." << endl;
+        cout << "\n---------------------\n";
+        cout << "Enter the plaintext : ";
+        cin >> plaintext;
+        cout << "\n---------------------\n";
+
+        if (plaintext.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        for (char c : p)
+        for (char c : plaintext)
         {
             if (!isalpha(c))
             {
                 throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only alphabetic characters are allowed.\033[0m");
             }
         }
-        plaintext = p;
     }
     catch (const invalid_argument &e)
     {
@@ -203,13 +211,24 @@ void RailFenceCipher::set_plaintext(const string &p)
 
 void RailFenceCipher::set_ciphertext(const string &c)
 {
-     try
+    try
     {
-        if (c.empty())
+        cout << "\n---------------------\n";
+        cout << "Enter the ciphertext : ";
+        cin >> ciphertext;
+        cout << "\n---------------------\n";
+
+        if (ciphertext.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-        ciphertext = c;
+        for (char c : ciphertext)
+        {
+            if (!isalpha(c))
+            {
+                throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only alphabetic characters are allowed.\033[0m");
+            }
+        }
     }
     catch (const invalid_argument &e)
     {

@@ -11,10 +11,6 @@ using namespace std;
 VigenereCipher::VigenereCipher(const string &p, const string &c, const string &k)
     : Cryptography(p, c), key(k)
 {
-    if (!std::all_of(p.begin(), p.end(), ::isupper))
-    {
-        throw invalid_argument("\033[1;31mPlaintext must contain only uppercase letters.\033[0m");
-    }
 }
 
 void VigenereCipher::set_key(const string &k)
@@ -59,7 +55,8 @@ string VigenereCipher::encrypt()
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
         return ciphertext;
     }
     catch (const exception &e)
@@ -100,12 +97,14 @@ string VigenereCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"<< endl;
+        cout << "---------------------------\n"
+             << endl;
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
-                  
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
+
         return plaintext;
     }
     catch (const exception &e)
@@ -116,10 +115,40 @@ string VigenereCipher::decrypt()
 
 void VigenereCipher::set_plaintext(const string &p)
 {
-    plaintext = p;
+    cout<<"== INPUT RULES==";
+    cout<<"Input must contain only uppercase alphabetic characters (no spaces)\n";
+    cout << "\n----------------------\n";
+    cout << "Enter the plaintext : ";
+    cin >> plaintext;
+    cout << "\n----------------------\n";
+    try
+    {
+        if (!std::all_of(p.begin(), p.end(), ::isupper))
+        {
+            throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only uppercase letters are allowed.\033[0m");
+        }
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << e.what() << endl;
+    }
 }
 
 void VigenereCipher::set_ciphertext(const string &c)
 {
-    ciphertext = c;
+    cout << "\n---------------------\n";
+    cout << "Enter the ciphertext : ";
+    cin >> ciphertext;
+    cout << "\n---------------------\n";
+
+   try{
+     if (!std::all_of(c.begin(), c.end(), ::isupper))
+        {
+            throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only uppercase letters are allowed.\033[0m");
+        }
+    }
+    catch (const invalid_argument &e)
+    {
+        cerr << e.what() << endl;
+    }
 }

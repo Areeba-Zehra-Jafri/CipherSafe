@@ -140,7 +140,7 @@ string AffineCipher::decrypt()
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
         cout << "\n---------------------------\033[0m\n"
-                  << endl;
+             << endl;
 
         return plain_text;
     }
@@ -152,10 +152,51 @@ string AffineCipher::decrypt()
 
 void AffineCipher::set_plaintext(const string &p)
 {
-    plaintext = p;
+    try
+    {
+        cout<<"==INPUT RULES ==";
+        cout << "Only alphabetic characters are allowed(no spaces)\n";
+        cout << "\n-------------------------------\n";
+        cout << "Enter the plaintext to encrypt:\n";
+        cout << "--------------------------------\n"
+             << endl;
+        cin >> plaintext;
+
+        for (char c : plaintext)
+        {
+            if (!isalpha(c))
+            {
+                throw invalid_argument("\033[1;31mPlaintext should only contain alphabetic characters.\033[0m");
+            }
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << e.what() << endl;
+    }
 }
 
 void AffineCipher::set_ciphertext(const string &c)
 {
-    ciphertext = c;
+    try
+    {
+        cout << "Only alphabetic characters are allowed(no spaces)\n";
+        cout << "\n-------------------------------\n";
+        cout << "Enter the ciphertext to decrypt:\n";
+        cout << "----------------------------------\n"
+             << endl;
+        cin >> ciphertext;
+
+        for (char ch : ciphertext)
+        {
+            if (!isalpha(ch))
+            {
+                throw invalid_argument("\033[1;31mCiphertext should only contain alphabetic characters.\033[0m");
+            }
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << e.what() << endl;
+    }
 }

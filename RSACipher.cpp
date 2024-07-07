@@ -20,7 +20,7 @@ RSA::RSA(const string &plaintext, const string &ciphertext, long long p, long lo
     }
     catch (const std::exception &e)
     {
-        cerr<<"\033[1;31mInvalid parameters for RSA encryption.\033[0m"<<endl;
+        cerr << "\033[1;31mInvalid parameters for RSA encryption.\033[0m" << endl;
     }
 }
 
@@ -113,7 +113,7 @@ string RSA::encrypt()
 {
     try
     {
-         if (plaintext.empty())
+        if (plaintext.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
@@ -151,13 +151,14 @@ string RSA::encrypt()
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return ciphertext;
     }
     catch (const exception &e)
     {
-        cerr<<"\033[1;31mError during RSA encryption.\033[0m"<<endl;
+        cerr << "\033[1;31mError during RSA encryption.\033[0m" << endl;
     }
 }
 
@@ -205,13 +206,14 @@ string RSA::decrypt()
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return plaintext;
     }
     catch (const std::exception &e)
     {
-        cerr<<"\033[1;31mError during RSA decryption.\033[0m"<<endl;
+        cerr << "\033[1;31mError during RSA decryption.\033[0m" << endl;
     }
 }
 
@@ -237,10 +239,67 @@ string RSA::intToString(const vector<long long> &nums)
 
 void RSA::set_plaintext(const string &p)
 {
-    plaintext = p;
+    cout << "==INPUT RULES==";
+    cout << "Input must contain only alphanumeric characters (no spaces)." << endl;
+
+    try
+    {
+        while (true)
+        {
+
+            cout << "\n--------------------\n";
+            cout << "Enter the plaintext : ";
+            cin >> plaintext;
+            cout << "\n--------------------\n";
+
+            for (char c : plaintext)
+            {
+                if (!isalnum(c))
+                {
+                    throw invalid_argument("Plaintext should only contain alphanumeric characters.");
+                }
+            }
+
+            break;
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << "\033[1;31mError: " << e.what() << "\033[0m" << endl;
+    }
 }
+
 
 void RSA::set_ciphertext(const string &c)
 {
-    ciphertext = c;
+    cout << "\n-----------------------------------------------\n";
+    cout << "Enter the ciphertext (only numbers separated by spaces): ";
+    cin >> ciphertext;
+    cout << "\n-----------------------------------------------\n";
+
+     try
+    {
+        while (true)
+        {
+           
+            istringstream iss(ciphertext);
+            long long num;
+            while (iss >> num)
+            {
+                if (iss.peek() == ' ')
+                    iss.ignore();
+
+                if (iss.fail())
+                {
+                    throw invalid_argument("Ciphertext should only contain numbers separated by spaces.");
+                }
+            }
+
+            break; 
+        }
+    }
+    catch (const exception &e)
+    {
+        cerr << "\033[1;31mError: " << e.what() << "\033[0m" << endl;
+    }
 }

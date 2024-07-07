@@ -41,11 +41,13 @@ string CaesarCipher::encrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Encryption time: " << duration.count() << " ns" << endl;
-        cout << "---------------------------\n"<< endl; // Print the duration in nanoseconds
+        cout << "---------------------------\n"
+             << endl; // Print the duration in nanoseconds
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Encryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
 
         return ciphertext;
     }
@@ -87,11 +89,13 @@ string CaesarCipher::decrypt()
         auto duration = chrono::duration_cast<chrono::nanoseconds>(end - start);
         cout << "\n---------------------------\n";
         cout << "Decryption time: " << duration.count() << " ns" << endl; // Print the duration in nanoseconds
-        cout << "---------------------------\n"<< endl;
+        cout << "---------------------------\n"
+             << endl;
 
         cout << "\n\033[1;34m---------------------------\n";
         cout << "Decryption successful." << endl;
-        cout << "\n---------------------------\033[0m\n"<< endl;
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
         return plaintext;
     }
     catch (const exception &e)
@@ -104,11 +108,26 @@ void CaesarCipher::set_plaintext(const string &p)
 {
     try
     {
-        if (p.empty())
+        cout<<"==INPUT RULES==";
+        cout << "Only alphabetic characters are allowed(no spaces)\n";
+        cout << "\n-------------------------------\n";
+        cout << "Enter the plaintext to encrypt:\n";
+        cout << "--------------------------------\n"
+             << endl;
+        cin >> plaintext;
+
+        if (plaintext.empty())
         {
             throw invalid_argument("\033[1;31mPlaintext cannot be empty.\033[0m");
         }
-        plaintext = p;
+
+        for (char c : plaintext)
+        {
+            if (!isalpha(c))
+            {
+                throw invalid_argument("\033[1;31mPlaintext must contain only alphabetic characters.\033[0m");
+            }
+        }
     }
     catch (const invalid_argument &e)
     {
@@ -120,15 +139,29 @@ void CaesarCipher::set_ciphertext(const string &c)
 {
     try
     {
-        if (c.empty())
+        cout << "Only alphabetic characters are allowed(no spaces)\n";
+        cout << "\n-------------------------------\n";
+        cout << "Enter the ciphertext to decrypt:\n";
+        cout << "----------------------------------\n"
+             << endl;
+        cin >> ciphertext;
+
+        if (ciphertext.empty())
         {
             throw invalid_argument("\033[1;31mCiphertext cannot be empty.\033[0m");
         }
-        ciphertext = c;
+
+        for (char c : ciphertext)
+        {
+            if (!isalpha(c))
+            {
+                throw invalid_argument("\033[1;31mCiphertext must contain only alphabetic characters.\033[0m");
+            }
+        }
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet ciphertext error: " << e.what() << "\033[0m" << endl;
+        cerr << "\033[1;31mSet ciphertext error:" << e.what() << "\033[0m" << endl;
     }
 }
 
