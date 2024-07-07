@@ -125,11 +125,24 @@ string VernamCipher::decrypt()
 
 string VernamCipher::get_plain_text()
 {
+    cout << "==INPUT RULES==\n"
+         << endl;
+    cout << "Input must contain only alphanumeric characters (no spaces)." << endl;
+    cout << "-----------------" << endl;
+    cout << "Enter the plaintext : ";
+    cin >> plaintext;
+    cout << "-----------------" << endl;
+
     return plaintext;
 }
 
-string VernamCipher::get_cipher()
+string VernamCipher::get_ciphertext()
 {
+    cout << "-----------------" << endl;
+    cout << "Enter the ciphertext : ";
+    cin >> ciphertext;
+    cout << "-----------------" << endl;
+
     return ciphertext;
 }
 
@@ -137,12 +150,6 @@ void VernamCipher::set_plaintext(const string &p)
 {
     try
     {
-        cout << "==INPUT RULES==" << endl;
-        cout << "Input must contain only alphanumeric characters (no spaces)." << endl;
-        cout << "-----------------" << endl;
-        cout << "Enter the plaintext : ";
-        cin >> plaintext;
-        cout << "-----------------" << endl;
 
         for (char c : p)
         {
@@ -155,6 +162,7 @@ void VernamCipher::set_plaintext(const string &p)
         {
             throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext.\033[0m");
         }
+        plaintext = p;
     }
     catch (const exception &e)
     {
@@ -166,27 +174,23 @@ void VernamCipher::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "-----------------" << endl;
-        cout << "Enter the ciphertext : ";
-        cin >> ciphertext;
-        cout << "-----------------" << endl;
         if (ciphertext.length() != key.length())
         {
             throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as ciphertext.\033[0m");
         }
+        ciphertext = c;
     }
-     catch (const exception &e)
+    catch (const exception &e)
     {
         cerr << "\033[1;31mError setting ciphertext:\033[0m " << e.what() << endl;
     }
 }
 
-
-    void VernamCipher::set_key(const string &k)
+void VernamCipher::set_key(const string &k)
+{
+    key = k;
+    if (plaintext.length() != key.length() && ciphertext.length() != key.length())
     {
-        key = k;
-        if (plaintext.length() != key.length() && ciphertext.length() != key.length())
-        {
-            throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext and ciphertext.\033[0m");
-        }
+        throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext and ciphertext.\033[0m");
     }
+}
