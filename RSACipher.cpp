@@ -109,6 +109,29 @@ pair<long long, long long> RSA::getPrivateKey()
     return {d, n};
 }
 
+string RSA::get_plaintext()
+{
+
+    cout << "==INPUT RULES==\n";
+    cout << "Input must contain only alphanumeric characters (no spaces)." << endl;
+    cout << "\n--------------------\n";
+    cout << "Enter the plaintext : ";
+    cin >> plaintext;
+    cout << "\n--------------------\n";
+
+    return plaintext;
+}
+
+string RSA::get_ciphertext()
+{
+    cout << "\n-----------------------------------------------\n";
+    cout << "Enter the ciphertext (only numbers separated by spaces): ";
+    cin >> ciphertext;
+    cout << "\n-----------------------------------------------\n";
+
+    return ciphertext;
+}
+
 string RSA::encrypt()
 {
     try
@@ -239,64 +262,46 @@ string RSA::intToString(const vector<long long> &nums)
 
 void RSA::set_plaintext(const string &p)
 {
-    cout << "==INPUT RULES==";
-    cout << "Input must contain only alphanumeric characters (no spaces)." << endl;
 
     try
     {
-        while (true)
+
+        for (char c : plaintext)
         {
-
-            cout << "\n--------------------\n";
-            cout << "Enter the plaintext : ";
-            cin >> plaintext;
-            cout << "\n--------------------\n";
-
-            for (char c : plaintext)
+            if (!isalnum(c))
             {
-                if (!isalnum(c))
-                {
-                    throw invalid_argument("Plaintext should only contain alphanumeric characters.");
-                }
+                throw invalid_argument("Plaintext should only contain alphanumeric characters.");
             }
-
-            break;
         }
+
+        plaintext = p;
     }
+
     catch (const exception &e)
     {
         cerr << "\033[1;31mError: " << e.what() << "\033[0m" << endl;
     }
 }
 
-
 void RSA::set_ciphertext(const string &c)
 {
-    cout << "\n-----------------------------------------------\n";
-    cout << "Enter the ciphertext (only numbers separated by spaces): ";
-    cin >> ciphertext;
-    cout << "\n-----------------------------------------------\n";
-
-     try
+    try
     {
-        while (true)
+
+        istringstream iss(ciphertext);
+        long long num;
+        while (iss >> num)
         {
-           
-            istringstream iss(ciphertext);
-            long long num;
-            while (iss >> num)
+            if (iss.peek() == ' ')
+                iss.ignore();
+
+            if (iss.fail())
             {
-                if (iss.peek() == ' ')
-                    iss.ignore();
-
-                if (iss.fail())
-                {
-                    throw invalid_argument("Ciphertext should only contain numbers separated by spaces.");
-                }
+                throw invalid_argument("Ciphertext should only contain numbers separated by spaces.");
             }
-
-            break; 
         }
+
+        ciphertext = c;
     }
     catch (const exception &e)
     {

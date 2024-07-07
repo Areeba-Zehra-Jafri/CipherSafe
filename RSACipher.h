@@ -12,6 +12,8 @@ public:
     RSA(const string& plaintext, const string& ciphertext,long long p, long long q, long long e);
     pair<long long, long long> getPublicKey();
     pair<long long, long long> getPrivateKey();
+    string get_plaintext();
+    string get_ciphertext();
     string encrypt();
     string decrypt();
     void set_plaintext(const string& p);
