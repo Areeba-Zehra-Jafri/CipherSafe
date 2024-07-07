@@ -38,6 +38,7 @@ void TextCryptography::processText()
             try
             {
                 encryptText(text);
+                Stats.updateTextLinesEncrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
             {
@@ -48,6 +49,7 @@ void TextCryptography::processText()
             try
             {
                 decryptText(text);
+                Stats.updateTextLinesDecrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
             {

@@ -13,6 +13,7 @@
 #include"Vernam_Cipher.h"
 #include "VigenereCipher.h"
 #include "monoalphabetic.h"
+#include "login.h"
 
 
 using namespace std;
@@ -25,6 +26,7 @@ private:
     void encryptFile(const string& inputFilePath, const string& outputFilePath);
     void decryptFile(const string& inputFilePath, const string& outputFilePath);
     Cryptography* selectCipher();
+    Management Stats;
 };
 
 #endif // FILE_CRYPTOGRAPHY_H

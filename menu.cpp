@@ -8,6 +8,7 @@
 #include "Steganography.h"
 #include "TextCryptography.h"
 #include "HybridCryptography.h"
+#include "login.h"
 
 using namespace std;
 
@@ -46,7 +47,6 @@ void password_screen()
     {
         system("cls");
         Management m1;
-        m1.load_accounts("data.txt");
         string username, password;
         int choice;
         while (true)
@@ -73,7 +73,6 @@ void password_screen()
                 cin>>password;
                 cout << "--------------------" << endl;
                 m1.sign_up(username, password);
-                m1.save_accounts("data.txt");
                 break;
             case 2:
                 cout << "\033[1;33m=== Change Password ===\033[0m" << endl;
@@ -122,8 +121,8 @@ void main_screen(void)
         cout << "\033[1;33m=== Main Menu ===\033[0m" << endl;
         cout << "1. Start" << endl;
         cout << "2. Instructions" << endl;
-        cout << "3. Exit" << endl;
-        cout << "4. Change login id" << endl;
+        cout << "3. Display User Stats" << endl;
+        cout << "4. Log Out" << endl;
         cout << "Enter choice: ";
         cin >> choice;
         switch (choice)
@@ -137,7 +136,8 @@ void main_screen(void)
             instructions();
             break;
         case 3:
-            exit(0);
+            Management m1;
+            m1.displayCurrentStats(m1.getCurrentUsername());
             break;
         case 4:
             password_screen();

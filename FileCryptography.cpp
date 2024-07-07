@@ -39,6 +39,7 @@ void FileCryptography::processFiles()
             try
             {
                 encryptFile(inputFilePath, outputFilePath);
+                Stats.updateFilesEncrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
             {
@@ -49,6 +50,7 @@ void FileCryptography::processFiles()
             try
             {
                 decryptFile(inputFilePath, outputFilePath);
+                Stats.updateFilesDecrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
             {

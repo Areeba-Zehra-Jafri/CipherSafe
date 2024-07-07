@@ -23,9 +23,11 @@ void HybridCryptography::processTextHybrid()
         {
         case 1:
             encryptAndEmbedText();
+            Stats.updateTextEncryptedEmbedded(Stats.getCurrentUsername());
             break;
         case 2:
             extractAndDecryptText();
+            Stats.updateTextDecryptedExtracted(Stats.getCurrentUsername());
             break;
         case 3:
             return;

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "login.h"
 using namespace std;
 
 class Steganography {
@@ -14,6 +15,7 @@ public:
 private:
     void readImage(const string &filename, vector<unsigned char> &header, vector<unsigned char> &data);
     void writeImage(const string &filename, const vector<unsigned char> &header, const vector<unsigned char> &data);
+    Management Stats;
 };
 
 #endif // STEGANOGRAPHY_H

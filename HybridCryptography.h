@@ -3,6 +3,7 @@
 
 #include "TextCryptography.h"
 #include "Steganography.h"
+#include "login.h"
 #include <string>
 
 class HybridCryptography {
@@ -13,7 +14,7 @@ public:
 private:
     TextCryptography textCrypt;
     Steganography stego;
-
+    Management Stats;
     Cryptography* selectTextCipher();
 };
 

@@ -12,6 +12,7 @@
 #include "Vernam_Cipher.h"
 #include "RSACipher.h"
 #include "AESCipher.h"
+#include "login.h"
 
 class TextCryptography {
 public:
@@ -21,6 +22,7 @@ private:
     void encryptText(const std::string& plaintext);
     void decryptText(const std::string& ciphertext);
     Cryptography* selectCipher();
+    Management Stats;
 };
 
 #endif // TEXTCRYPTOGRAPHY_H
