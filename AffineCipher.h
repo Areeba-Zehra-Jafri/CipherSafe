@@ -10,8 +10,8 @@ using namespace std;
 class AffineCipher : public Cryptography {
 public:
     AffineCipher(const string& plain_text, const string& cipher_text, int a, int b);
-    string get_cipher();
-    string get_decrypt();
+    string get_ciphertext();
+    string get_plaintext();
     string encrypt() ;
     string decrypt() ;
     void set_plaintext(const string& p);

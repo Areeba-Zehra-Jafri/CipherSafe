@@ -28,13 +28,27 @@ int AffineCipher::modInverse(int a, int m)
     throw invalid_argument("\033[1;31mMultiplicative inverse does not exist.\033[0m");
 }
 
-string AffineCipher::get_cipher()
+string AffineCipher::get_ciphertext()
 {
+    cout << "\n-------------------------------\n";
+    cout << "Enter the ciphertext to decrypt:\n";
+    cout << "----------------------------------\n"
+         << endl;
+    cin >> ciphertext;
+
     return ciphertext;
 }
 
-string AffineCipher::get_decrypt()
+string AffineCipher::get_plaintext()
 {
+    cout << "==INPUT RULES ==\n";
+    cout << "Only alphabetic characters are allowed(no spaces)\n";
+    cout << "\n-------------------------------\n";
+    cout << "Enter the plaintext to encrypt:\n";
+    cout << "--------------------------------\n"
+         << endl;
+    cin >> plaintext;
+
     return plaintext;
 }
 
@@ -154,13 +168,6 @@ void AffineCipher::set_plaintext(const string &p)
 {
     try
     {
-        cout<<"==INPUT RULES ==";
-        cout << "Only alphabetic characters are allowed(no spaces)\n";
-        cout << "\n-------------------------------\n";
-        cout << "Enter the plaintext to encrypt:\n";
-        cout << "--------------------------------\n"
-             << endl;
-        cin >> plaintext;
 
         for (char c : plaintext)
         {
@@ -169,6 +176,7 @@ void AffineCipher::set_plaintext(const string &p)
                 throw invalid_argument("\033[1;31mPlaintext should only contain alphabetic characters.\033[0m");
             }
         }
+        plaintext = p;
     }
     catch (const exception &e)
     {
@@ -180,12 +188,6 @@ void AffineCipher::set_ciphertext(const string &c)
 {
     try
     {
-        cout << "Only alphabetic characters are allowed(no spaces)\n";
-        cout << "\n-------------------------------\n";
-        cout << "Enter the ciphertext to decrypt:\n";
-        cout << "----------------------------------\n"
-             << endl;
-        cin >> ciphertext;
 
         for (char ch : ciphertext)
         {
@@ -194,6 +196,7 @@ void AffineCipher::set_ciphertext(const string &c)
                 throw invalid_argument("\033[1;31mCiphertext should only contain alphabetic characters.\033[0m");
             }
         }
+        ciphertext = c;
     }
     catch (const exception &e)
     {
