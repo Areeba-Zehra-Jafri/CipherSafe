@@ -10,18 +10,18 @@ using namespace std;
 void TextCryptography::processText()
 {
     int choice;
-    string text;
 
     while (true)
     {
         cout << "---------------------------------------" << endl;
-        cout << "1-Encrypt a text" << endl;
-        cout << "2-Decrypt a text" << endl;
-        cout << "3-Go back" << endl;
+        cout << "1-Encrypt text" << endl;
+        cout << "2-Decrypt text" << endl;
+        cout << "3-Encrypt and Decrypt text" <<endl;
+        cout << "4-Go back" << endl;
         cout << "---------------------------------------" << endl;
         cin >> choice;
 
-        if (choice == 3)
+        if (choice == 4)
         {
             return;
         }
@@ -33,7 +33,7 @@ void TextCryptography::processText()
         case 1:
             try
             {
-                encryptText(text);
+                encryptText();
                 Stats.updateTextLinesEncrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
@@ -44,12 +44,24 @@ void TextCryptography::processText()
         case 2:
             try
             {
-                decryptText(text);
+                decryptText();
                 Stats.updateTextLinesDecrypted(Stats.getCurrentUsername());
             }
             catch (const exception &e)
             {
                 cerr << "\033[1;31mDecryption Error:\033[0m " << e.what() << endl;
+            }
+            break;
+        case 3:
+            try
+            {
+                EncryptDecryptText();
+                Stats.updateTextLinesEncrypted(Stats.getCurrentUsername());
+                Stats.updateTextLinesDecrypted(Stats.getCurrentUsername());
+            }
+            catch (const exception &e)
+            {
+                cerr << "\033[1;31mEncryption , Decryption Error:\033[0m " << e.what() << endl;
             }
             break;
         default:
@@ -59,7 +71,37 @@ void TextCryptography::processText()
     }
 }
 
-void TextCryptography::encryptText(const string &plaintext)
+void TextCryptography::EncryptDecryptText()
+{
+    Cryptography *cipher = selectCipher();
+    if (!cipher)
+    {
+        throw runtime_error("\033[1;31mInvalid cipher selection.\033[0m");
+    }
+    try
+    {
+        string text = cipher->get_plaintext();
+        cipher->set_plaintext(text);
+        string encryptedText = cipher->encrypt();
+        cout << "-------------------" << endl;
+        cout << "Encrypted text: " << encryptedText << endl;
+        cout << "-------------------" << endl;
+        cipher->set_ciphertext(encryptedText);
+        string decryptedText = cipher->decrypt();
+        cout << "-------------------" << endl;
+        cout << "Decrypted text: " << decryptedText << endl;
+        cout << "-------------------" << endl;
+    }
+    catch (const exception &e)
+    {
+        delete cipher;
+        throw;
+    }
+
+    delete cipher;
+}
+
+void TextCryptography::encryptText()
 {
     Cryptography *cipher = selectCipher();
     if (!cipher)
@@ -85,7 +127,7 @@ void TextCryptography::encryptText(const string &plaintext)
     delete cipher;
 }
 
-void TextCryptography::decryptText(const string &ciphertext)
+void TextCryptography::decryptText()
 {
     Cryptography *cipher = selectCipher();
     if (!cipher)

@@ -26,20 +26,19 @@ void Steganography::runSteganography(Steganography &stego)
         {
             return;
         }
-        cout << "----------------------------------------" << endl;
-        cout << "Enter the path of the input image: ";
-        cin >> inputImage;
-
-        cout << "Enter the path of the output image: ";
-        cin >> outputImage;
-        cout << "----------------------------------------" << endl;
-        cin.ignore();
-
         try
         {
             switch (choice)
             {
             case 1:
+                cout << "----------------------------------------" << endl;
+                cout << "Enter the path of the input image: ";
+                cin >> inputImage;
+
+                cout << "Enter the path of the output image: ";
+                cin >> outputImage;
+                cout << "----------------------------------------" << endl;
+                cin.ignore();
                 cout << "--------------------------------------" << endl;
                 std::cout << "Enter the message to hide: ";
                 std::getline(std::cin, message);
@@ -47,6 +46,10 @@ void Steganography::runSteganography(Steganography &stego)
                 Stats.updateTextEmbeddedCount(Stats.getCurrentUsername());
                 break;
             case 2:
+                cout << "Enter the path of the input image: ";
+                cin >> outputImage;
+                cout << "----------------------------------------" << endl;
+                cin.ignore();
                 extractedMessage = stego.extractMessage(outputImage);
                 Stats.updateTextExtractedCount(Stats.getCurrentUsername());
                 cout << "----------------------------------------" << endl;

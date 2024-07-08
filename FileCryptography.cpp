@@ -17,11 +17,12 @@ void FileCryptography::processFiles()
         cout << "----------------------------------------" << endl;
         cout << "1-Encrypt a file" << endl;
         cout << "2-Decrypt a file" << endl;
-        cout << "3-Go back" << endl;
+        cout << "3-Encrypt and Decrypt a file" <<endl;
+        cout << "4-Go back" << endl;
         cout << "----------------------------------------" << endl;
         cin >> choice;
 
-        if (choice == 3)
+        if (choice == 4)
         {
             return;
         }
@@ -57,11 +58,114 @@ void FileCryptography::processFiles()
                 cerr << "\033[1;31mDecryption Error: \033[0m" << e.what() << endl;
             }
             break;
+        case 3:
+            try
+            {
+                EncryptDecryptFile(inputFilePath, outputFilePath);
+                Stats.updateFilesEncrypted(Stats.getCurrentUsername());
+                Stats.updateFilesDecrypted(Stats.getCurrentUsername());
+            }
+            catch (const exception &e)
+            {
+                cerr << "\033[1;31mEncryption and Decryption Error: \033[0m" << e.what() << endl;
+            }
+            break;
         default:
             cout << "033[1;31mInvalid input\033[0m" << endl;
             break;
         }
     }
+}
+
+void FileCryptography::EncryptDecryptFile(const string &inputFilePath, const string &outputFilePath)
+{
+    string finalFile;
+    cout << "Enter the final output file path: ";
+    cin >> finalFile;
+    cout << "----------------------------------------" << endl;
+
+    ifstream inputFile(inputFilePath);
+    if (!inputFile)
+    {
+        throw runtime_error("\033[1;31mError opening input file: " + inputFilePath + "\033[0m");
+    }
+
+    ofstream outputFile(outputFilePath);
+    if (!outputFile)
+    {
+        inputFile.close();
+        throw runtime_error("\033[1;31mError creating output file: " + outputFilePath + "\033[0m");
+    }
+
+    Cryptography *cipher = selectCipher();
+    if (!cipher)
+    {
+        inputFile.close();
+        outputFile.close();
+        throw runtime_error("\033[1;31mInvalid cipher selection.\033[0m");
+    }
+
+    try
+    {
+        string line;
+        while (getline(inputFile, line))
+        {
+            cipher->set_plaintext(line);
+            string encryptedLine = cipher->encrypt();
+            cout << "----------------------------------------" << endl;
+            cout << "Encrypted line: " << encryptedLine << endl;
+            cout << "----------------------------------------" << endl;
+            outputFile << encryptedLine << endl;
+        }
+    }
+    catch (const exception &e)
+    {
+        delete cipher;
+        inputFile.close();
+        outputFile.close();
+        throw;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    ifstream inputFile2(outputFilePath);
+    if (!inputFile2)
+    {
+        throw runtime_error("\033[1;31mError opening input file: " + outputFilePath + "\033[0m");
+    }
+
+    ofstream outputFile2(finalFile);
+    if (!outputFile2)
+    {
+        inputFile2.close();
+        throw runtime_error("\033[1;31mError creating final output file: " + finalFile + "\033[0m");
+    }
+
+    try
+    {
+        string line;
+        while (getline(inputFile2, line))
+        {
+            cipher->set_ciphertext(line);
+            string decryptedLine = cipher->decrypt();
+            cout << "----------------------------------------" << endl;
+            cout << "Decrypted line: " << decryptedLine << endl;
+            cout << "----------------------------------------" << endl;
+            outputFile2 << decryptedLine << endl;
+        }
+    }
+    catch (const exception &e)
+    {
+        delete cipher;
+        inputFile2.close();
+        outputFile2.close();
+        throw;
+    }
+
+    delete cipher;
+    inputFile2.close();
+    outputFile2.close();
 }
 
 void FileCryptography::encryptFile(const string &inputFilePath, const string &outputFilePath)
@@ -179,7 +283,7 @@ Cryptography *FileCryptography::selectCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int key1, key3, key5;
-    string key2, key4, key6,key7;
+    string key2, key4, key6, key7;
     vector<long long> key8;
     vector<vector<int>> key9;
 
@@ -227,8 +331,8 @@ Cryptography *FileCryptography::selectCipher()
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        key7= obj.getVernamCipherKey();
-        return new VernamCipher("", "",key7);
+        key7 = obj.getVernamCipherKey();
+        return new VernamCipher("", "", key7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;

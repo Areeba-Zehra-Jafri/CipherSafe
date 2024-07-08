@@ -25,6 +25,7 @@ public:
 private:
     void encryptFile(const string& inputFilePath, const string& outputFilePath);
     void decryptFile(const string& inputFilePath, const string& outputFilePath);
+    void EncryptDecryptFile(const string& inputFilePath, const string& outputFilePath);
     Cryptography* selectCipher();
     Management Stats;
 };

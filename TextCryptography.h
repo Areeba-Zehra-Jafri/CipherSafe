@@ -19,8 +19,9 @@ public:
     void processText();
 
 private:
-    void encryptText(const std::string& plaintext);
-    void decryptText(const std::string& ciphertext);
+    void encryptText();
+    void decryptText();
+    void EncryptDecryptText();
     Cryptography* selectCipher();
     Management Stats;
 };
