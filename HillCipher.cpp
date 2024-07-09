@@ -81,6 +81,7 @@ string HillCipher::get_plaintext()
 {
     cout << "==INPUT RULES==\n";
     cout << "Input must contain only lowercase alphabetic characters (no spaces)." << endl;
+    cout << "2. If the plaintext length is odd, it will be padded with 'x' to ensure even length.\n";
     cout << "\n---------------------\n";
     cout << "Enter the plaintext :\n";
     cout << "-----------------------\n";
@@ -257,7 +258,7 @@ void HillCipher::set_plaintext(const string &p)
     }
     catch (const invalid_argument &e)
     {
-        throw ;
+        throw;
     }
 }
 

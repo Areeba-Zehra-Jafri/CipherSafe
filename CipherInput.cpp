@@ -1,7 +1,6 @@
 #include "CipherInput.h"
 using namespace std;
 
-
 // int CipherInput::getAffineCipherKey()
 // {
 //     int a, b;
@@ -25,8 +24,10 @@ int CipherInput::getAffineCipherKey()
 {
     int a, b;
     string input;
-    
+
     // Input and validate 'a'
+    cout << "==INPUT RULES\n";
+    cout << "1. 'a' must be coprime with 26.\n";
     cout << "\n---------------------------\n";
     cout << "Input a and b for Affine Cipher:\n";
     cout << "Enter a: ";
@@ -79,6 +80,8 @@ int CipherInput::getAffineCipherKey()
 int CipherInput::getCaesarCipherKey()
 {
     int shift;
+    cout << "==INPUT RULES==\n";
+    cout << "1. Enter a positive integer between 1 and 25 \n";
     cout << "\n---------------------------\n";
     cout << "Enter shift for Caesar Cipher: ";
     cout << "\n---------------------------\n";
@@ -100,7 +103,7 @@ int CipherInput::getCaesarCipherKey()
         throw invalid_argument("\033[1;31mInvalid input: Shift must be a numeric value.\033[0m");
     }
 
-     shift = std::stoi(input);
+    shift = std::stoi(input);
 
     if (shift < 0 || shift >= 26)
     {
@@ -112,6 +115,10 @@ int CipherInput::getCaesarCipherKey()
 std::string CipherInput::getHillCipherKey()
 {
     string key;
+    cout << "==INPUT RULES==\n";
+    cout << "1. The key must be exactly 4 alphabetic characters.\n";
+    cout << "2. No uppercase , spaces or special characters are allowed.\n";
+    cout << "3. lowercase letters are accepted.\n";
     cout << "\n---------------------------\n";
     cout << "Enter key for Hill Cipher: ";
     cout << "\n---------------------------\n";
@@ -127,7 +134,7 @@ std::string CipherInput::getHillCipherKey()
 
 // int CipherInput::getRailFenceCipherKey()
 // {
-   
+
 //     int railKey;
 //     cout << "\n-------------------------------------\n";
 //     cout << "Enter rail key for Rail Fence Cipher: ";
@@ -146,7 +153,9 @@ int CipherInput::getRailFenceCipherKey()
 {
     int railKey;
     string input;
-    
+
+    cout << "==INPUT RULES==\n";
+    cout << "1. The key must be at least 2.\n";
     cout << "\n-------------------------------------\n";
     cout << "Enter rail key for Rail Fence Cipher: ";
     cout << "\n-------------------------------------\n";
@@ -212,6 +221,10 @@ vector<long long> CipherInput::getRSACipherKey()
     string input;
 
     // Input and validate 'p'
+
+    cout << "==INPUT RULES==\n";
+    cout << "1. 'p' and 'q' must be prime numbers.\n";
+    cout << "2. 'e' must be greater than 1 and coprime with (p-1)*(q-1).\n";
     cout << "\n---------------------------\n";
     cout << "Input p, q, and e for RSA:\n";
     cout << "Enter p: ";
@@ -290,10 +303,12 @@ vector<long long> CipherInput::getRSACipherKey()
 string CipherInput::getVigenereCipherKey()
 {
     string key;
+    cout << "==INPUT RULES==\n";
+    cout << "1. The key must be a string of uppercase letters only .\n";
     cout << "\n-------------------------------------------------------\n";
     cout << "Enter key for Vigenere Cipher (uppercase letters only): ";
     cout << "\n-------------------------------------------------------\n";
-    cin>>key;
+    cin >> key;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     for (char c : key)
     {
@@ -308,6 +323,8 @@ string CipherInput::getVigenereCipherKey()
 vector<vector<int>> CipherInput::getAESCipherKey()
 {
     string keyText;
+    cout << "==INPUT RULES==\n";
+    cout << "1. The AES key must be exactly 16 alphanumeric characters.\n";
     cout << "\n-------------------------------------\n";
     cout << "Enter AES key (exactly 16 characters): ";
     cout << "\n-------------------------------------\n";
@@ -333,10 +350,13 @@ vector<vector<int>> CipherInput::getAESCipherKey()
 string CipherInput::getMonoalphabeticCipherKey()
 {
     string key;
+    cout << "==INPUT RULES==\n";
+    cout << "1. The key must be a string of 26 lowercase letters.\n";
+    cout << "2. The key must not contain duplicate characters.\n";
     cout << "\n----------------------------------------------------------\n";
     cout << "Enter key for Monoalphabetic Cipher (26 lowercase letters): ";
     cout << "\n----------------------------------------------------------\n";
-    cin>>key;
+    cin >> key;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (key.length() != 26)
@@ -386,8 +406,12 @@ bool CipherInput::isPrime(long long n)
 string CipherInput::getVernamCipherKey()
 {
     string key;
+    cout << "==INPUT RULES==\n";
+    cout << "1. The key must be a string of uppercase letters A-Z.\n";
+    cout << "------------------------------------------\n";
     cout << "Enter the key for Vernam Cipher (A-Z only): ";
-    cin>>key;
+    cout << "\n--------------------------------------------\n";
+    cin >> key;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     // Validate key (should contain only uppercase letters A-Z)
