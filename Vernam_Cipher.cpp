@@ -123,7 +123,7 @@ string VernamCipher::decrypt()
     return "";
 }
 
-string VernamCipher::get_plain_text()
+string VernamCipher::get_plaintext()
 {
     cout << "==INPUT RULES==\n"
          << endl;
@@ -184,7 +184,7 @@ void VernamCipher::set_ciphertext(const string &c)
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mError setting ciphertext:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 

@@ -14,7 +14,7 @@ private:
 
 public:
     VernamCipher(const string& p, const string& c,const string& k); // Default parameter for key
-    string get_plain_text();
+    string get_plaintext();
     string get_ciphertext();
     string encrypt();
     string decrypt();
