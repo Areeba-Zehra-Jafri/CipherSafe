@@ -40,102 +40,124 @@ void HybridCryptography::processTextHybrid()
 
 void HybridCryptography::encryptAndEmbedText()
 {
-    string text, inputImage, outputImage;
-
-    Cryptography *cipher = selectTextCipher();
-    if (!cipher)
-    {
-        cerr << "\033[1;31mInvalid cipher selection.\033[0m" << endl;
-        return;
-    }
-
-    string encryptedText;
     try
     {
-        text=cipher->get_plaintext();
-        cipher->set_plaintext(text);
-        encryptedText = cipher->encrypt();
-        cout << "--------------------------" << endl;
-        cout << "Encrypted Text:" << encryptedText << endl;
-        cout << "--------------------------" << endl;
-        delete cipher;
+        string text, inputImage, outputImage;
+
+        Cryptography *cipher = selectTextCipher();
+        if (!cipher)
+        {
+            cerr << "\033[1;31mInvalid cipher selection.\033[0m" << endl;
+            return;
+        }
+
+        string encryptedText;
+        try
+        {
+            text=cipher->get_plaintext();
+            cipher->set_plaintext(text);
+            encryptedText = cipher->encrypt();
+            cout << "--------------------------" << endl;
+            cout << "Encrypted Text:" << encryptedText << endl;
+            cout << "--------------------------" << endl;
+            delete cipher;
+        }
+        catch (const exception &e)
+        {
+            cerr << "\033[1;31mEncryption Error: \033[0m" << e.what() << endl;
+            delete cipher;
+            return;
+        }
+
+        cin.ignore(); // Ignore newline left in input buffer after cin >>
+        cout << "----------------------------------------" << endl;
+        cout << "Enter the path of the input image: ";
+        cin >> inputImage;
+
+        cout << "Enter the path of the output image: ";
+        cin >> outputImage;
+        cout << "----------------------------------------" << endl;
+        std::cin.ignore();
+        try
+        {
+            stego.hideMessage(inputImage, outputImage, encryptedText);
+        }
+        catch(const exception& e)
+        {
+            return;
+        }
+        
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Text encrypted and embedded successfully!" << endl;
+        cout << "\n---------------------------\033[0m\n";
     }
-    catch (const exception &e)
+    catch(const exception& e)
     {
         cerr << "\033[1;31mEncryption Error: \033[0m" << e.what() << endl;
-        delete cipher;
-        return;
-    }
-
-    cin.ignore(); // Ignore newline left in input buffer after cin >>
-    cout << "----------------------------------------" << endl;
-    cout << "Enter the path of the input image: ";
-    cin >> inputImage;
-
-    cout << "Enter the path of the output image: ";
-    cin >> outputImage;
-    cout << "----------------------------------------" << endl;
-    std::cin.ignore();
-    try
-    {
-        stego.hideMessage(inputImage, outputImage, encryptedText);
-    }
-    catch(const std::exception& e)
-    {
         return;
     }
     
-
-     std::cout << "\n\033[1;34m---------------------------\n";
-    cout << "Text encrypted and embedded successfully!" << endl;
-     cout << "\n---------------------------\033[0m\n";
 }
 
 void HybridCryptography::extractAndDecryptText()
 {
-    string inputImage, extractedMessage;
-    cout << "----------------------------------------" << endl;
-    cout << "Enter the path of the steganographic image: ";
-    cin.ignore(); // Ignore any newline characters left in the input buffer
-    getline(cin, inputImage);
-    cout << "----------------------------------------" << endl;
-
-    // Extract message from image
     try
     {
-        extractedMessage = stego.extractMessage(inputImage);
-    }
-    catch(const std::exception& e)
-    {
-        return;
-    }
-    
-    cout << "----------------------------------------" << endl;
-    cout << "Extracted Message: " << extractedMessage << endl;
-    cout << "----------------------------------------" << endl;
-    // Decrypt extracted message
-    Cryptography *cipher = selectTextCipher();
-    if (!cipher)
-    {
-        cerr << "\033[1;31mInvalid cipher selection.\033[0m" << endl;
-        return;
-    }
+        string inputImage, extractedMessage;
+        cout << "----------------------------------------" << endl;
+        cout << "Enter the path of the steganographic image: ";
+        cin.ignore(); // Ignore any newline characters left in the input buffer
+        getline(cin, inputImage);
+        cout << "----------------------------------------" << endl;
 
-    string decryptedText;
-    try
-    {
-        cipher->set_ciphertext(extractedMessage);
-        decryptedText = cipher->decrypt();
-        delete cipher;
+        // Extract message from image
+        try
+        {
+            extractedMessage = stego.extractMessage(inputImage);
+        }
+        catch(const std::exception& e)
+        {
+            return;
+        }
+        
+        cout << "----------------------------------------" << endl;
+        cout << "Extracted Message: " << extractedMessage << endl;
+        cout << "----------------------------------------" << endl;
+        // Decrypt extracted message
+        
+        Cryptography *cipher = selectTextCipher();
+        if (!cipher)
+        {
+            cerr << "\033[1;31mInvalid cipher selection.\033[0m" << endl;
+            return;
+        }
+
+        string decryptedText;
+        try
+        {
+            cipher->set_ciphertext(extractedMessage);
+            decryptedText = cipher->decrypt();
+            delete cipher;
+        }
+        catch (const exception &e)
+        {
+            cerr << "\033[1;31mDecryption Error:\033[0m " << e.what() << endl;
+            delete cipher;
+            return;
+        }
+        cout << "-------------------------------" << endl;
+        cout << "Extracted and decrypted text: " << decryptedText << endl;
+
+        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "Text decrypted and extracted successfully!" << endl;
+        cout << "\n---------------------------\033[0m\n";
     }
-    catch (const exception &e)
+    catch(const exception& e)
     {
-        cerr << "\033[1;31mDecryption Error:\033[0m " << e.what() << endl;
-        delete cipher;
+        cerr << "\033[1;31mDecryption Error: \033[0m" << e.what() << endl;
         return;
     }
-    cout << "-------------------------------" << endl;
-    cout << "Extracted and decrypted text: " << decryptedText << endl;
 }
 
 Cryptography *HybridCryptography::selectTextCipher()
