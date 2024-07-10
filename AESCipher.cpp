@@ -4,6 +4,7 @@
 #include <cctype>
 #include <iostream>
 #include <cstdint>
+#include <limits>
 #include <iomanip>
 
 using namespace std;
@@ -224,6 +225,7 @@ string AES::get_plaintext()
     cout << "Enter plaintext :\n ";
     cout << "\n------------------\n";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return plaintext;
 }
@@ -234,6 +236,7 @@ string AES::get_ciphertext()
     cout << "Enter Ciphertext :\n ";
     cout << "\n------------------\n";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return ciphertext;
 }

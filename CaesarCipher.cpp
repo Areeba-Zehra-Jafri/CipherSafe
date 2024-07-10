@@ -17,6 +17,7 @@ string CaesarCipher::get_ciphertext()
     cout << "----------------------------------\n"
          << endl;
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return ciphertext;
 }
@@ -30,6 +31,7 @@ string CaesarCipher::get_plaintext()
     cout << "--------------------------------\n"
          << endl;
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return plaintext;
 }
@@ -78,7 +80,7 @@ string CaesarCipher::encrypt()
     catch (const exception &e)
     {
 
-        cerr << "\033[1;31mEncryption error: " << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 
@@ -124,7 +126,7 @@ string CaesarCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mDecryption error: " << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 
@@ -149,7 +151,7 @@ void CaesarCipher::set_plaintext(const string &p)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet plaintext error:" << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 
@@ -174,7 +176,7 @@ void CaesarCipher::set_ciphertext(const string &c)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet ciphertext error:" << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 

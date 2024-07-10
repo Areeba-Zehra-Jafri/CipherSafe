@@ -85,6 +85,7 @@ string HillCipher::get_plaintext()
     cout << "Enter the plaintext :\n";
     cout << "-----------------------\n";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return plaintext;
 }
@@ -95,6 +96,7 @@ string HillCipher::get_ciphertext()
     cout << "Enter the ciphertext :\n";
     cout << "-----------------------\n";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return ciphertext;
 }
@@ -165,7 +167,7 @@ string HillCipher::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -231,7 +233,7 @@ string HillCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -255,7 +257,7 @@ void HillCipher::set_plaintext(const string &p)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet plaintext error:\033[0m " << e.what() << endl;
+        throw ;
     }
 }
 
@@ -279,6 +281,6 @@ void HillCipher::set_ciphertext(const string &c)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet ciphertext error:\033[0m " << e.what() << endl;
+        throw;
     }
 }

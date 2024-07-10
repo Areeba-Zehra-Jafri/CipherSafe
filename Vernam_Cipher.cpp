@@ -68,7 +68,7 @@ string VernamCipher::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
+        throw;
     }
     return "";
 }
@@ -118,7 +118,7 @@ string VernamCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
+       throw;
     }
     return "";
 }
@@ -131,6 +131,7 @@ string VernamCipher::get_plain_text()
     cout << "-----------------" << endl;
     cout << "Enter the plaintext : ";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "-----------------" << endl;
 
     return plaintext;
@@ -141,6 +142,7 @@ string VernamCipher::get_ciphertext()
     cout << "-----------------" << endl;
     cout << "Enter the ciphertext : ";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "-----------------" << endl;
 
     return ciphertext;
@@ -166,7 +168,7 @@ void VernamCipher::set_plaintext(const string &p)
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mError setting plaintext:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -191,6 +193,6 @@ void VernamCipher::set_key(const string &k)
     key = k;
     if (plaintext.length() != key.length() && ciphertext.length() != key.length())
     {
-        throw invalid_argument("\033[1;31mIn Vernam Cipher, key must be the same length as plaintext and ciphertext.\033[0m");
+        throw;
     }
 }

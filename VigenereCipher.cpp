@@ -21,6 +21,7 @@ string VigenereCipher::get_plaintext()
     cout << "\n----------------------\n";
     cout << "Enter the plaintext : ";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n----------------------\n";
 
     return plaintext;
@@ -31,6 +32,7 @@ string VigenereCipher::get_ciphertext()
     cout << "\n---------------------\n";
     cout << "Enter the ciphertext : ";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n---------------------\n";
 
     return ciphertext;
@@ -84,7 +86,7 @@ string VigenereCipher::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mEncryption error:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -132,7 +134,7 @@ string VigenereCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mDecryption error:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -148,7 +150,7 @@ void VigenereCipher::set_plaintext(const string &p)
     }
     catch (const invalid_argument &e)
     {
-        cerr << e.what() << endl;
+        throw;
     }
 }
 
@@ -165,6 +167,6 @@ void VigenereCipher::set_ciphertext(const string &c)
     }
     catch (const invalid_argument &e)
     {
-        cerr << e.what() << endl;
+        throw;
     }
 }

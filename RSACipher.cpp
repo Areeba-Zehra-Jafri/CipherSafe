@@ -117,16 +117,27 @@ string RSA::get_plaintext()
     cout << "\n--------------------\n";
     cout << "Enter the plaintext : ";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n--------------------\n";
 
     return plaintext;
 }
 
+// string RSA::get_ciphertext()
+// {
+//     cout << "\n-----------------------------------------------\n";
+//     cout << "Enter the ciphertext (only numbers separated by spaces): ";
+//     cin >> ciphertext;
+//     cout << "\n-----------------------------------------------\n";
+
+//     return ciphertext;
+// }
 string RSA::get_ciphertext()
 {
     cout << "\n-----------------------------------------------\n";
     cout << "Enter the ciphertext (only numbers separated by spaces): ";
-    cin >> ciphertext;
+    cin.ignore(); // Ignore the remaining newline character from the previous input
+    getline(cin, ciphertext);
     cout << "\n-----------------------------------------------\n";
 
     return ciphertext;
@@ -181,7 +192,7 @@ string RSA::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mError during RSA encryption.\033[0m" << endl;
+        throw;
     }
 }
 
@@ -236,7 +247,7 @@ string RSA::decrypt()
     }
     catch (const std::exception &e)
     {
-        cerr << "\033[1;31mError during RSA decryption.\033[0m" << endl;
+        throw;
     }
 }
 
@@ -279,7 +290,7 @@ void RSA::set_plaintext(const string &p)
 
     catch (const exception &e)
     {
-        cerr << "\033[1;31mError: " << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 
@@ -305,6 +316,6 @@ void RSA::set_ciphertext(const string &c)
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mError: " << e.what() << "\033[0m" << endl;
+       throw;
     }
 }

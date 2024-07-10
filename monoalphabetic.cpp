@@ -1,6 +1,8 @@
 #include "monoalphabetic.h"
 #include <iostream>
 #include <cctype>
+#include <limits>
+#include <stdexcept>
 #include "Cryptography.h"
 
 using namespace std;
@@ -28,6 +30,7 @@ string monoalphabetic::get_plaintext()
     cout << "\n----------------------\n";
     cout << "Enter the plaintext (only alphabetic characters) : ";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n----------------------\n";
 
     return plaintext;
@@ -39,6 +42,7 @@ string monoalphabetic::get_ciphertext()
     cout << "\n-----------------------\n";
     cout << "Enter the ciphertext : ";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n-----------------------\n";
 
     return ciphertext;
@@ -108,7 +112,7 @@ void monoalphabetic::set_plaintext(const string &p)
 
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet plaintext error:\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -138,6 +142,6 @@ void monoalphabetic::set_ciphertext(const string &c)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet ciphertext error:\033[0m " << e.what() << endl;
+        throw;
     }
 }

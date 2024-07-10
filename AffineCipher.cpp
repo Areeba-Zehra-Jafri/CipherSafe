@@ -35,6 +35,7 @@ string AffineCipher::get_ciphertext()
     cout << "----------------------------------\n"
          << endl;
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return ciphertext;
 }
@@ -48,6 +49,7 @@ string AffineCipher::get_plaintext()
     cout << "--------------------------------\n"
          << endl;
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     return plaintext;
 }
@@ -103,7 +105,7 @@ string AffineCipher::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mPlaintext cannot be empty.\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -160,7 +162,7 @@ string AffineCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mDecryption error: \033[0m " << e.what() << std::endl;
+        throw;
     }
 }
 
@@ -180,7 +182,7 @@ void AffineCipher::set_plaintext(const string &p)
     }
     catch (const exception &e)
     {
-        cerr << e.what() << endl;
+        throw;
     }
 }
 
@@ -200,6 +202,6 @@ void AffineCipher::set_ciphertext(const string &c)
     }
     catch (const exception &e)
     {
-        cerr << e.what() << endl;
+        throw;
     }
 }

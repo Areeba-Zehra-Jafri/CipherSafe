@@ -22,6 +22,7 @@ string RailFenceCipher::get_plaintext()
     cout << "\n---------------------\n";
     cout << "Enter the plaintext : ";
     cin >> plaintext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n---------------------\n";
 
     return plaintext;
@@ -32,6 +33,7 @@ string RailFenceCipher::get_ciphertext()
     cout << "\n---------------------\n";
     cout << "Enter the ciphertext : ";
     cin >> ciphertext;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n---------------------\n";
 
     return ciphertext;
@@ -99,7 +101,7 @@ string RailFenceCipher::encrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mException caught in encrypt():\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -198,7 +200,7 @@ string RailFenceCipher::decrypt()
     }
     catch (const exception &e)
     {
-        cerr << "\033[1;31mException caught in decrypt():\033[0m " << e.what() << endl;
+        throw;
     }
 }
 
@@ -222,7 +224,7 @@ void RailFenceCipher::set_plaintext(const string &p)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet plaintext error:" << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
 
@@ -246,6 +248,6 @@ void RailFenceCipher::set_ciphertext(const string &c)
     }
     catch (const invalid_argument &e)
     {
-        cerr << "\033[1;31mSet ciphertext error: " << e.what() << "\033[0m" << endl;
+        throw;
     }
 }
