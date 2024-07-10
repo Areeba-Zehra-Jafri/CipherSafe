@@ -66,10 +66,11 @@ void password_screen()
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
-                cin.ignore();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cin>>password;
                 cout << "--------------------" << endl;
                 m1.sign_up(username, password);
@@ -79,10 +80,12 @@ void password_screen()
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
                 cin>>password;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
                 m1.change_password(username, password);
                 break;
@@ -91,10 +94,12 @@ void password_screen()
                 cout << "--------------------" << endl;
                 cout << "Enter your username: ";
                 cin>>username;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
                 cin>>password;
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
                 m1.login(username, password);
                 break;
