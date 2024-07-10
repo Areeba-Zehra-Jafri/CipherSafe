@@ -2,17 +2,77 @@
 using namespace std;
 
 
+// int CipherInput::getAffineCipherKey()
+// {
+//     int a, b;
+//     cout << "\n---------------------------\n";
+//     cout << "Input a and b for Affine Cipher: "<<endl;
+//     cout<<"Enter a:";
+//     cin >> a ;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//     cout<<endl;
+//     cout<<"Enter b:";
+//     cin >>b;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//     cout << "\n---------------------------\n";
+//     if (gcd(a, 26) != 1)
+//     {
+//         throw invalid_argument("\033[1;31mIn Affine Cipher, 'a' must be coprime with 26.\033[0m");
+//     }
+//     return a * 100 + b;
+// }
 int CipherInput::getAffineCipherKey()
 {
     int a, b;
+    string input;
+    
+    // Input and validate 'a'
     cout << "\n---------------------------\n";
-    cout << "Enter a and b for Affine Cipher: ";
-      cout << "\n---------------------------\n";
-    cin >> a >> b;
+    cout << "Input a and b for Affine Cipher:\n";
+    cout << "Enter a: ";
+    while (true)
+    {
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: 'a' must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            a = stoi(input);
+            break;
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Input and validate 'b'
+    cout << "Enter b: ";
+    while (true)
+    {
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: 'b' must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            b = stoi(input);
+            break;
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "\n---------------------------\n";
+
+    // Validate 'a' is coprime with 26
     if (gcd(a, 26) != 1)
     {
         throw invalid_argument("\033[1;31mIn Affine Cipher, 'a' must be coprime with 26.\033[0m");
     }
+
     return a * 100 + b;
 }
 
@@ -24,7 +84,7 @@ int CipherInput::getCaesarCipherKey()
     cout << "\n---------------------------\n";
     string input;
     cin >> input;
-
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     bool isNumeric = true;
     for (char c : input)
     {
@@ -56,6 +116,7 @@ std::string CipherInput::getHillCipherKey()
     cout << "Enter key for Hill Cipher: ";
     cout << "\n---------------------------\n";
     cin >> key;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     if (key.length() != 4)
     {
         throw invalid_argument("\033[1;31mIn Hill Cipher, key must be 4 characters long.\033[0m");
@@ -64,37 +125,164 @@ std::string CipherInput::getHillCipherKey()
     return key;
 }
 
+// int CipherInput::getRailFenceCipherKey()
+// {
+   
+//     int railKey;
+//     cout << "\n-------------------------------------\n";
+//     cout << "Enter rail key for Rail Fence Cipher: ";
+//     cout << "\n-------------------------------------\n";
+//     cin >> railKey;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+//     if (railKey < 2)
+//     {
+//         throw invalid_argument("\033[1;31mIn Rail Fence Cipher, rail key must be at least 2.\033[0m");
+//     }
+//     return railKey;
+// }
+
 int CipherInput::getRailFenceCipherKey()
 {
-   
     int railKey;
+    string input;
+    
     cout << "\n-------------------------------------\n";
     cout << "Enter rail key for Rail Fence Cipher: ";
     cout << "\n-------------------------------------\n";
-    cin >> railKey;
 
-    if (railKey < 2)
+    while (true)
     {
-        throw invalid_argument("\033[1;31mIn Rail Fence Cipher, rail key must be at least 2.\033[0m");
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: Rail key must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            railKey = stoi(input);
+            if (railKey < 2)
+            {
+                cout << "\033[1;31mIn Rail Fence Cipher, rail key must be at least 2. Please enter again: \033[0m";
+            }
+            else
+            {
+                break;
+            }
+        }
     }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cout << "\n-------------------------------------\n";
     return railKey;
 }
 
+// vector<long long> CipherInput::getRSACipherKey()
+// {
+//     long long p, q, e;
+//     cout << "\n---------------------------\n";
+//     cout << "Input p, q, and e for RSA: ";
+//     cout << "Enter p: ";
+//     cin>>p;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//     cout<<endl;
+//     cout<<"Enter q: ";
+//     cin>>q;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//     cout<<endl;
+//     cout<<"Enter e: ";
+//     cin >> e;
+//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//     cout << "\n---------------------------\n";
+//     if(!isPrime(p) || !isPrime(q))
+//     {
+//         throw invalid_argument("\033[1;31mIn RSA, both p and q must be prime numbers.\033[0m");
+//     }
+//     if (e <= 1 || gcd(e, (p - 1) * (q - 1)) != 1)
+//     {
+//         throw invalid_argument("\033[1;31mIn RSA, e must be greater than 1 and coprime with (p-1)*(q-1).\033[0m");
+//     }
+//     vector<long long> rsaKey = {p, q, e};
+//     return rsaKey;
+// }
 vector<long long> CipherInput::getRSACipherKey()
 {
     long long p, q, e;
+    string input;
+
+    // Input and validate 'p'
     cout << "\n---------------------------\n";
-    cout << "Enter p, q, and e for RSA: ";
+    cout << "Input p, q, and e for RSA:\n";
+    cout << "Enter p: ";
+    while (true)
+    {
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: 'p' must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            p = stoll(input);
+            break;
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Input and validate 'q'
+    cout << "Enter q: ";
+    while (true)
+    {
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: 'q' must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            q = stoll(input);
+            break;
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    // Input and validate 'e'
+    cout << "Enter e: ";
+    while (true)
+    {
+        cin >> input;
+        if (cin.fail() || !all_of(input.begin(), input.end(), ::isdigit))
+        {
+            cout << "\033[1;31mInvalid input: 'e' must be a numeric value. Please enter again: \033[0m";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+        else
+        {
+            e = stoll(input);
+            break;
+        }
+    }
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n---------------------------\n";
-    cin >> p >> q >> e;
-    if(!isPrime(p) || !isPrime(q))
+
+    // Validate 'p' and 'q' are prime
+    if (!isPrime(p) || !isPrime(q))
     {
         throw invalid_argument("\033[1;31mIn RSA, both p and q must be prime numbers.\033[0m");
     }
+
+    // Validate 'e' is greater than 1 and coprime with (p-1)*(q-1)
     if (e <= 1 || gcd(e, (p - 1) * (q - 1)) != 1)
     {
         throw invalid_argument("\033[1;31mIn RSA, e must be greater than 1 and coprime with (p-1)*(q-1).\033[0m");
     }
+
     vector<long long> rsaKey = {p, q, e};
     return rsaKey;
 }
@@ -106,6 +294,7 @@ string CipherInput::getVigenereCipherKey()
     cout << "Enter key for Vigenere Cipher (uppercase letters only): ";
     cout << "\n-------------------------------------------------------\n";
     cin>>key;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     for (char c : key)
     {
         if (!isupper(c))
@@ -123,6 +312,7 @@ vector<vector<int>> CipherInput::getAESCipherKey()
     cout << "Enter AES key (exactly 16 characters): ";
     cout << "\n-------------------------------------\n";
     cin >> keyText;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (keyText.size() != 16 || !std::all_of(keyText.begin(), keyText.end(), [](char c)
                                              { return std::isalnum(static_cast<unsigned char>(c)); }))
@@ -147,6 +337,7 @@ string CipherInput::getMonoalphabeticCipherKey()
     cout << "Enter key for Monoalphabetic Cipher (26 lowercase letters): ";
     cout << "\n----------------------------------------------------------\n";
     cin>>key;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     if (key.length() != 26)
     {
@@ -197,6 +388,7 @@ string CipherInput::getVernamCipherKey()
     string key;
     cout << "Enter the key for Vernam Cipher (A-Z only): ";
     cin>>key;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     // Validate key (should contain only uppercase letters A-Z)
     for (char c : key)
