@@ -52,7 +52,7 @@ void HybridCryptography::encryptAndEmbedText()
     string encryptedText;
     try
     {
-        text=cipher->get_plaintext();
+        text = cipher->get_plaintext();
         cipher->set_plaintext(text);
         encryptedText = cipher->encrypt();
         cout << "--------------------------" << endl;
@@ -80,15 +80,14 @@ void HybridCryptography::encryptAndEmbedText()
     {
         stego.hideMessage(inputImage, outputImage, encryptedText);
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         return;
     }
-    
 
-     std::cout << "\n\033[1;34m---------------------------\n";
+    std::cout << "\n\033[1;34m---------------------------\n";
     cout << "Text encrypted and embedded successfully!" << endl;
-     cout << "\n---------------------------\033[0m\n";
+    cout << "\n---------------------------\033[0m\n";
 }
 
 void HybridCryptography::extractAndDecryptText()
@@ -105,11 +104,11 @@ void HybridCryptography::extractAndDecryptText()
     {
         extractedMessage = stego.extractMessage(inputImage);
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         return;
     }
-    
+
     cout << "----------------------------------------" << endl;
     cout << "Extracted Message: " << extractedMessage << endl;
     cout << "----------------------------------------" << endl;
@@ -136,6 +135,11 @@ void HybridCryptography::extractAndDecryptText()
     }
     cout << "-------------------------------" << endl;
     cout << "Extracted and decrypted text: " << decryptedText << endl;
+    cout << "-------------------------------" << endl;
+
+    cout << "\n\033[1;34m---------------------------\n";
+    cout << "Text decrypted and extracted successfully!" << endl;
+    cout << "\n---------------------------\033[0m\n";
 }
 
 Cryptography *HybridCryptography::selectTextCipher()
@@ -156,7 +160,7 @@ Cryptography *HybridCryptography::selectTextCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int keyF1, keyF3, keyF5;
-    string keyF2, keyF4, keyF6,keyF7;
+    string keyF2, keyF4, keyF6, keyF7;
     vector<long long> keyF8;
     vector<vector<int>> keyF9;
     CipherInput obj;
@@ -168,7 +172,7 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Caesar Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF1 = obj.getCaesarCipherKey();
-        return new CaesarCipher("", "", keyF1); 
+        return new CaesarCipher("", "", keyF1);
     case 2:
         cout << "----------------------------------------" << endl;
         cout << "Selected Hill Cipher" << endl;
@@ -186,7 +190,7 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Vigenere Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF4 = obj.getVigenereCipherKey();
-        return new VigenereCipher("", "", keyF4); 
+        return new VigenereCipher("", "", keyF4);
     case 5:
         cout << "----------------------------------------" << endl;
         cout << "Selected Rail Fence Cipher" << endl;
@@ -198,19 +202,19 @@ Cryptography *HybridCryptography::selectTextCipher()
         cout << "Selected Monoalphabetic Cipher" << endl;
         cout << "----------------------------------------" << endl;
         keyF6 = obj.getMonoalphabeticCipherKey();
-        return new monoalphabetic("", "", keyF6); 
+        return new monoalphabetic("", "", keyF6);
     case 7:
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        keyF7= obj.getVernamCipherKey();
-        return new VernamCipher("", "",keyF7);
+        keyF7 = obj.getVernamCipherKey();
+        return new VernamCipher("", "", keyF7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;
         cout << "----------------------------------------" << endl;
         keyF8 = obj.getRSACipherKey();
-        return new RSA("", "", keyF8[0], keyF8[1], keyF8[2]); 
+        return new RSA("", "", keyF8[0], keyF8[1], keyF8[2]);
     case 9:
     {
         cout << "----------------------------------------" << endl;
