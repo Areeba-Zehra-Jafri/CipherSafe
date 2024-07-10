@@ -71,7 +71,8 @@ void password_screen()
                 cout << "--------------------" << endl;
                 cout << "Enter your password: ";
                 cin>>password;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+               // cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cin.ignore();
                 cout << "--------------------" << endl;
                 m1.sign_up(username, password);
                 break;
