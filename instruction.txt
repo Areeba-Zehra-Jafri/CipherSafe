@@ -252,5 +252,13 @@ Compare the encrypted image with the original image to identify the hidden infor
 Output:
 
 The original text that was hidden within the image.
+
+
+
+HYBRID CRYPTOGRAPHY:
+Hybrid cryptography is a method that integrates cryptographic techniques with steganography. Cryptography involves techniques for secure communication, including encryption and decryption of data using various algorithms like AES, RSA, and others. On the other hand, steganography focuses on concealing the existence of hidden information within other data, such as images . By combining these two methods, hybrid cryptography ensures not only the encryption of sensitive information but also its covert transmission or storage within seemingly innocuous cover media. This dual-layered approach provides enhanced security against unauthorized access and interception, making it particularly effective for protecting confidential data in digital communications and storage.
+
+
+
 Conclusion
 Thank you for using the Cipher Project! If you encounter any issues or have any questions, please refer to the documentation or contact support.
