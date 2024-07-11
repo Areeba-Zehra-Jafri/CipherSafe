@@ -350,8 +350,7 @@ void Management::updateTextExtractedCount(const std::string &username)
         std::cerr << "\033[1;31mException caught in updateTextExtractedCount: " << e.what() << "\033[0m" << std::endl;
     }
 }
-
-void Management::updateTextEncryptedEmbedded(const std::string &username)
+void Management::updateTextEncryptedEmbedded(const string &username)
 {
     try
     {
@@ -440,6 +439,8 @@ void Management::serialize(const Account &account, ostream &file) const
     file.write(reinterpret_cast<const char *>(&account.textLinesDecrypted), sizeof(account.textLinesDecrypted));
     file.write(reinterpret_cast<const char *>(&account.textEmbeddedCount), sizeof(account.textEmbeddedCount));
     file.write(reinterpret_cast<const char *>(&account.textExtractedCount), sizeof(account.textExtractedCount));
+    file.write(reinterpret_cast<const char *>(&account.textEncryptedEmbedded), sizeof(account.textEncryptedEmbedded));
+    file.write(reinterpret_cast<const char *>(&account.textDecryptedExtracted), sizeof(account.textDecryptedExtracted));
 }
 
 void Management::deserialize(Account &account, istream &file)
@@ -460,7 +461,10 @@ void Management::deserialize(Account &account, istream &file)
     file.read(reinterpret_cast<char *>(&account.textLinesDecrypted), sizeof(account.textLinesDecrypted));
     file.read(reinterpret_cast<char *>(&account.textEmbeddedCount), sizeof(account.textEmbeddedCount));
     file.read(reinterpret_cast<char *>(&account.textExtractedCount), sizeof(account.textExtractedCount));
+    file.read(reinterpret_cast<char *>(&account.textEncryptedEmbedded), sizeof(account.textEncryptedEmbedded));
+    file.read(reinterpret_cast<char *>(&account.textDecryptedExtracted), sizeof(account.textDecryptedExtracted));
 }
+
 
 void Management::displayCurrentStats(const string &username)
 {

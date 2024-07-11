@@ -69,8 +69,8 @@ public:
     void updateTextLinesDecrypted(const string &username);
     void updateTextEmbeddedCount(const string &username);
     void updateTextExtractedCount(const string &username);
-    void updateTextEncryptedEmbedded(const std::string &username);
-    void updateTextDecryptedExtracted(const std::string &username);
+    void updateTextEncryptedEmbedded(const string &username);
+    void updateTextDecryptedExtracted(const string &username);
     void displayCurrentStats(const string &username) ;
     static void setCurrentUsername(const string &username);
     static string getCurrentUsername() ;
