@@ -14,7 +14,8 @@
 #include "AESCipher.h"
 #include "login.h"
 
-class TextCryptography {
+class TextCryptography
+{
 public:
     void processText();
 
@@ -22,7 +23,7 @@ private:
     void encryptText();
     void decryptText();
     void EncryptDecryptText();
-    Cryptography* selectCipher();
+    Cryptography *selectCipher();
     Management Stats;
 };
 

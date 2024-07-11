@@ -6,16 +6,18 @@
 #include "login.h"
 #include <string>
 
-class HybridCryptography {
+class HybridCryptography
+{
 public:
     void encryptAndEmbedText();
     void extractAndDecryptText();
     void processTextHybrid();
+
 private:
     TextCryptography textCrypt;
     Steganography stego;
     Management Stats;
-    Cryptography* selectTextCipher();
+    Cryptography *selectTextCipher();
 };
 
 #endif // HYBRIDCRYPTOGRAPHY_H

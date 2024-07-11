@@ -16,7 +16,7 @@ void TextCryptography::processText()
         cout << "---------------------------------------" << endl;
         cout << "1-Encrypt text" << endl;
         cout << "2-Decrypt text" << endl;
-        cout << "3-Encrypt and Decrypt text" <<endl;
+        cout << "3-Encrypt and Decrypt text" << endl;
         cout << "4-Go back" << endl;
         cout << "---------------------------------------" << endl;
         cin >> choice;
@@ -137,7 +137,7 @@ void TextCryptography::decryptText()
 
     try
     {
-        string text=cipher->get_ciphertext();
+        string text = cipher->get_ciphertext();
         cipher->set_ciphertext(text);
         string decryptedText = cipher->decrypt();
         cout << "-------------------" << endl;
@@ -170,7 +170,7 @@ Cryptography *TextCryptography::selectCipher()
     cout << "----------------------------------------" << endl;
     cin >> choice;
     int keyT1, keyT3, keyT5;
-    string keyT2, keyT4, keyT6,keyT7;
+    string keyT2, keyT4, keyT6, keyT7;
     vector<long long> keyT8;
     vector<vector<int>> keyT9;
 
@@ -218,8 +218,8 @@ Cryptography *TextCryptography::selectCipher()
         cout << "----------------------------------------" << endl;
         cout << "Selected Vernam Cipher" << endl;
         cout << "----------------------------------------" << endl;
-        keyT7= obj.getVernamCipherKey();
-        return new VernamCipher("", "",keyT7);
+        keyT7 = obj.getVernamCipherKey();
+        return new VernamCipher("", "", keyT7);
     case 8:
         cout << "----------------------------------------" << endl;
         cout << "Selected RSA Algorithm" << endl;

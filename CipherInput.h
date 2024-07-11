@@ -9,17 +9,18 @@
 #include <cctype>
 #include <unordered_set>
 
-class CipherInput {
+class CipherInput
+{
 public:
     static int getAffineCipherKey();
     static int getCaesarCipherKey();
     static std::string getHillCipherKey();
     static int getRailFenceCipherKey();
-    static std::vector<long long> getRSACipherKey();
-    static std::string getVigenereCipherKey();
-    static std::vector<std::vector<int>> getAESCipherKey();
-    static std::string getMonoalphabeticCipherKey();
-    static std::string getVernamCipherKey();
+    static vector<long long> getRSACipherKey();
+    static string getVigenereCipherKey();
+    static vector<vector<int>> getAESCipherKey();
+    static string getMonoalphabeticCipherKey();
+    static string getVernamCipherKey();
 
 private:
     static int gcd(int a, int b);

@@ -6,7 +6,8 @@
 #include "login.h"
 using namespace std;
 
-class Steganography {
+class Steganography
+{
 public:
     void hideMessage(const string &inputImage, const string &outputImage, const string &message);
     string extractMessage(const string &image);

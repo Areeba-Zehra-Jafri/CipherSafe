@@ -1,9 +1,8 @@
-#include<iostream>
-#include<cstdlib>
-#include<fstream>
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
 #include "functions.h"
-#include<windows.h>
-
+#include <windows.h>
 
 int main()
 {

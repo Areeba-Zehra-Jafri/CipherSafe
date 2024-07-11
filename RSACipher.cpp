@@ -26,7 +26,7 @@ RSA::RSA(const string &plaintext, const string &ciphertext, long long p, long lo
 
 long long generatePrime()
 {
-    static std::random_device rd;
+    static random_device rd;
     static mt19937 gen(rd());
     static uniform_int_distribution<long long> dis(100, 999);
 
@@ -123,15 +123,6 @@ string RSA::get_plaintext()
     return plaintext;
 }
 
-// string RSA::get_ciphertext()
-// {
-//     cout << "\n-----------------------------------------------\n";
-//     cout << "Enter the ciphertext (only numbers separated by spaces): ";
-//     cin >> ciphertext;
-//     cout << "\n-----------------------------------------------\n";
-
-//     return ciphertext;
-// }
 string RSA::get_ciphertext()
 {
     cout << "\n-----------------------------------------------\n";
@@ -245,7 +236,7 @@ string RSA::decrypt()
 
         return plaintext;
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
         throw;
     }
@@ -316,6 +307,6 @@ void RSA::set_ciphertext(const string &c)
     }
     catch (const exception &e)
     {
-       throw;
+        throw;
     }
 }

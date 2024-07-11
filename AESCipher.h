@@ -17,25 +17,23 @@ private:
     uint8_t gmul_0b(uint8_t x);
     uint8_t gmul_0d(uint8_t x);
     uint8_t gmul_0e(uint8_t x);
-    vector<uint8_t> keyExpansion(const vector<vector<int>>& key);
-    void subBytes(vector<uint8_t>& state);
-    void shiftRows(vector<uint8_t>& state);
-    void mixColumns(vector<uint8_t>& state);
-    void addRoundKey(vector<uint8_t>& state, const vector<uint8_t>& roundKey);
-    void invSubBytes(vector<uint8_t>& state);
-    void invShiftRows(vector<uint8_t>& state);
-    void invMixColumns(vector<uint8_t>& state);
+    vector<uint8_t> keyExpansion(const vector<vector<int>> &key);
+    void subBytes(vector<uint8_t> &state);
+    void shiftRows(vector<uint8_t> &state);
+    void mixColumns(vector<uint8_t> &state);
+    void addRoundKey(vector<uint8_t> &state, const vector<uint8_t> &roundKey);
+    void invSubBytes(vector<uint8_t> &state);
+    void invShiftRows(vector<uint8_t> &state);
+    void invMixColumns(vector<uint8_t> &state);
 
 public:
-    AES(const string& p,const string& c, const vector<vector<int>>& k);
+    AES(const string &p, const string &c, const vector<vector<int>> &k);
     string get_plaintext();
     string get_ciphertext();
-    string encrypt() ;
-    string decrypt() ;
-    void set_plaintext(const string& p);
-    void set_ciphertext(const string& c);
+    string encrypt();
+    string decrypt();
+    void set_plaintext(const string &p);
+    void set_ciphertext(const string &c);
 };
 
 #endif
-
-

@@ -118,7 +118,7 @@ string VernamCipher::decrypt()
     }
     catch (const exception &e)
     {
-       throw;
+        throw;
     }
     return "";
 }

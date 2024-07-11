@@ -142,7 +142,7 @@ void VigenereCipher::set_plaintext(const string &p)
 {
     try
     {
-        if (!std::all_of(p.begin(), p.end(), ::isupper))
+        if (!all_of(p.begin(), p.end(), ::isupper))
         {
             throw invalid_argument("\033[1;31mInvalid character found in plaintext. Only uppercase letters are allowed.\033[0m");
         }
@@ -159,7 +159,7 @@ void VigenereCipher::set_ciphertext(const string &c)
 
     try
     {
-        if (!std::all_of(c.begin(), c.end(), ::isupper))
+        if (!all_of(c.begin(), c.end(), ::isupper))
         {
             throw invalid_argument("\033[1;31mInvalid character found in ciphertext. Only uppercase letters are allowed.\033[0m");
         }

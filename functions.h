@@ -7,5 +7,4 @@ void main_screen(void);
 void start_screen(void);
 void instructions(void);
 
-
 #endif

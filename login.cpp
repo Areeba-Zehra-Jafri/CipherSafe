@@ -7,15 +7,15 @@ using namespace std;
 
 string Management::currentUsername = "";
 
-void Management::sign_up(const std::string &username, const std::string &password)
+void Management::sign_up(const string &username, const string &password)
 {
     try
     {
         // Check if the username already exists
-        std::ifstream file_read("accounts.bin", std::ios::binary);
+        ifstream file_read("accounts.bin", ios::binary);
         if (!file_read.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
@@ -25,16 +25,16 @@ void Management::sign_up(const std::string &username, const std::string &passwor
             if (temp.username == username)
             {
                 file_read.close();
-                throw std::runtime_error("\033[1;31mThis username already exists. Please choose a different username.\033[0m");
+                throw runtime_error("\033[1;31mThis username already exists. Please choose a different username.\033[0m");
             }
         }
         file_read.close();
 
         // Add the new account
-        std::ofstream file_write("accounts.bin", std::ios::binary | std::ios::app);
+        ofstream file_write("accounts.bin", ios::binary | ios::app);
         if (!file_write.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account new_account;
@@ -43,28 +43,29 @@ void Management::sign_up(const std::string &username, const std::string &passwor
         serialize(new_account, file_write);
         file_write.close();
 
-        std::cout << "\n\033[1;34m---------------------------\n";
-        std::cout << " Account created successfully! ";
-        std::cout << "\n---------------------------\033[0m\n" << std::endl;
+        cout << "\n\033[1;34m---------------------------\n";
+        cout << " Account created successfully! ";
+        cout << "\n---------------------------\033[0m\n"
+             << endl;
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
         std::cerr << "\033[1;31mException caught in sign_up: " << e.what() << "\033[0m" << std::endl;
     }
 }
 
-void Management::change_password(const std::string &username, const std::string &password)
+void Management::change_password(const string &username, const string &password)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         bool account_found = false;
         while (file.peek() != EOF)
         {
@@ -74,24 +75,25 @@ void Management::change_password(const std::string &username, const std::string 
             {
                 if (temp.password == password)
                 {
-                    std::cout << "Enter your new password: ";
-                    std::string new_password;
-                    std::cin >> new_password;
+                    cout << "Enter your new password: ";
+                    string new_password;
+                    cin >> new_password;
                     temp.password = new_password;
 
                     file.seekp(pos);
                     serialize(temp, file);
 
-                    std::cout << "\n\033[1;34m---------------------------\n";
-                    std::cout << " Password changed successfully! ";
-                    std::cout << "\n---------------------------\033[0m\n" << std::endl;
+                    cout << "\n\033[1;34m---------------------------\n";
+                    cout << " Password changed successfully! ";
+                    cout << "\n---------------------------\033[0m\n"
+                         << endl;
 
                     account_found = true;
                     break;
                 }
                 else
                 {
-                    throw std::invalid_argument("\033[1;31mInvalid password.\033[0m");
+                    throw invalid_argument("\033[1;31mInvalid password.\033[0m");
                 }
             }
         }
@@ -99,23 +101,23 @@ void Management::change_password(const std::string &username, const std::string 
 
         if (!account_found)
         {
-            throw std::runtime_error("\033[1;31mAccount not found.\033[0m");
+            throw runtime_error("\033[1;31mAccount not found.\033[0m");
         }
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in change_password: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in change_password: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::login(const std::string &username, const std::string &password)
+void Management::login(const string &username, const string &password)
 {
     try
     {
-        std::ifstream file("accounts.bin", std::ios::binary);
+        ifstream file("accounts.bin", ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         bool login_successful = false;
@@ -125,9 +127,10 @@ void Management::login(const std::string &username, const std::string &password)
             deserialize(temp, file);
             if (temp.username == username && temp.password == password)
             {
-                std::cout << "\n\033[1;34m---------------------------\n";
-                std::cout << " Login successful! ";
-                std::cout << "\n---------------------------\033[0m\n" << std::endl;
+                cout << "\n\033[1;34m---------------------------\n";
+                cout << " Login successful! ";
+                cout << "\n---------------------------\033[0m\n"
+                     << endl;
                 login_successful = true;
                 setCurrentUsername(username);
                 main_screen();
@@ -138,27 +141,27 @@ void Management::login(const std::string &username, const std::string &password)
 
         if (!login_successful)
         {
-            throw std::runtime_error("\033[1;31mInvalid username or password. Try again.\033[0m");
+            throw runtime_error("\033[1;31mInvalid username or password. Try again.\033[0m");
         }
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        std::cerr << "\033[1;31mException caught in login: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in login: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateFilesEncrypted(const std::string &username)
+void Management::updateFilesEncrypted(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -173,26 +176,26 @@ void Management::updateFilesEncrypted(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateFilesEncrypted: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateFilesEncrypted: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateFilesDecrypted(const std::string &username)
+void Management::updateFilesDecrypted(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -207,26 +210,26 @@ void Management::updateFilesDecrypted(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateFilesDecrypted: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateFilesDecrypted: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateTextLinesEncrypted(const std::string &username)
+void Management::updateTextLinesEncrypted(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
             throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -241,26 +244,26 @@ void Management::updateTextLinesEncrypted(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextLinesEncrypted: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextLinesEncrypted: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateTextLinesDecrypted(const std::string &username)
+void Management::updateTextLinesDecrypted(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -275,26 +278,26 @@ void Management::updateTextLinesDecrypted(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextLinesDecrypted: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextLinesDecrypted: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateTextEmbeddedCount(const std::string &username)
+void Management::updateTextEmbeddedCount(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -309,26 +312,26 @@ void Management::updateTextEmbeddedCount(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextEmbeddedCount: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextEmbeddedCount: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateTextExtractedCount(const std::string &username)
+void Management::updateTextExtractedCount(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -343,25 +346,25 @@ void Management::updateTextExtractedCount(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextExtractedCount: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextExtractedCount: " << e.what() << "\033[0m" << endl;
     }
 }
 void Management::updateTextEncryptedEmbedded(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -370,7 +373,7 @@ void Management::updateTextEncryptedEmbedded(const string &username)
             {
                 // Increment the count for text encrypted and embedded
                 temp.textEncryptedEmbedded++;
-                
+
                 file.seekp(pos);
                 serialize(temp, file);
                 file.close();
@@ -378,26 +381,26 @@ void Management::updateTextEncryptedEmbedded(const string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextEncryptedEmbedded: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextEncryptedEmbedded: " << e.what() << "\033[0m" << endl;
     }
 }
 
-void Management::updateTextDecryptedExtracted(const std::string &username)
+void Management::updateTextDecryptedExtracted(const string &username)
 {
     try
     {
-        std::fstream file("accounts.bin", std::ios::in | std::ios::out | std::ios::binary);
+        fstream file("accounts.bin", ios::in | ios::out | ios::binary);
         if (!file.is_open())
         {
-            throw std::runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
+            throw runtime_error("\033[1;31mError opening file: accounts.bin\033[0m");
         }
 
         Account temp;
-        std::streampos pos;
+        streampos pos;
         while (file.peek() != EOF)
         {
             pos = file.tellg();
@@ -406,7 +409,7 @@ void Management::updateTextDecryptedExtracted(const std::string &username)
             {
                 // Increment the count for text decrypted and extracted
                 temp.textDecryptedExtracted++;
-                
+
                 file.seekp(pos);
                 serialize(temp, file);
                 file.close();
@@ -414,14 +417,13 @@ void Management::updateTextDecryptedExtracted(const std::string &username)
             }
         }
         file.close();
-        throw std::runtime_error("Account not found.");
+        throw runtime_error("Account not found.");
     }
     catch (const std::exception &e)
     {
-        std::cerr << "\033[1;31mException caught in updateTextDecryptedExtracted: " << e.what() << "\033[0m" << std::endl;
+        cerr << "\033[1;31mException caught in updateTextDecryptedExtracted: " << e.what() << "\033[0m" << endl;
     }
 }
-
 
 void Management::serialize(const Account &account, ostream &file) const
 {
@@ -465,7 +467,6 @@ void Management::deserialize(Account &account, istream &file)
     file.read(reinterpret_cast<char *>(&account.textDecryptedExtracted), sizeof(account.textDecryptedExtracted));
 }
 
-
 void Management::displayCurrentStats(const string &username)
 {
     try
@@ -486,7 +487,8 @@ void Management::displayCurrentStats(const string &username)
                 found = true;
                 cout << "\n\033[1;34m---------------------------\n";
                 cout << " Current Statistics for " << username << " ";
-                cout << "\n---------------------------\033[0m\n" << endl;
+                cout << "\n---------------------------\033[0m\n"
+                     << endl;
                 cout << "Username: " << temp.username << endl;
                 cout << "Files Encrypted: " << temp.filesEncrypted << endl;
                 cout << "Files Decrypted: " << temp.filesDecrypted << endl;
@@ -494,8 +496,8 @@ void Management::displayCurrentStats(const string &username)
                 cout << "Text Lines Decrypted: " << temp.textLinesDecrypted << endl;
                 cout << "Text Embedded Count: " << temp.textEmbeddedCount << endl;
                 cout << "Text Extracted Count: " << temp.textExtractedCount << endl;
-                cout << "Text Encrypted and Embedded Count " <<temp.textEncryptedEmbedded << endl;
-                cout << "Text Decrypted and Extracted Count " <<temp.textDecryptedExtracted << endl;
+                cout << "Text Encrypted and Embedded Count " << temp.textEncryptedEmbedded << endl;
+                cout << "Text Decrypted and Extracted Count " << temp.textDecryptedExtracted << endl;
                 cout << "---------------------------" << endl;
                 break; // Exit loop once found
             }
@@ -520,8 +522,7 @@ void Management::setCurrentUsername(const string &username)
 }
 
 // Getter implementation
-string Management::getCurrentUsername() 
+string Management::getCurrentUsername()
 {
     return currentUsername;
 }
-

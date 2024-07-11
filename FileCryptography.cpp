@@ -17,7 +17,7 @@ void FileCryptography::processFiles()
         cout << "----------------------------------------" << endl;
         cout << "1-Encrypt a file" << endl;
         cout << "2-Decrypt a file" << endl;
-        cout << "3-Encrypt and Decrypt a file" <<endl;
+        cout << "3-Encrypt and Decrypt a file" << endl;
         cout << "4-Go back" << endl;
         cout << "----------------------------------------" << endl;
         cin >> choice;

@@ -1,25 +1,6 @@
 #include "CipherInput.h"
 using namespace std;
 
-// int CipherInput::getAffineCipherKey()
-// {
-//     int a, b;
-//     cout << "\n---------------------------\n";
-//     cout << "Input a and b for Affine Cipher: "<<endl;
-//     cout<<"Enter a:";
-//     cin >> a ;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//     cout<<endl;
-//     cout<<"Enter b:";
-//     cin >>b;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//     cout << "\n---------------------------\n";
-//     if (gcd(a, 26) != 1)
-//     {
-//         throw invalid_argument("\033[1;31mIn Affine Cipher, 'a' must be coprime with 26.\033[0m");
-//     }
-//     return a * 100 + b;
-// }
 int CipherInput::getAffineCipherKey()
 {
     int a, b;
@@ -132,23 +113,6 @@ std::string CipherInput::getHillCipherKey()
     return key;
 }
 
-// int CipherInput::getRailFenceCipherKey()
-// {
-
-//     int railKey;
-//     cout << "\n-------------------------------------\n";
-//     cout << "Enter rail key for Rail Fence Cipher: ";
-//     cout << "\n-------------------------------------\n";
-//     cin >> railKey;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-//     if (railKey < 2)
-//     {
-//         throw invalid_argument("\033[1;31mIn Rail Fence Cipher, rail key must be at least 2.\033[0m");
-//     }
-//     return railKey;
-// }
-
 int CipherInput::getRailFenceCipherKey()
 {
     int railKey;
@@ -187,34 +151,6 @@ int CipherInput::getRailFenceCipherKey()
     return railKey;
 }
 
-// vector<long long> CipherInput::getRSACipherKey()
-// {
-//     long long p, q, e;
-//     cout << "\n---------------------------\n";
-//     cout << "Input p, q, and e for RSA: ";
-//     cout << "Enter p: ";
-//     cin>>p;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//     cout<<endl;
-//     cout<<"Enter q: ";
-//     cin>>q;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//     cout<<endl;
-//     cout<<"Enter e: ";
-//     cin >> e;
-//     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-//     cout << "\n---------------------------\n";
-//     if(!isPrime(p) || !isPrime(q))
-//     {
-//         throw invalid_argument("\033[1;31mIn RSA, both p and q must be prime numbers.\033[0m");
-//     }
-//     if (e <= 1 || gcd(e, (p - 1) * (q - 1)) != 1)
-//     {
-//         throw invalid_argument("\033[1;31mIn RSA, e must be greater than 1 and coprime with (p-1)*(q-1).\033[0m");
-//     }
-//     vector<long long> rsaKey = {p, q, e};
-//     return rsaKey;
-// }
 vector<long long> CipherInput::getRSACipherKey()
 {
     long long p, q, e;

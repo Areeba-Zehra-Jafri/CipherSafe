@@ -54,7 +54,7 @@ void HybridCryptography::encryptAndEmbedText()
         string encryptedText;
         try
         {
-            text=cipher->get_plaintext();
+            text = cipher->get_plaintext();
             cipher->set_plaintext(text);
             encryptedText = cipher->encrypt();
             cout << "--------------------------" << endl;
@@ -77,27 +77,25 @@ void HybridCryptography::encryptAndEmbedText()
         cout << "Enter the path of the output image: ";
         cin >> outputImage;
         cout << "----------------------------------------" << endl;
-        std::cin.ignore();
+        cin.ignore();
         try
         {
             stego.hideMessage(inputImage, outputImage, encryptedText);
         }
-        catch(const exception& e)
+        catch (const exception &e)
         {
             return;
         }
-        
 
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Text encrypted and embedded successfully!" << endl;
         cout << "\n---------------------------\033[0m\n";
     }
-    catch(const exception& e)
+    catch (const exception &e)
     {
         cerr << "\033[1;31mEncryption Error: \033[0m" << e.what() << endl;
         return;
     }
-    
 }
 
 void HybridCryptography::extractAndDecryptText()
@@ -116,16 +114,16 @@ void HybridCryptography::extractAndDecryptText()
         {
             extractedMessage = stego.extractMessage(inputImage);
         }
-        catch(const std::exception& e)
+        catch (const std::exception &e)
         {
             return;
         }
-        
+
         cout << "----------------------------------------" << endl;
         cout << "Extracted Message: " << extractedMessage << endl;
         cout << "----------------------------------------" << endl;
         // Decrypt extracted message
-        
+
         Cryptography *cipher = selectTextCipher();
         if (!cipher)
         {
@@ -153,7 +151,7 @@ void HybridCryptography::extractAndDecryptText()
         cout << "Text decrypted and extracted successfully!" << endl;
         cout << "\n---------------------------\033[0m\n";
     }
-    catch(const exception& e)
+    catch (const exception &e)
     {
         cerr << "\033[1;31mDecryption Error: \033[0m" << e.what() << endl;
         return;

@@ -40,8 +40,8 @@ void Steganography::runSteganography(Steganography &stego)
                 cout << "----------------------------------------" << endl;
                 cin.ignore();
                 cout << "--------------------------------------" << endl;
-                std::cout << "Enter the message to hide: ";
-                std::getline(std::cin, message);
+                cout << "Enter the message to hide: ";
+                getline(cin, message);
                 stego.hideMessage(inputImage, outputImage, message);
                 Stats.updateTextEmbeddedCount(Stats.getCurrentUsername());
                 break;
@@ -53,17 +53,17 @@ void Steganography::runSteganography(Steganography &stego)
                 extractedMessage = stego.extractMessage(outputImage);
                 Stats.updateTextExtractedCount(Stats.getCurrentUsername());
                 cout << "----------------------------------------" << endl;
-                std::cout << "Extracted Message: " << extractedMessage << std::endl;
+                cout << "Extracted Message: " << extractedMessage << endl;
                 cout << "----------------------------------------" << endl;
                 break;
             default:
-                std::cout << "\033[1;31mInvalid input\033[0m" << std::endl;
+                cout << "\033[1;31mInvalid input\033[0m" << endl;
                 break;
             }
         }
-        catch (const std::exception &e)
+        catch (const exception &e)
         {
-            std::cerr << "\033[1;31mError: \033[0m" << e.what() << std::endl;
+            cerr << "\033[1;31mError: \033[0m" << e.what() << endl;
         }
     }
 }
@@ -114,7 +114,7 @@ void Steganography::hideMessage(const string &inputImage, const string &outputIm
 
         if (binaryMessage.size() > data.size())
         {
-            throw std::runtime_error("Message is too large to be hidden in the image.");
+            throw runtime_error("Message is too large to be hidden in the image.");
         }
 
         for (size_t i = 0; i < binaryMessage.size(); ++i)
@@ -123,11 +123,11 @@ void Steganography::hideMessage(const string &inputImage, const string &outputIm
         }
 
         writeImage(outputImage, header, data);
-        std::cout << "\n\033[1;34m---------------------------\n";
+        cout << "\n\033[1;34m---------------------------\n";
         cout << "Message hidden successfully!" << endl;
-        std::cout << "\n---------------------------\033[0m\n";
+        cout << "\n---------------------------\033[0m\n";
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
         throw;
     }
@@ -158,7 +158,7 @@ string Steganography::extractMessage(const string &image)
 
         return message;
     }
-    catch (const std::exception &e)
+    catch (const exception &e)
     {
         throw;
     }

@@ -43,7 +43,7 @@ string AffineCipher::get_ciphertext()
 string AffineCipher::get_plaintext()
 {
     cout << "==INPUT RULES ==\n";
-   cout << "Only alphabetic characters and numbers are allowed (no spaces)\n";
+    cout << "Only alphabetic characters and numbers are allowed (no spaces)\n";
     cout << "\n-------------------------------\n";
     cout << "Enter the plaintext to encrypt:\n";
     cout << "--------------------------------\n"
@@ -191,7 +191,7 @@ void AffineCipher::set_ciphertext(const string &c)
     try
     {
 
-         for (char ch : c)
+        for (char ch : c)
         {
             if (!isalnum(ch))
             {
