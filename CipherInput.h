@@ -9,6 +9,8 @@
 #include <cctype>
 #include <unordered_set>
 
+using namespace std;
+
 class CipherInput
 {
 public:

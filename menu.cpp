@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <fstream>
 #include <windows.h>
+#include <conio.h> // For _getch()
+#include <regex> // For regex and regex_match
+#include <limits>
 #include "functions.h"
 #include "login.h"
 #include "FileCryptography.h"
@@ -41,16 +44,130 @@ void welcome_screen(void)
     cin.get();
 }
 
-void password_screen()
-{
-    try
-    {
+// void password_screen()
+// {
+//     try
+//     {
+//         system("cls");
+//         Management m1;
+//         string username, password;
+//         int choice;
+//         while (true)
+//         {
+//             cout << "\033[1;33m=== Password Management ===\033[0m" << endl;
+//             cout << "1. Sign up" << endl;
+//             cout << "2. Change password" << endl;
+//             cout << "3. Login" << endl;
+//             cout << "4. Exit" << endl;
+//             cout << "Enter choice: ";
+//             cin >> choice;
+//             cin.ignore();
+//             switch (choice)
+//             {
+//             case 1:
+//                 cout << "\033[1;33m=== Sign Up ===\033[0m" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your username: ";
+//                 cin >> username;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "--------------------" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your password: ";
+//                 cin >> password;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 // cin.ignore();
+//                 cout << "--------------------" << endl;
+//                 m1.sign_up(username, password);
+//                 break;
+//             case 2:
+//                 cout << "\033[1;33m=== Change Password ===\033[0m" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your username: ";
+//                 cin >> username;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "--------------------" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your password: ";
+//                 cin >> password;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "--------------------" << endl;
+//                 m1.change_password(username, password);
+//                 break;
+//             case 3:
+//                 cout << "\033[1;33m=== Login ===\033[0m" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your username: ";
+//                 cin >> username;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "--------------------" << endl;
+//                 cout << "--------------------" << endl;
+//                 cout << "Enter your password: ";
+//                 cin >> password;
+//                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
+//                 cout << "--------------------" << endl;
+//                 m1.login(username, password);
+//                 break;
+//             case 4:
+//                 exit(0);
+//             default:
+//                 cout << "\033[1;31mInvalid input.\033[0m Try again." << std::endl;
+//                 break;
+//             }
+//         }
+//     }
+//     catch (const exception &e)
+//     {
+//         cerr << "\033[1;31mException caught in password_screen:\033[0m " << e.what() << endl;
+//     }
+// }
+
+// Function to validate the password
+bool validate_password(const string &password) {
+    if (password.length() < 8)
+        return false;
+    bool has_upper = false, has_digit = false, has_special = false;
+    for (char c : password) {
+        if (isupper(c)) has_upper = true;
+        if (isdigit(c)) has_digit = true;
+        if (ispunct(c)) has_special = true;
+    }
+    return has_upper && has_digit && has_special;
+}
+
+// Function to get the password input with masking
+string get_password() {
+    string password;
+    char ch;
+    cout << "Enter your password: ";
+    while (true) {
+        ch = _getch(); // Read a character without echoing it
+        if (ch == 13) break; // Enter key pressed
+        if (ch == 8) { // Backspace key pressed
+            if (!password.empty()) {
+                cout << "\b \b"; // Remove the last '*' from console
+                password.pop_back(); // Remove last character from password string
+            }
+        } else {
+            password.push_back(ch);
+            cout << '*'; // Print '*' instead of the actual character
+        }
+    }
+    cout << endl;
+
+    if (!validate_password(password)) {
+        cout << "\033[1;31mPassword must be at least 8 characters long, contain at least one uppercase letter, one digit, and one special character.\033[0m" << endl;
+        return get_password();
+    }
+    return password;
+}
+
+void password_screen() {
+    try {
         system("cls");
         Management m1;
         string username, password;
         int choice;
-        while (true)
-        {
+        while (true) {
             cout << "\033[1;33m=== Password Management ===\033[0m" << endl;
             cout << "1. Sign up" << endl;
             cout << "2. Change password" << endl;
@@ -59,8 +176,7 @@ void password_screen()
             cout << "Enter choice: ";
             cin >> choice;
             cin.ignore();
-            switch (choice)
-            {
+            switch (choice) {
             case 1:
                 cout << "\033[1;33m=== Sign Up ===\033[0m" << endl;
                 cout << "--------------------" << endl;
@@ -68,11 +184,7 @@ void password_screen()
                 cin >> username;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
-                cout << "--------------------" << endl;
-                cout << "Enter your password: ";
-                cin >> password;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                // cin.ignore();
+                password = get_password();
                 cout << "--------------------" << endl;
                 m1.sign_up(username, password);
                 break;
@@ -83,10 +195,7 @@ void password_screen()
                 cin >> username;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
-                cout << "--------------------" << endl;
-                cout << "Enter your password: ";
-                cin >> password;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                password = get_password();
                 cout << "--------------------" << endl;
                 m1.change_password(username, password);
                 break;
@@ -97,10 +206,7 @@ void password_screen()
                 cin >> username;
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "--------------------" << endl;
-                cout << "--------------------" << endl;
-                cout << "Enter your password: ";
-                cin >> password;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                password = get_password();
                 cout << "--------------------" << endl;
                 m1.login(username, password);
                 break;
@@ -111,9 +217,7 @@ void password_screen()
                 break;
             }
         }
-    }
-    catch (const exception &e)
-    {
+    } catch (const exception &e) {
         cerr << "\033[1;31mException caught in password_screen:\033[0m " << e.what() << endl;
     }
 }

@@ -1,4 +1,7 @@
 #include "CipherInput.h"
+#include<string>
+#include<vector>
+
 using namespace std;
 
 int CipherInput::getAffineCipherKey()
